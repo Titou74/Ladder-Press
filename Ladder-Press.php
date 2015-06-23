@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Plugin Name: Ladder-Press
  * Plugin URI: https://github.com/Titou74/Ladder-Press
  * Description: Online ladder plugin for Wordpress
