@@ -259,6 +259,104 @@ class Install {
                        primary key (UMC_ID)
                     );   
         ");
+        
+        $wpdb->query("
+        alter table LADP_TJ_GAM_MPA_GMP add constraint FK_J_GMP_GAM foreign key (GAM_ID)
+              references LADP_T_GAMES_GAM (GAM_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_GAM_MPA_GMP add constraint FK_J_GMP_MPA foreign key (MPA_ID)
+              references LADP_T_MAP_PACKS_MPA (MPA_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_GAM_TEA_GTE add constraint FK_J_GTE_GAM foreign key (GAM_ID)
+              references LADP_T_GAMES_GAM (GAM_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_GAM_TEA_GTE add constraint FK_J_GTE_TEA foreign key (TEA_ID)
+              references LADP_T_TEAMS_TEA (TEA_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_LAD_LUP_PARTICIPE_LLP add constraint FK_J_LLP_LAD foreign key (LAD_ID)
+              references LADP_T_LADDER_LAD (LAD_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_LAD_LUP_PARTICIPE_LLP add constraint FK_J_LLP_LUP foreign key (LUP_ID)
+              references LADP_T_LINE_UP_LUP (LUP_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_MPA_MAP_MMA add constraint FK_J_MMA_MAP foreign key (MAP_ID)
+              references LADP_T_MAPS_MAP (MAP_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_MPA_MAP_MMA add constraint FK_J_MMA_MPA foreign key (MPA_ID)
+              references LADP_T_MAP_PACKS_MPA (MPA_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_USER_GAM_UGA add constraint FK_J_JUS_JEU foreign key (UGA_GAM_ID)
+              references LADP_T_GAMES_GAM (GAM_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_USER_GAM_UGA add constraint FK_J_JUS_USER foreign key (UGA_USER_ID)
+              references WP_USER (ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_USER_LUP_ULU add constraint FK_J_ULU_LUP foreign key (LUP_ID)
+              references LADP_T_LINE_UP_LUP (LUP_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_USER_LUP_ULU add constraint FK_J_ULU_USER_UUS foreign key (ID)
+              references WP_USER (ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_USER_TEA_UTE add constraint FK_J_UTE_TEA foreign key (UTE_TEA_ID)
+              references LADP_T_TEAMS_TEA (TEA_ID) on delete restrict on update restrict;
+
+        alter table LADP_TJ_USER_TEA_UTE add constraint FK_J_UTE_USER foreign key (UTE_USER_ID)
+              references WP_USER (ID) on delete restrict on update restrict;
+
+        alter table LADP_T_LADDER_LAD add constraint FK_J_LAD_GAM foreign key (LAD_GAM_ID)
+              references LADP_T_GAMES_GAM (GAM_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_LADDER_LAD add constraint FK_J_LAD_MPA foreign key (LAD_MPA_ID)
+              references LADP_T_MAP_PACKS_MPA (MPA_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_LADDER_MATCH_LMA add constraint FK_H_LMA_MAC foreign key (MAT_ID)
+              references LADP_T_MATCHS_MAT (MAT_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_LADDER_MATCH_LMA add constraint FK_J_LMA_LAD foreign key (LMA_LAD_ID)
+              references LADP_T_LADDER_LAD (LAD_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_LAD_DAYS_POSSIBLE_LDP add constraint FK_J_LDP_LAD foreign key (LDP_LAD_ID)
+              references LADP_T_LADDER_LAD (LAD_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_LINE_UP_LUP add constraint FK_J_LUP_GAM foreign key (LUP_GAM_ID)
+              references LADP_T_GAMES_GAM (GAM_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_LINE_UP_LUP add constraint FK_J_LUP_TEA foreign key (LUP_TEA_ID)
+              references LADP_T_TEAMS_TEA (TEA_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_MAPS_MAP add constraint FK_J_MAP_GAM foreign key (MAP_GAM_ID)
+              references LADP_T_GAMES_GAM (GAM_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_MATCHS_MAT add constraint FK_J_MAC_LUP_CHALLENGED foreign key (MAT_CHALLENGED_ID)
+              references LADP_T_LINE_UP_LUP (LUP_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_MATCHS_MAT add constraint FK_J_MAC_LUP_CHALLENGER foreign key (MAT_CHALLENGER_ID)
+              references LADP_T_LINE_UP_LUP (LUP_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_PLAYED_MAP_PLM add constraint FK_J_PLM_MAC foreign key (PLM_MAT_ID)
+              references LADP_T_MATCHS_MAT (MAT_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_PLAYED_MAP_PLM add constraint FK_J_PLM_MAP foreign key (PLM_MAP_ID)
+              references LADP_T_MAPS_MAP (MAP_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_PROPOSE_DATE_PDA add constraint FK_J_PDA_MAC foreign key (PDA_MAT_ID)
+              references LADP_T_MATCHS_MAT (MAT_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_PROPOSE_MAP_PMA add constraint FK_J_PMA_MAC foreign key (PMA_MAT_ID)
+              references LADP_T_MATCHS_MAT (MAT_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_PROPOSE_MAP_PMA add constraint FK_J_PMA_MAP foreign key (PMA_MAP_ID)
+              references LADP_T_MAPS_MAP (MAP_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_TEAMS_TEA add constraint FK_USER_TEA_CREATOR_UTC foreign key (USER_ID_CREATOR)
+              references WP_USER (ID) on delete restrict on update restrict;
+
+        alter table LADP_T_USER_MAT_COMMENTAIRE_UMC add constraint FK_J_UMC_MAC foreign key (UMC_MAT_ID)
+              references LADP_T_MATCHS_MAT (MAT_ID) on delete restrict on update restrict;
+
+        alter table LADP_T_USER_MAT_COMMENTAIRE_UMC add constraint FK_J_UMC_USER foreign key (UMC_USER_ID)
+              references WP_USER (ID) on delete restrict on update restrict;
+        ");
     }
 
 }
