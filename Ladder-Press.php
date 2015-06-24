@@ -11,3 +11,13 @@
  *                      Thibaut Dupuy   (email : t*****@gmail.com)
  * 
 */
+class LadderPress
+{
+    public function __construct()
+    {
+        include_once plugin_dir_path( __FILE__ ).'/Team.php';
+        new Team();
+    }
+}
+
+new LadderPress();
