@@ -15,8 +15,23 @@ class LadderPress
 {
     public function __construct()
     {
-        include_once plugin_dir_path( __FILE__ ).'/Team.php';
+        register_activation_hook(__FILE__, array('LadderPress', 'install'));
+        register_deactivation_hook(__FILE__, array('LadderPress', 'uninstall')); //ONLY FOR DEVELOPMENT
+        register_uninstall_hook(__FILE__, array('LadderPress', 'uninstall'));
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/Team.php';
+        
         new Team();
+    }
+    
+    public static function install() {
+        include_once plugin_dir_path( __FILE__ ).'/install/Install.php';
+        Install::install();
+    }
+    
+    public static function uninstall() {
+        include_once plugin_dir_path( __FILE__ ).'/install/Uninstall.php';
+        Uninstall::uninstall();
     }
 }
 
