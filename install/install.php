@@ -32,5 +32,14 @@ class Install {
                        TEA_LOGO_NAME        char(255),
                        primary key (TEA_ID)
                     );");
+        
+        $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}T_MAPS_MAP
+                    (
+                       MAP_ID               bigint not null,
+                       MAP_GAM_ID           bigint,
+                       MAP_NAME             char(100),
+                       MAP_PICK             char(100),
+                       primary key (MAP_ID)
+                    );");
     }
 }
