@@ -9,6 +9,11 @@
 class Team
 {
     public function __construct() {
-        
+        add_shortcode('test', array($this, 'teamHtml'));
+    }
+    
+    public function teamHtml()
+    {
+        echo "A que coucou Bob !";
     }
 }
