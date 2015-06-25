@@ -20,8 +20,14 @@ class LadderPress
         register_uninstall_hook(__FILE__, array('LadderPress', 'uninstall'));
         
         include_once plugin_dir_path( __FILE__ ).'/model/Team.php';
-        
         new Team();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/Game.php';
+        new Game();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/Ladder.php';
+        new Ladder();
+        
     }
     
     public static function install() {
