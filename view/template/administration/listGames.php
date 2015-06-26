@@ -10,7 +10,14 @@ if ( ! isset( $allGames ) ) exit; // Exit if accessed directly
 
 echo '<h1>'.get_admin_page_title().'</h1>';
 
-echo '<table>';
+echo '<table class="wp-list-table widefat fixed striped">';
+
+echo '<thead><tr>';
+    echo '<th scope="col">Name</th>';
+    echo '<th scope="col">Short name</th>';
+    echo '<th scope="col">GUID require</th>';
+    echo '<th scope="col">GUID regex</th>';
+echo '</tr></thead><tbody id="the-list">';
 
 foreach ($allGames as $game){
     
@@ -19,13 +26,12 @@ foreach ($allGames as $game){
     echo '<tr id="record_'.$game->getId().'">';
         echo '<td './*$attributes.*/'>'.stripslashes($game->getName()).'</td>';
         echo '<td './*$attributes.*/'>'.stripslashes($game->getShortname()).'</td>';
-        echo '<td './*$attributes.*/'>'.stripslashes($game->getActiveGuid()).'</td>';
-        echo '<td './*$attributes.*/'>'.stripslashes($game->getGuidRegex()).'</td>';
+        echo '<td './*$attributes.*/'>'.stripslashes($game->getActiveGuid() ? 'Yes' : 'No').'</td>';
         echo '<td './*$attributes.*/'>'.stripslashes($game->getGuidRegex()).'</td>';
     echo'</tr>';
 
 }
 
-echo '</table>';
+echo '</tbody></table>';
 
 var_dump($allGames);
