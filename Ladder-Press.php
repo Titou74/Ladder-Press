@@ -28,6 +28,15 @@ class LadderPress
         include_once plugin_dir_path( __FILE__ ).'/model/Ladder.php';
         new Ladder();
         
+        include_once plugin_dir_path( __FILE__ ).'/model/Match.php';
+        new Match();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/Map.php';
+        new Map();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/MapPack.php';
+        new MapPack();
+        
     }
     
     public static function install() {
