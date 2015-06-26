@@ -6,3 +6,10 @@
  * and open the template in the editor.
  */
 
+class GamesAdministration
+{ 
+    function addMenuGames() {
+        echo "LADDER PRESS";
+    }
+    
+}

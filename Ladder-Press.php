@@ -55,7 +55,9 @@ class LadderPress
         include_once plugin_dir_path( __FILE__ ).'/model/UserMatchCom.php';
         new UserMatchCom();
         
-        add_action('admin_menu', array($this, 'addMenuGames'));
+        include_once plugin_dir_path( __FILE__ ).'/controller/GamesAdministration.php';
+        
+        add_action('admin_menu', array('GamesAdministration', 'addMenuGames'));
         
     }
     
