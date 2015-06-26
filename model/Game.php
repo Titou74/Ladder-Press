@@ -57,4 +57,32 @@ class Game
     public function setGuidRegex($guidRegex) {
         $this->guidRegex = $guidRegex;
     }
+    
+    private function instancierGame($gameArray = null) {
+        $game = new Game();
+        if($gameArray != null) {
+            $game->setId($gameArray['GAM_ID']);
+            $game->setName($gameArray['GAM_NAME']);
+            $game->setShortname($gameArray['GAM_SHORT_NAME']);
+            $game->setActiveGuid($gameArray['GAM_ACTIVE_GUID'] == 1 ? true : false);
+            $game->setGuidRegex($gameArray['GAM_GUID_REGEX']);
+        }
+        return $game;
+    }
+    
+    public function getAllGames() {
+        // Execution requête
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_games_gam", ARRAY_A);
+        
+        // Initialisation tableau retour
+        $games = array();
+        
+        // Instanciation des objects "Game"
+        foreach ($result as $value){
+            $games[] = self::instancierGame($value);
+        }
+        
+        return $games;
+    }
 }

@@ -10,6 +10,8 @@ class GamesAdministration
 { 
     public function gamesMenu()
     {
-        echo '<h1>'.get_admin_page_title().'</h1>';
+        $allGames = Game::getAllGames();
+        
+        include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listGames.php';
     }
 }
