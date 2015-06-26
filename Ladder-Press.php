@@ -37,6 +37,24 @@ class LadderPress
         include_once plugin_dir_path( __FILE__ ).'/model/MapPack.php';
         new MapPack();
         
+        include_once plugin_dir_path( __FILE__ ).'/model/MapPack.php';
+        new LadderMatch();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/LineUp.php';
+        new LineUp();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/LineUp.php';
+        new PlayedMap();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/ProposeDate.php';
+        new ProposeDate();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/PropposeMatch.php';
+        new ProposeMatch();
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/UserMatchCom.php';
+        new UserMatchCom();
+        
     }
     
     public static function install() {
