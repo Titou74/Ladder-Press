@@ -9,7 +9,12 @@
 class GamesAdministration
 { 
     function addMenuGames() {
-        echo "LADDER PRESS";
+        add_menu_page('Games menu', 'Games', 'manage_options', 'Ladder-Press', array($this, 'menuGames'));
+    }
+    
+    function menuGames()
+    {
+        echo 'COUCOU !';
     }
     
 }
