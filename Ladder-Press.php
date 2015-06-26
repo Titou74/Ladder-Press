@@ -39,7 +39,7 @@ class LadderPress
         
         include_once plugin_dir_path( __FILE__ ).'/model/ProposeDate.php';
         
-        include_once plugin_dir_path( __FILE__ ).'/model/ProposeMatch.php';
+        include_once plugin_dir_path( __FILE__ ).'/model/ProposeMap.php';
         
         include_once plugin_dir_path( __FILE__ ).'/model/UserMatchCom.php';
         
