@@ -35,6 +35,17 @@ class GamesAdministration extends WP_List_Table
         
         $data = self::table_data($allGames);
         usort( $data, array( &$this, 'sort_data' ) );
+        
+        $perPage = 20;
+        $currentPage = $this->get_pagenum();
+        $totalItems = count($data);
+
+        $this->set_pagination_args( array(
+            'total_items' => $totalItems,
+            'per_page'    => $perPage
+        ) );
+
+        $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
 
         $this->_column_headers = array($columns, $hidden, $sortable);
         $this->items = $data;
