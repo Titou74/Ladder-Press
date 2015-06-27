@@ -105,7 +105,7 @@ class MapsAdministration extends WP_List_Table
                 'id'        => $map->getId(),
                 'game'      => $game['GAM_NAME'],
                 'name'      => $map->getName(),
-                'picture'   => $map->getPick() ? 'Yes' : 'No'
+                'picture'   => $map->getPick()
             );
             $data[] = $dataMap;
         }
