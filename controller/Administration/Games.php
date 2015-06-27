@@ -12,12 +12,21 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 
 class GamesAdministration extends WP_List_Table
 {
-    public function listGamesMenu()
+    public function gamesMenu()
     {
-        $gamesAdministration = new GamesAdministration();
-        $gamesAdministration->prepare_items();
-        
-        include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listGames.php';
+        if(!isset($_GET['action'])) {
+            $gamesAdministration = new GamesAdministration();
+            $gamesAdministration->prepare_items();
+
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listGames.php';
+        } else if($_GET['action'] == "add") {
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
+        } else if($_GET['action'] == "edit" && isset ($_GET['gameId'])) {
+            $editGame = Game::getGameById($_GET['gameId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
+        } else if($_GET['action'] == "remove") {
+            
+        }
     }
     
     /**

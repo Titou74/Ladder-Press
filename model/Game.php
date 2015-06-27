@@ -58,13 +58,6 @@ class Game
         $this->guidRegex = $guidRegex;
     }
     
-    public function getGameById($id)
-    {
-        global $wpdb;
-        $game = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_games_gam WHERE GAM_ID = $id", ARRAY_A);
-        return $game;
-    }
-    
     private function instancierGame($gameArray = null) {
         $game = new Game();
         if($gameArray != null) {
@@ -91,5 +84,14 @@ class Game
         }
         
         return $games;
+    }
+    
+    public function getGameById($id)
+    {
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_games_gam WHERE GAM_ID = $id", ARRAY_A);
+        $game = self::instancierGame($result);
+        
+        return $game;
     }
 }
