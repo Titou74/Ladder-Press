@@ -176,15 +176,6 @@ class GamesAdministration extends WP_List_Table
         return -$result;
     }
     
-    function column_booktitle($item) {
-        $actions = array(
-                'edit'      => sprintf('<a href="?page=%s&action=%s&book=%s">Edit</a>',$_REQUEST['page'],'edit',$item['ID']),
-                'delete'    => sprintf('<a href="?page=%s&action=%s&book=%s">Delete</a>',$_REQUEST['page'],'delete',$item['ID']),
-            );
-
-        return sprintf('%1$s %2$s', $item['booktitle'], $this->row_actions($actions) );
-    }
-    
     function get_bulk_actions() {
         $actions = array(
             'delete'    => 'Delete'
