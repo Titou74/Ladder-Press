@@ -179,7 +179,7 @@ class Install {
         $wpdb->query("CREATE TABLE IF NOT EXISTS {$wpdb->prefix}LADP_T_MAPS_MAP
                     (
                        MAP_ID               int not null auto_increment,
-                       MAP_GAM_ID           int,
+                       MAP_GAM_ID           int not null,
                        MAP_NAME             char(100),
                        MAP_PICK             char(100),
                        primary key (MAP_ID)
