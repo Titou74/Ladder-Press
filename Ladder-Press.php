@@ -44,6 +44,7 @@ class LadderPress
         include_once plugin_dir_path( __FILE__ ).'/model/UserMatchCom.php';
         
         include_once plugin_dir_path( __FILE__ ).'/controller/Administration/Games.php';
+        include_once plugin_dir_path( __FILE__ ).'/controller/Administration/Maps.php';
         include_once plugin_dir_path( __FILE__ ).'/controller/Administration/LadderPress.php';
         
         add_action('admin_menu', array('LadderPressAdministration', 'addLadderPressMenu'), 20);

@@ -47,6 +47,32 @@ class Map
     public function setPick($pick) {
         $this->pick = $pick;
     }
+    
+    private function instancierMap($mapArray = null) {
+        $map = new Map();
+        if($mapArray != null) {
+            $map->setId($mapArray['MAP_ID']);
+            $map->setGameId($mapArray['MAP_GAM_ID']);
+            $map->setName($mapArray['MAP_NAME']);
+            $map->setPick($mapArray['MAP_PICK'] == 1 ? true : false);
+        }
+        return $map;
+    }
 
-
+    public function getAllMaps() {
+        // Execution requête
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_maps_map", ARRAY_A);
+        
+        // Initialisation tableau retour
+        $maps = array();
+        
+        // Instanciation des objects "Game"
+        foreach ($result as $value){
+            $maps[] = self::instancierMap($value);
+        }
+        
+        return $maps;
+    }
+    
 }
