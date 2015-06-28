@@ -48,6 +48,7 @@ class LadderPress
         include_once plugin_dir_path( __FILE__ ).'/controller/Administration/LadderPress.php';
         
         add_action('admin_menu', array('LadderPressAdministration', 'addLadderPressMenu'), 20);
+        add_action('admin_init', array('LadderPressAdministration', 'register_settings'));
         
     }
     

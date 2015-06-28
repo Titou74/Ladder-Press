@@ -29,4 +29,10 @@ class LadderPressAdministration {
     {
         echo '<h1>'.get_admin_page_title().'</h1>';
     }
+    
+    public function register_settings()
+
+    {
+        register_setting('ladder_press_settings', 'zero_newsletter_sender');
+    }
 }

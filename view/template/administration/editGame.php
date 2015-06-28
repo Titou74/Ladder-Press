@@ -15,6 +15,11 @@ $edit = isset($editGame);
         <label>Game name</label>
         <input type="text" name="ladder_press_map_name" value="<?php echo $edit ?  $editGame->getName() : ""; /*echo get_option('zero_newsletter_sender')*/?>"/>
         
+        <label>Game short name</label>
+        <input type="text" name="ladder_press_map_name" value="<?php echo $edit ?  $editGame->getShortname() : ""; /*echo get_option('zero_newsletter_sender')*/?>"/>
+        
+        <?php settings_fields('ladder_press_settings') ?>
+        
         <?php submit_button(); ?>
     </form>
 </div>
