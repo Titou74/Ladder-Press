@@ -94,4 +94,31 @@ class Game
         
         return $game;
     }
+    
+    public function createGame($game) {
+        global $wpdb;
+        $wpdb->insert( "{$wpdb->prefix}ladp_t_games_gam", array( 
+		'gam_name' => $game->getName(),
+		'gam_short_name' => $game->getShortName(),
+                'gam_active_guid' => $game->getActiveGuid(),
+                'gam_guid_regex' => $game->getGuidRegex()
+            )
+        );
+    }
+    
+    public function updateGame($game) {
+        global $wpdb;
+        $wpdb->update( "{$wpdb->prefix}ladp_t_games_gam", array( 
+		'gam_name' => $game->getName(),
+		'gam_short_name' => $game->getShortName(),
+                'gam_active_guid' => $game->getActiveGuid(),
+                'gam_guid_regex' => $game->getGuidRegex()
+            ), 
+        array( 'gam_id' => $game->getId() ) );
+    }
+    
+    public function deleteGame($game) {
+        global $wpdb;
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'gam_id' => $game->getId() ) );
+    }
 }

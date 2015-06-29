@@ -19,31 +19,26 @@ class GamesAdministration extends WP_List_Table
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_game_id']) && $_POST['ladder_press_remove_game_id'] != 0) {
                 // Remove game
-                echo "remove";
-                var_dump($_POST);exit;
+                Game::deleteGame($_POST['ladder_press_remove_game_id']);
             } else if (isset($_POST['ladder_press_game_id'])) {
                 if($_POST['ladder_press_game_id'] != 0) {
                     // Update game
                     $game = Game::getGameById($_POST['ladder_press_game_id']);
                     $game->setName($_POST['ladder_press_game_name']);
                     $game->setShortName($_POST['ladder_press_game_short_name']);
-                    $game->setShortName($_POST['ladder_press_game_short_name']);
                     $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
                     $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
                     
-                    echo "update TOTO";
-                    var_dump($game);exit;
+                    Game::updateGame($game);
                 } else {
                     // Create game
                     $game = new Game();
                     $game->setName($_POST['ladder_press_game_name']);
                     $game->setShortName($_POST['ladder_press_game_short_name']);
-                    $game->setShortName($_POST['ladder_press_game_short_name']);
                     $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
                     $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
                     
-                    echo "create";
-                    var_dump($_POST);exit;
+                    Game::createGame($game);
                 }
                 
             }
