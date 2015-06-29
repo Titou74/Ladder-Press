@@ -117,8 +117,8 @@ class Game
         array( 'gam_id' => $game->getId() ) );
     }
     
-    public function deleteGame($game) {
+    public function deleteGame($gameId) {
         global $wpdb;
-        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'gam_id' => $game->getId() ) );
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'gam_id' => $gameId ) );
     }
 }

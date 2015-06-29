@@ -31,8 +31,7 @@ $edit = isset($editGame);
                 <tr>
                     <th scope="row">GUID require</th>
                     <td>
-                        <?php echo $editGame->getActiveGuid() ?>
-                        <input type="checkbox" name="ladder_press_game_guid_require" value="<?php echo $edit ?  $editGame->getActiveGuid() : ""; ?>"/>
+                        <input type="checkbox" name="ladder_press_game_guid_require" value="" <?php echo $edit ? ( $editGame->getActiveGuid() ? "checked" : "" ) : ""; ?>/>
                     </td>
                 </tr>
                 <tr>

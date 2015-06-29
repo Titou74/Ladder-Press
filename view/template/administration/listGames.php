@@ -19,6 +19,9 @@ if ( ! isset( $gamesAdministration ) ) exit; // Exit if accessed directly
     <?php $gamesAdministration->display(); ?>
 </div>
 
+<form style="display:inline;" action="?page=ladder_press_games&action=add" method="post">
+    <input id="submit" class="button button-primary" type="submit" value="Create new game" />
+</form>
+
 <?php
 
-echo "fin de page - bouton ETC";
