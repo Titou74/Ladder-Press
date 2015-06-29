@@ -103,7 +103,7 @@ class MapsAdministration extends WP_List_Table
             $game = Game::getGameById($map->getGameId());
             $dataMap = array(
                 'id'        => $map->getId(),
-                'game'      => $game['GAM_NAME'],
+                'game'      => $game->getName(),
                 'name'      => $map->getName(),
                 'picture'   => $map->getPick()
             );
