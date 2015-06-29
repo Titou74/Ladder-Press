@@ -10,6 +10,10 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
+if ( ! class_exists( 'AdminPageFramework' ) ) {
+    include_once( dirname( __FILE__ ) . '/library/admin-page-framework.min.php' );
+}
+
 class GamesAdministration extends WP_List_Table
 {
     public function gamesMenu()
