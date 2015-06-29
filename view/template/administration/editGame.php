@@ -12,6 +12,7 @@ $edit = isset($editGame);
 <div class="wrap">
     <h2><?php echo $edit ? "Edit " : "Add "; echo get_admin_page_title(); ?></h2>
     <form method="post" action="admin.php?page=ladder_press_games">
+        <?php echo $edit ? " <input type=\"hidden\" id=\"ladder_press_game_id\" value=".$editGame->getId()."> " : ""; ?>
         <table class="form-table">
             <tbody>
                 <tr>
