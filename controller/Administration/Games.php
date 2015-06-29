@@ -14,6 +14,40 @@ class GamesAdministration extends WP_List_Table
 {
     public function gamesMenu()
     {
+        if(! is_admin()) exit;
+        
+        if (isset($_POST['submit'])) {
+            if(isset($_POST['ladder_press_remove_game_id']) && $_POST['ladder_press_remove_game_id'] != 0) {
+                // Remove game
+                echo "remove";
+                var_dump($_POST);exit;
+            } else if (isset($_POST['ladder_press_game_id'])) {
+                if($_POST['ladder_press_game_id'] != 0) {
+                    // Update game
+                    $game = Game::getGameById($_POST['ladder_press_game_id']);
+                    $game->setName($_POST['ladder_press_game_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
+                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+                    echo "update";
+                    var_dump($game);exit;
+                } else {
+                    // Create game
+                    $game = new Game();
+                    $game->setName($_POST['ladder_press_game_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
+                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+                    
+                    echo "create";
+                    var_dump($_POST);exit;
+                }
+                
+            }
+        }
+        
         if(!isset($_GET['action'])) {
             $gamesAdministration = new GamesAdministration();
             $gamesAdministration->prepare_items();
@@ -73,7 +107,8 @@ class GamesAdministration extends WP_List_Table
             'name'       => 'Name',
             'short_name' => 'Short name',
             'guid'        => 'GUID require',
-            'regex'    => 'GUID regex'
+            'regex'    => 'GUID regex',
+            'action'    => ''
         );
         return $columns;
     }
@@ -185,16 +220,24 @@ class GamesAdministration extends WP_List_Table
         return -$result;
     }
     
-    function get_bulk_actions() {
+    /*function get_bulk_actions() {
         $actions = array(
             'delete'    => 'Delete'
         );
         return $actions;
-    }
+    }*/
     
     function column_cb($item) {
         return sprintf(
             '<input type="checkbox" name="book[]" value="%s" />', $item['ID']
         );    
+    }
+    
+    function column_action($item) {
+        $actions = array(
+            'edit' => sprintf('<a href="?page=ladder_press_games&action=edit&gameId='.$item["id"].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_games&action=remove&gameId='.$item["id"].'">Delete</a>'),
+        );
+        return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }
 }

@@ -15,7 +15,7 @@ if(!isset($deleteGame)) exit;
     <p>Are you sure to want to delete <strong>"<?php echo $deleteGame->getName() ?>"</strong> ? This action can't be undo.</p>
     
     <form style="display:inline;" method="post" action="admin.php?page=ladder_press_games">
-        <input type="hidden" id="ladder_press_game_id" value="<?php $deleteGame->getId() ?>">
+        <input type="hidden" name="ladder_press_remove_game_id" value="<?php echo $deleteGame->getId() ?>">
         
         <input id="submit" class="button button-primary" type="submit" value="Validate" name="submit" />
     </form>
