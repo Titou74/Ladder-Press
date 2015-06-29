@@ -30,7 +30,8 @@ class GamesAdministration extends WP_List_Table
                     $game->setShortName($_POST['ladder_press_game_short_name']);
                     $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
                     $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
-                    echo "update";
+                    
+                    echo "update TOTO";
                     var_dump($game);exit;
                 } else {
                     // Create game
