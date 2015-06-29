@@ -17,15 +17,15 @@ class GamesAdministration extends WP_List_Table
         if(!isset($_GET['action'])) {
             $gamesAdministration = new GamesAdministration();
             $gamesAdministration->prepare_items();
-
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listGames.php';
         } else if($_GET['action'] == "add") {
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
         } else if($_GET['action'] == "edit" && isset ($_GET['gameId'])) {
             $editGame = Game::getGameById($_GET['gameId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
-        } else if($_GET['action'] == "remove") {
-            
+        } else if($_GET['action'] == "remove" && isset ($_GET['gameId'])) {
+            $deleteGame = Game::getGameById($_GET['gameId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteGame.php';
         }
     }
     
