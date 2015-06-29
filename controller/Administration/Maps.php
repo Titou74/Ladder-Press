@@ -19,6 +19,7 @@ class MapsAdministration extends WP_List_Table
         
         include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
         echo lala;
+        echo test;
     }
     
     /**
