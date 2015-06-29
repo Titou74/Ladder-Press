@@ -14,18 +14,48 @@ class GamesAdministration extends WP_List_Table
 {
     public function gamesMenu()
     {
+        if(! is_admin()) exit;
+        
+        if (isset($_POST['submit'])) {
+            if(isset($_POST['ladder_press_remove_game_id']) && $_POST['ladder_press_remove_game_id'] != 0) {
+                // Remove game
+                Game::deleteGame($_POST['ladder_press_remove_game_id']);
+            } else if (isset($_POST['ladder_press_game_id'])) {
+                if($_POST['ladder_press_game_id'] != 0) {
+                    // Update game
+                    $game = Game::getGameById($_POST['ladder_press_game_id']);
+                    $game->setName($_POST['ladder_press_game_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
+                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+                    
+                    Game::updateGame($game);
+                } else {
+                    // Create game
+                    $game = new Game();
+                    $game->setName($_POST['ladder_press_game_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
+                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+                    
+                    Game::createGame($game);
+                }
+                
+            }
+        }
+        
         if(!isset($_GET['action'])) {
             $gamesAdministration = new GamesAdministration();
             $gamesAdministration->prepare_items();
-
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listGames.php';
         } else if($_GET['action'] == "add") {
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
         } else if($_GET['action'] == "edit" && isset ($_GET['gameId'])) {
             $editGame = Game::getGameById($_GET['gameId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
-        } else if($_GET['action'] == "remove") {
-            
+        } else if($_GET['action'] == "remove" && isset ($_GET['gameId'])) {
+            $deleteGame = Game::getGameById($_GET['gameId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteGame.php';
         }
     }
     
@@ -73,7 +103,8 @@ class GamesAdministration extends WP_List_Table
             'name'       => 'Name',
             'short_name' => 'Short name',
             'guid'        => 'GUID require',
-            'regex'    => 'GUID regex'
+            'regex'    => 'GUID regex',
+            'action'    => ''
         );
         return $columns;
     }
@@ -185,16 +216,24 @@ class GamesAdministration extends WP_List_Table
         return -$result;
     }
     
-    function get_bulk_actions() {
+    /*function get_bulk_actions() {
         $actions = array(
             'delete'    => 'Delete'
         );
         return $actions;
-    }
+    }*/
     
     function column_cb($item) {
         return sprintf(
             '<input type="checkbox" name="book[]" value="%s" />', $item['ID']
         );    
+    }
+    
+    function column_action($item) {
+        $actions = array(
+            'edit' => sprintf('<a href="?page=ladder_press_games&action=edit&gameId='.$item["id"].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_games&action=remove&gameId='.$item["id"].'">Delete</a>'),
+        );
+        return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }
 }
