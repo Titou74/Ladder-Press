@@ -86,13 +86,22 @@ class Map
     
     public function updateMap($map) {
         global $wpdb;
-        var_dump($map);
         $wpdb->update( "{$wpdb->prefix}ladp_t_maps_map", array( 
 		'map_name' => $map->getName(),
 		'map_gam_id' => $map->getGameId(),
                 'map_pick' => $map->getPick()
             ), 
         array( 'map_id' => $map->getId() ) );
+    }
+    
+    public function createMap($map) {
+        global $wpdb;
+        $wpdb->insert( "{$wpdb->prefix}ladp_t_maps_map", array( 
+		'map_name' => $map->getName(),
+		'map_gam_id' => $map->getGameId(),
+                'map_pick' => $map->getPick()
+            ) 
+       );
     }
     
 }

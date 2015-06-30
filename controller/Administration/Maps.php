@@ -29,13 +29,12 @@ class MapsAdministration extends WP_List_Table
                     Map::updateMap($map);
                 } else {
                     // Create game
-                    $game = new Game();
-                    $game->setName($_POST['ladder_press_game_name']);
-                    $game->setShortName($_POST['ladder_press_game_short_name']);
-                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
-                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+                    $map = new Map();
+                    $map->setName($_POST['ladder_press_map_name']);
+                    $map->setGameId($_POST['ladder_press_map_from_game']);
+                    $map->setPick("");
 
-                    Game::createMap($game);
+                    Map::createMap($map);
                 }
 
             }

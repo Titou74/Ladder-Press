@@ -10,6 +10,9 @@ $edit = isset($editMap);
 if($edit)
 {
     $game_select = Game::getGameById($editMap->getGameId());
+    $game_select_id = $game_select->getId();
+}else{
+    $game_select_id = 0;
 }
     
 $games = Game::getAllGames();
@@ -26,15 +29,15 @@ $games = Game::getAllGames();
                 <tr>
                     <th scope="row">Map name</th>
                     <td>
-                        <input type="text" name="ladder_press_map_name" value="<?php echo $edit ?  $editMap->getName() : ""; ?>"/>
+                        <input type="text" name="ladder_press_map_name" value="<?php echo $edit ?  $editMap->getName() : ""; ?>" required="required">
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">From Game</th>
                     <td>
-                        <select name="ladder_press_map_from_game">
+                        <select name="ladder_press_map_from_game" required="required">
                             <?php foreach($games as $game): ?>
-                                <?php if($game->getId() === $game_select->getId()): ?>
+                                <?php if($game->getId() === $game_select_id): ?>
                                     <option value="<?php echo $game->getId();?>" selected="selected"><?php echo $game->getName(); ?></option>
                                 <?php else: ?>
                                     <option value="<?php echo $game->getId();?>"><?php echo $game->getName(); ?></option>
