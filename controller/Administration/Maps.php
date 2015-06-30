@@ -12,9 +12,23 @@ if( ! class_exists( 'WP_List_Table' ) ) {
 
 class MapsAdministration extends WP_List_Table
 {
-    public function listMapsMenu()
+    public function mapsMenu()
     {
-        $mapsAdministration = new MapsAdministration();
+        
+        if(!isset($_GET['action'])) {
+            $mapsAdministration = new MapsAdministration();
+            $mapsAdministration->prepare_items();
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
+        } else if($_GET['action'] == "add") {
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
+        } else if($_GET['action'] == "edit" && isset ($_GET['gameId'])) {
+            $editGame = Game::getGameById($_GET['gameId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
+        } else if($_GET['action'] == "remove" && isset ($_GET['gameId'])) {
+            $deleteGame = Game::getGameById($_GET['gameId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
+        }
+        
         $mapsAdministration->prepare_items();
         
         include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
@@ -62,7 +76,8 @@ class MapsAdministration extends WP_List_Table
             'id'         => 'ID',
             'game'       => 'Game',
             'name'       => 'Name',
-            'pick'       => 'Picture'
+            'pick'       => 'Picture',
+            'action'    => ''
         );
         return $columns;
     }
@@ -171,5 +186,13 @@ class MapsAdministration extends WP_List_Table
         }
 
         return -$result;
+    }
+    
+    function column_action($item) {
+        $actions = array(
+            'edit' => sprintf('<a href="?page=ladder_press_maps&action=edit&mapId='.$item["id"].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_maps&action=remove&mapId='.$item["id"].'">Delete</a>'),
+        );
+        return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }
 }
