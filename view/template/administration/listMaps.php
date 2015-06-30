@@ -19,6 +19,7 @@ if ( ! isset( $mapsAdministration ) ) exit; // Exit if accessed directly
     <?php $mapsAdministration->display(); ?>
 </div>
 
-<?php
 
-echo "fin de page - bouton ETC";
+<form style="display:inline;" action="?page=ladder_press_map&action=add" method="post">
+    <input id="submit" class="button button-primary" type="submit" value="Add a new map" />
+</form>

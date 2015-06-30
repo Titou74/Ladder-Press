@@ -75,4 +75,24 @@ class Map
         return $maps;
     }
     
+    public function getMapById($id)
+    {
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_maps_map WHERE MAP_ID = $id", ARRAY_A);
+        $map = self::instancierMap($result);
+        
+        return $map;
+    }
+    
+    public function updateMap($map) {
+        global $wpdb;
+        var_dump($map);
+        $wpdb->update( "{$wpdb->prefix}ladp_t_maps_map", array( 
+		'map_name' => $map->getName(),
+		'map_gam_id' => $map->getGameId(),
+                'map_pick' => $map->getPick()
+            ), 
+        array( 'map_id' => $map->getId() ) );
+    }
+    
 }

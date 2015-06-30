@@ -7,37 +7,46 @@
  */
 
 $edit = isset($editMap);
+if($edit)
+{
+    $game_select = Game::getGameById($editMap->getGameId());
+}
+    
+$games = Game::getAllGames();
+
+
 
 ?>
 <div class="wrap">
     <h2><?php echo $edit ? "Edit " : "Add "; echo get_admin_page_title(); ?></h2>
-    <form method="post" action="admin.php?page=ladder_press_games">
+    <form method="post" action="admin.php?page=ladder_press_maps">
         <input type="hidden" name="ladder_press_map_id" value=" <?php echo $edit ? $editMap->getId() : "0"; ?> ">
         <table class="form-table">
             <tbody>
                 <tr>
-                    <th scope="row">Game name</th>
+                    <th scope="row">Map name</th>
                     <td>
-                        <input type="text" name="ladder_press_game_name" value="<?php echo $edit ?  $editGame->getName() : ""; ?>"/>
+                        <input type="text" name="ladder_press_map_name" value="<?php echo $edit ?  $editMap->getName() : ""; ?>"/>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Game short name</th>
+                    <th scope="row">From Game</th>
                     <td>
-                        <input type="text" name="ladder_press_game_short_name" value="<?php echo $edit ?  $editGame->getShortname() : ""; ?>"/>
-                        <p id="ladder_press_game_short_name-description" class="description">Use by some display elements</p>
+                        <select name="ladder_press_map_from_game">
+                            <?php foreach($games as $game): ?>
+                                <?php if($game->getId() === $game_select->getId()): ?>
+                                    <option value="<?php echo $game->getId();?>" selected="selected"><?php echo $game->getName(); ?></option>
+                                <?php else: ?>
+                                    <option value="<?php echo $game->getId();?>"><?php echo $game->getName(); ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </select>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">GUID require</th>
+                    <th scope="row">Picture</th>
                     <td>
-                        <input type="checkbox" name="ladder_press_game_guid_require" value="" <?php echo $edit ? ( $editGame->getActiveGuid() ? "checked" : "" ) : ""; ?>/>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">GUID regex</th>
-                    <td>
-                        <input type="text" name="ladder_press_game_guid_regex" value="<?php echo $edit ?  $editGame->getGuidRegex() : ""; ?>"/>
+                        <p>A faire</p>
                     </td>
                 </tr>
             </tbody>

@@ -14,24 +14,45 @@ class MapsAdministration extends WP_List_Table
 {
     public function mapsMenu()
     {
-        
+        if(! is_admin()) exit;
+        if (isset($_POST['submit'])) {
+            if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
+                // Remove game
+                Map::deleteMap($_POST['ladder_press_remove_game_id']);
+            } else if (isset($_POST['ladder_press_map_id'])) {
+                if($_POST['ladder_press_map_id'] != 0) {
+                    // Update game
+                    $map = Map::getMapById($_POST['ladder_press_map_id']);
+                    $map->setName($_POST['ladder_press_map_name']);
+                    $map->setGameId($_POST['ladder_press_map_from_game']);
+                    $map->setPick("");
+                    Map::updateMap($map);
+                } else {
+                    // Create game
+                    $game = new Game();
+                    $game->setName($_POST['ladder_press_game_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
+                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+
+                    Game::createMap($game);
+                }
+
+            }
+        }
         if(!isset($_GET['action'])) {
             $mapsAdministration = new MapsAdministration();
             $mapsAdministration->prepare_items();
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
         } else if($_GET['action'] == "add") {
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
-        } else if($_GET['action'] == "edit" && isset ($_GET['gameId'])) {
-            $editGame = Game::getGameById($_GET['gameId']);
+        } else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
+            $editMap = Map::getMapById($_GET['mapId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
-        } else if($_GET['action'] == "remove" && isset ($_GET['gameId'])) {
-            $deleteGame = Game::getGameById($_GET['gameId']);
+        } else if($_GET['action'] == "remove" && isset ($_GET['mapId'])) {
+            $deleteGame = Game::getMapById($_GET['mapId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
         }
-        
-        $mapsAdministration->prepare_items();
-        
-        include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
     }
     
     /**
