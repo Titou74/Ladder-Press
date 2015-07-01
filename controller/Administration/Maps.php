@@ -16,9 +16,10 @@ class MapsAdministration extends WP_List_Table
     {
         if(! is_admin()) exit;
         if (isset($_POST['submit'])) {
+            var_dump($_POST);
             if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
                 // Remove game
-                Map::deleteMap($_POST['ladder_press_remove_game_id']);
+                Map::deleteMap($_POST['ladder_press_remove_map_id']);
             } else if (isset($_POST['ladder_press_map_id'])) {
                 if($_POST['ladder_press_map_id'] != 0) {
                     // Update game
@@ -49,7 +50,7 @@ class MapsAdministration extends WP_List_Table
             $editMap = Map::getMapById($_GET['mapId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
         } else if($_GET['action'] == "remove" && isset ($_GET['mapId'])) {
-            $deleteGame = Game::getMapById($_GET['mapId']);
+            $deleteMap = Map::getMapById($_GET['mapId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
         }
     }

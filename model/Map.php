@@ -104,4 +104,9 @@ class Map
        );
     }
     
+    public function deleteMap($mapId) {
+        global $wpdb;
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'map_id' => $mapId ) );
+    }
+    
 }
