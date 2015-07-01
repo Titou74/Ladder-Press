@@ -16,7 +16,6 @@ class MapsAdministration extends WP_List_Table
     {
         if(! is_admin()) exit;
         if (isset($_POST['submit'])) {
-            var_dump($_POST);
             if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
                 // Remove game
                 Map::deleteMap($_POST['ladder_press_remove_map_id']);
