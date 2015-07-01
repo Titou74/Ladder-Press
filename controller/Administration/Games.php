@@ -15,6 +15,36 @@ class GamesAdministration extends WP_List_Table
     public function gamesMenu()
     {
         
+        if(! is_admin()) exit;
+        
+        if (isset($_POST['submit'])) {
+           if(isset($_POST['ladder_press_remove_game_id']) && $_POST['ladder_press_remove_game_id'] != 0) {
+                // Remove game
+                Game::deleteGame($_POST['ladder_press_remove_game_id']);
+            } else if (isset($_POST['ladder_press_game_id'])) {
+                if($_POST['ladder_press_game_id'] != 0) {
+                    // Update game
+                    $game = Game::getGameById($_POST['ladder_press_game_id']);
+                    $game->setName($_POST['ladder_press_game_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
+                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+                    
+                    Game::updateGame($game);
+                } else {
+                    // Create game
+                    $game = new Game();
+                    $game->setName($_POST['ladder_press_game_name']);
+                    $game->setShortName($_POST['ladder_press_game_short_name']);
+                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
+                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
+                    
+                    Game::createGame($game);
+                }
+                
+            }
+        }
+        
         if(!isset($_GET['action'])) {
             $gamesAdministration = new GamesAdministration();
             $gamesAdministration->prepare_items();
