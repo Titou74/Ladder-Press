@@ -8,8 +8,15 @@
 
 if ( ! isset( $mapsAdministration ) ) exit; // Exit if accessed directly
 
+$games = Game::getAllGames();
+
 ?>
 <div class="wrap">
+    <select>
+        <?php foreach($games as $game): ?>
+            <option value="<?php echo $game->getId(); ?>"><?php echo $game->getName(); ?></option>
+        <?php endforeach;?>
+    </select>
     <form method="post">
         <input type="hidden" name="page" value="example_list_table" />
         <?php $mapsAdministration->search_box('Search', 'search_id'); ?>
