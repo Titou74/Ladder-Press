@@ -42,8 +42,8 @@ class MapsAdministration extends WP_List_Table
         if(!isset($_GET['action'])) {
             $mapsAdministration = new MapsAdministration();
             $mapsAdministration->prepare_items();
-            $mapsAdministration->addJavascript('listMap','listMap.js');
-            $mapsAdministration->addStyleSheet('listMap','listMap.css');
+            $mapsAdministration->addJavascript('listMap','listMaps.js');
+            $mapsAdministration->addStyleSheet('listMap','listMaps.css');
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
         } else if($_GET['action'] == "add") {
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
@@ -54,6 +54,12 @@ class MapsAdministration extends WP_List_Table
             $deleteMap = Map::getMapById($_GET['mapId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
         }
+    }
+    
+    public function single_row( $item ) {
+            echo '<tr class="from_game_'.$item['gameId'].'">';
+            $this->single_row_columns( $item );
+            echo '</tr>';
     }
     
     /**
@@ -142,7 +148,8 @@ class MapsAdministration extends WP_List_Table
                 'id'        => $map->getId(),
                 'game'      => $game->getName(),
                 'name'      => $map->getName(),
-                'picture'   => $map->getPick()
+                'picture'   => $map->getPick(),
+                'gameId'   => $map->getGameId(),
             );
             $data[] = $dataMap;
         }

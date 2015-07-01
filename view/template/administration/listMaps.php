@@ -9,20 +9,21 @@
 if ( ! isset( $mapsAdministration ) ) exit; // Exit if accessed directly
 
 $games = Game::getAllGames();
-
 ?>
 <div class="wrap">
-    <select>
-        <?php foreach($games as $game): ?>
-            <option value="<?php echo $game->getId(); ?>"><?php echo $game->getName(); ?></option>
-        <?php endforeach;?>
-    </select>
     <form method="post">
         <input type="hidden" name="page" value="example_list_table" />
         <?php $mapsAdministration->search_box('Search', 'search_id'); ?>
     </form>
     <div id="icon-users" class="icon32"></div>
     <h2><?php echo get_admin_page_title(); ?></h2>
+    <label for="from_game"> Choose a game to filter the list map </label>
+    <select name="from_game" id="from_game" onchange="hideRowOtherGames()">
+        <option selected="selected">Choose a game</option>
+        <?php foreach($games as $game): ?>
+            <option value="<?php echo $game->getId(); ?>"><?php echo $game->getName(); ?> </option>
+        <?php endforeach;?>
+    </select>
     <?php $mapsAdministration->display(); ?>
 </div>
 

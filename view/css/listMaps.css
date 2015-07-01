@@ -7,3 +7,12 @@ and open the template in the editor.
     Created on : 1 juil. 2015, 17:38:48
     Author     : Poussins
 */
+.ladder-press_page_ladder_press_maps .hide_row
+{
+    display:none;
+}
+
+.ladder-press_page_ladder_press_maps .show_row
+{
+    display:table-row;
+}
