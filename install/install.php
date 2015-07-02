@@ -72,7 +72,7 @@ class Install {
                     (
                        LUP_ID               int not null,
                        ID                   bigint(20) unsigned not null,
-                       ULU_JOIN_DATE        datetime,
+                       ULU_JOIN_DATE        datetime not null,
                        ULU_LEAVE_DATE       datetime,
                        primary key (LUP_ID, ID)
                     );
@@ -87,6 +87,7 @@ class Install {
                        UTE_TEAM_ACCEPT      bool not null,
                        UTE_USER_ACCEPT      bool not null,
                        UTE_USER_RANK        char(10) not null,
+                       UTE_DATE_ACCEPT      datetime,
                        primary key (UTE_TEA_ID, UTE_USER_ID)
                     );
         ");
@@ -141,11 +142,11 @@ class Install {
                     (
                        MAT_ID               int not null auto_increment,
                        LMA_LAD_ID           int not null,
-                       MAT_CHALLENGER_ID    int,
-                       MAT_CHALLENGED_ID    int,
+                       MAT_CHALLENGER_ID    int not null,
+                       MAT_CHALLENGED_ID    int not null,
                        MAT_DATE             datetime,
                        MAT_SERVER           char(21),
-                       MAT_STATUS           char(50),
+                       MAT_STATUS           char(50) not null,
                        MAT_CHALLENGER_SCORE int,
                        MAT_CHALLENGED_SCORE int,
                        MAT_CHALLENGER_REPORT text,
@@ -168,7 +169,7 @@ class Install {
                        LUP_TEA_ID           int not null,
                        LUP_GAM_ID           int not null,
                        LUP_NAME             char(255) not null,
-                       LUP_SHORT_NAME       char(5),
+                       LUP_SHORT_NAME       char(5) not null,
                        LUP_DATE_CREATION    datetime not null,
                        LUP_DATE_SUPPRESSION datetime,
                        LUP_ACTIVE           bool not null,
@@ -180,7 +181,7 @@ class Install {
                     (
                        MAP_ID               int not null auto_increment,
                        MAP_GAM_ID           int not null,
-                       MAP_NAME             char(100),
+                       MAP_NAME             char(100) not null,
                        MAP_PICK             char(100),
                        primary key (MAP_ID)
                     );
@@ -238,10 +239,10 @@ class Install {
                     (
                        TEA_ID               int not null auto_increment,
                        USER_ID_CREATOR      bigint(20) unsigned not null,
-                       TEA_NAME             char(255),
-                       TEA_TAG              char(5),
-                       TEA_DATE_CREATION    datetime,
-                       TEA_ACTIVE           bool,
+                       TEA_NAME             char(255) not null,
+                       TEA_TAG              char(5) not null,
+                       TEA_DATE_CREATION    datetime not null,
+                       TEA_ACTIVE           bool not null,
                        TEA_SITE_URL         char(255),
                        TEA_LOGO_NAME        char(255),
                        primary key (TEA_ID)
