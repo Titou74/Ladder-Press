@@ -14,7 +14,7 @@ function hideRowOtherGames()
     var id_game = jQuery('#from_game').find(":selected").val();
     jQuery('.ladder-press_page_ladder_press_maps tr[class^="from_game_"]').each(function() {
         console.log(jQuery(this).hasClass('from_game_'+id_game));
-        if(!jQuery(this).hasClass('from_game_'+id_game))
+        if(!jQuery(this).hasClass('from_game_'+id_game) &&  jQuery('#from_game option:selected').val() != '0')
         {
             jQuery(this).removeClass('hide_row');
             jQuery(this).removeClass('show_row');
