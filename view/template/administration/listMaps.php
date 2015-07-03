@@ -19,7 +19,7 @@ $games = Game::getAllGames();
     <h2><?php echo get_admin_page_title(); ?></h2>
     <label for="from_game"> Choose a game to filter the list map </label>
     <select name="from_game" id="from_game" onchange="hideRowOtherGames()">
-        <option selected="selected">Choose a game</option>
+        <option selected="selected">All games</option>
         <?php foreach($games as $game): ?>
             <option value="<?php echo $game->getId(); ?>"><?php echo $game->getName(); ?> </option>
         <?php endforeach;?>

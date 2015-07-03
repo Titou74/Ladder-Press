@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 jQuery(document).ready(function($){
-    jQuery('#from_game').click(function () {
-      jQuery('option[selected="selected"]', this).remove();
-    });
+//    jQuery('#from_game').click(function () {
+//      jQuery('option[selected="selected"]', this).remove();
+//    });
 });
 
 function hideRowOtherGames()
