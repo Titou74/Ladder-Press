@@ -29,10 +29,13 @@ class MapsAdministration extends WP_List_Table
                     Map::updateMap($map);
                 } else {
                     // Create game
+                    $uploadedFile = $_FILES['my_image_upload'];
+                    $uploadOverrides = array( 'test_form' => false );
+                    $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
                     $map = new Map();
                     $map->setName($_POST['ladder_press_map_name']);
                     $map->setGameId($_POST['ladder_press_map_from_game']);
-                    $map->setPick("");
+                    $map->setPick($movefile['url']);
 
                     Map::createMap($map);
                 }
@@ -46,6 +49,9 @@ class MapsAdministration extends WP_List_Table
             $mapsAdministration->addStyleSheet('listMap','listMaps.css');
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
         } else if($_GET['action'] == "add") {
+            require_once( ABSPATH . 'wp-admin/includes/image.php' );
+            require_once( ABSPATH . 'wp-admin/includes/file.php' );
+            require_once( ABSPATH . 'wp-admin/includes/media.php' );
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
         } else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
             $editMap = Map::getMapById($_GET['mapId']);
@@ -241,4 +247,5 @@ class MapsAdministration extends WP_List_Table
     {
         wp_enqueue_style( $name, plugins_url( '/../../view/css/'.$fileName, __FILE__));
     }
+    
 }

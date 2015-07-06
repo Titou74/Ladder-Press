@@ -22,7 +22,7 @@ $games = Game::getAllGames();
 ?>
 <div class="wrap">
     <h2><?php echo $edit ? "Edit " : "Add "; echo get_admin_page_title(); ?></h2>
-    <form method="post" action="admin.php?page=ladder_press_maps">
+    <form method="post" action="admin.php?page=ladder_press_maps" enctype="multipart/form-data">
         <input type="hidden" name="ladder_press_map_id" value=" <?php echo $edit ? $editMap->getId() : "0"; ?> ">
         <table class="form-table">
             <tbody>
@@ -47,9 +47,9 @@ $games = Game::getAllGames();
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Picture</th>
+                    <th scope="row">Upload Picture</th>
                     <td>
-                        <p>A faire</p>
+                        <input type="file" name="pick" id="pick"  multiple="false" />
                     </td>
                 </tr>
             </tbody>
