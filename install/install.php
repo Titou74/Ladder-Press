@@ -182,7 +182,7 @@ class Install {
                        MAP_ID               int not null auto_increment,
                        MAP_GAM_ID           int not null,
                        MAP_NAME             char(100) not null,
-                       MAP_PICK             char(100),
+                       MAP_PICK             char(255),
                        primary key (MAP_ID)
                     );
         ");

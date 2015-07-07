@@ -29,14 +29,13 @@ class MapsAdministration extends WP_List_Table
                     Map::updateMap($map);
                 } else {
                     // Create game
-                    $uploadedFile = $_FILES['my_image_upload'];
+                    $uploadedFile = $_FILES['pick'];
                     $uploadOverrides = array( 'test_form' => false );
-                    $movefile = wp_handle_upload( $uploadedfile, $upload_overrides );
+                    $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
                     $map = new Map();
                     $map->setName($_POST['ladder_press_map_name']);
                     $map->setGameId($_POST['ladder_press_map_from_game']);
                     $map->setPick($movefile['url']);
-
                     Map::createMap($map);
                 }
 
@@ -154,10 +153,10 @@ class MapsAdministration extends WP_List_Table
                 'id'        => $map->getId(),
                 'game'      => $game->getName(),
                 'name'      => $map->getName(),
-                'picture'   => $map->getPick(),
+                'pick'   => $map->getPick() != "" ? '<img src="'.$map->getPick().'" style="width:150px;"/>' : "",
                 'gameId'   => $map->getGameId(),
             );
-            $data[] = $dataMap;
+            $data[] = $dataMap;           
         }
         return $data;
     }
