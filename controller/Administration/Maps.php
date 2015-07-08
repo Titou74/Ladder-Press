@@ -22,20 +22,35 @@ class MapsAdministration extends WP_List_Table
             } else if (isset($_POST['ladder_press_map_id'])) {
                 if($_POST['ladder_press_map_id'] != 0) {
                     // Update game
+                    if(isset($_FILES['pick']) && $_FILES['pick'] != '')
+                    {
+                        $uploadedFile = $_FILES['pick'];
+                        $uploadOverrides = array( 'test_form' => false );
+                        $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
+                        $url_pick = $movefile['url'];
+                    }else{
+                        $url_pick = "";
+                    }     
                     $map = Map::getMapById($_POST['ladder_press_map_id']);
                     $map->setName($_POST['ladder_press_map_name']);
                     $map->setGameId($_POST['ladder_press_map_from_game']);
-                    $map->setPick("");
+                    $map->setPick($url_pick);
                     Map::updateMap($map);
                 } else {
                     // Create game
-                    $uploadedFile = $_FILES['pick'];
-                    $uploadOverrides = array( 'test_form' => false );
-                    $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
+                    if(isset($_FILES['pick']) && $_FILES['pick'] != '')
+                    {
+                        $uploadedFile = $_FILES['pick'];
+                        $uploadOverrides = array( 'test_form' => false );
+                        $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
+                        $url_pick = $movefile['url'];
+                    }else{
+                        $url_pick = "";
+                    }
                     $map = new Map();
                     $map->setName($_POST['ladder_press_map_name']);
                     $map->setGameId($_POST['ladder_press_map_from_game']);
-                    $map->setPick($movefile['url']);
+                    $map->setPick($url_pick);
                     Map::createMap($map);
                 }
 
@@ -153,7 +168,7 @@ class MapsAdministration extends WP_List_Table
                 'id'        => $map->getId(),
                 'game'      => $game->getName(),
                 'name'      => $map->getName(),
-                'pick'   => $map->getPick() != "" ? '<img src="'.$map->getPick().'" style="width:150px;"/>' : "",
+                'pick'   => $map->getPick() != "" ? '<img src="'.$map->getPick().'" style="width:150px;max-height:150px;"/>' : "",
                 'gameId'   => $map->getGameId(),
             );
             $data[] = $dataMap;           

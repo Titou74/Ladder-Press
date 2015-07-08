@@ -49,6 +49,13 @@ $games = Game::getAllGames();
                 <tr>
                     <th scope="row">Upload Picture</th>
                     <td>
+                        <?php if($edit): ?>
+                            <?php if($editMap->getPick() != '') : ?>
+                                <img alt="image de la map" src="<?php echo $editMap->getPick(); ?>" style="width: 250px; display: block; max-height: 250px;"/>
+                            <?php else : ?>
+                                <p><i> No picture uploaded </i></p>
+                            <?php endif; ?>
+                        <?php endif; ?>
                         <input type="file" name="pick" id="pick"  multiple="false" />
                     </td>
                 </tr>
