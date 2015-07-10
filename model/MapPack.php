@@ -31,6 +31,19 @@ class MapPack
     public function setName($name) {
         $this->name = $name;
     }
-
+    
+    public function getAllMapPacks() {
+        // Execution requête
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_map_packs_mpa", ARRAY_A);
+        
+        // Initialisation tableau retour
+        $mPacks = array();
+        // Instanciation des objects "Game"
+        foreach ($result as $value){
+            $mPacks[] = self::instancierMap($value);
+        }
+        return $mPacks;
+    }
 
 }

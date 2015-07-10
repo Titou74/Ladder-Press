@@ -22,6 +22,7 @@ class LadderPressAdministration {
         // Add Ladder-Press sub menu
         add_submenu_page('ladder_press', 'Games', 'Games', 'manage_options', 'ladder_press_games', array('GamesAdministration', 'gamesMenu'));
         add_submenu_page('ladder_press', 'Maps', 'Maps', 'manage_options', 'ladder_press_maps', array('MapsAdministration', 'mapsMenu'));
+        add_submenu_page('ladder_press', 'Map packs', 'Map packs', 'manage_options', 'ladder_press_m_packs', array('MPacksAdministration', 'mPacksMenu'));
         
     }
     

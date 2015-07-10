@@ -59,8 +59,10 @@ class MapsAdministration extends WP_List_Table
         if(!isset($_GET['action'])) {
             $mapsAdministration = new MapsAdministration();
             $mapsAdministration->prepare_items();
-            $mapsAdministration->addJavascript('listMap','listMaps.js');
-            $mapsAdministration->addStyleSheet('listMap','listMaps.css');
+            wp_enqueue_script('jquery');
+            wp_enqueue_script( 'listMap', plugins_url( '/../../view/js/'.'listMaps.js', __FILE__) , array('jquery'), '1.0.0', true );
+            wp_enqueue_style( 'listMap', plugins_url( '/../../view/css/'.'listMaps.css', __FILE__));
+            
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
         } else if($_GET['action'] == "add") {
             require_once( ABSPATH . 'wp-admin/includes/image.php' );
@@ -243,23 +245,6 @@ class MapsAdministration extends WP_List_Table
             'delete' => sprintf('<a href="?page=ladder_press_maps&action=remove&mapId='.$item["id"].'">Delete</a>'),
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
-    }
-    
-    /**
-     * Ajout de javascript dans une vue
-     * 
-     * @param String $name nom de votre js
-     * @param String $fileName nom_du_fichier.js
-     */
-    function addJavascript($name,$fileName)
-    {
-        wp_enqueue_script('jquery');
-        wp_enqueue_script( $name, plugins_url( '/../../view/js/'.$fileName, __FILE__) , array('jquery'), '1.0.0', true );
-    }
-    
-    function addStyleSheet($name,$fileName)
-    {
-        wp_enqueue_style( $name, plugins_url( '/../../view/css/'.$fileName, __FILE__));
     }
     
 }
