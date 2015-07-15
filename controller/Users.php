@@ -14,13 +14,13 @@
 class Users {
     public function userMenu() {
         if(!isset($_GET['page'])) {
-            
-        } else if($_GET['page'] == "gameData_list") {
-            
-        } else if($_GET['page'] == "gameData_add") {
-            
-        } else if($_GET['page'] == "gameData_edit") {
-            
+            echo "COUCOU";
+        } else if($_GET['page'] == "game_list") {
+            echo "COUCOU LIST";
+        } else if($_GET['page'] == "game_add") {
+            echo "COUCOU ADD";
+        } else if($_GET['page'] == "game_edit") {
+            echo "COUCOU EDIT";
         }
     }
 }

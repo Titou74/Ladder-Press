@@ -1,0 +1,3 @@
+<?php
+
+$edit = isset($userGameData);
