@@ -15,7 +15,6 @@ class MPacksAdministration extends WP_List_Table
     public function mPacksMenu()
     {
         if(! is_admin()) exit;
-        var_dump($_POST);
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_m_pack_id']) && $_POST['ladder_press_remove_m_pack_id'] != 0) {
                 // Remove game
@@ -30,11 +29,18 @@ class MPacksAdministration extends WP_List_Table
 //                    Map::updateMap($map);
                 } else {
                     // Create game
-//                    $map = new Map();
-//                    $map->setName($_POST['ladder_press_map_name']);
-//                    $map->setGameId($_POST['ladder_press_map_from_game']);
-//                    $map->setPick($url_pick);
-//                    Map::createMap($map);
+                    // @TODO titou : je ne sais pas comment on gère la récuperation du dernier objet créer dans la bdd vu qu'on ne renvoie rien. Du coup j'ai renvoyé l'id et je l'ai récuperer vaut-il mieux l'instancier lors du "create" ?
+                    $mPack = new MapPack();
+                    $mPack->setName($_POST['ladder_press_m_packs_name']);
+                    $idMapPackCreated = MapPack::createMapPack($mPack);
+                    $leMapPack = MapPack::getMapPackById($idMapPackCreated);
+                    $maps = $_POST['ladder_press_m_packs_maps'];
+                    foreach($maps as $map)
+                    {
+                        $uneMap = Map::getMapById($map);
+                        $lesMaps[] = $uneMap;
+                    }
+                    MapPack::addMapsInMapPack($lesMaps,$leMapPack);
                 }
 
             }
@@ -46,7 +52,7 @@ class MPacksAdministration extends WP_List_Table
         } else if($_GET['action'] == "add") {
             wp_enqueue_script('jquery');
             wp_enqueue_script( 'editMapPacks', plugins_url( '/../../view/js/'.'editMapPacks.js', __FILE__) , array('jquery'), '1.0.0', true );
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMapPacks.php';
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMapPack.php';
         } else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
             $editMap = Map::getMapById($_GET['mapId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
@@ -56,11 +62,6 @@ class MPacksAdministration extends WP_List_Table
         }
     }
     
-    public function single_row( $item ) {
-            echo '<tr class="from_game_'.$item['gameId'].'">';
-            $this->single_row_columns( $item );
-            echo '</tr>';
-    }
     
     /**
      * Prepare the items for the table to process
@@ -77,7 +78,6 @@ class MPacksAdministration extends WP_List_Table
         
         $data = self::table_data($allMPacks);
         usort( $data, array( &$this, 'sort_data' ) );
-        
         $perPage = 20;
         $currentPage = $this->get_pagenum();
         $totalItems = count($data);
@@ -88,7 +88,6 @@ class MPacksAdministration extends WP_List_Table
         ) );
 
         $data = array_slice($data,(($currentPage-1)*$perPage),$perPage);
-
         $this->_column_headers = array($columns, $hidden, $sortable);
         $this->items = $data;
     }
@@ -102,7 +101,6 @@ class MPacksAdministration extends WP_List_Table
     {
         $columns = array(
             'id'         => 'ID',
-            'game'       => 'Game',
             'name'       => 'Name',
             'maps'       => 'Maps',
             'action'    => ''
@@ -129,7 +127,6 @@ class MPacksAdministration extends WP_List_Table
     {
         return array(
             'id' => array('id', false),
-            'game' => array('game', false),
             'name' => array('name', false)
         );
     }
@@ -143,10 +140,16 @@ class MPacksAdministration extends WP_List_Table
     {
         $data = array();
         foreach ($allMPacks as $mPack) {
+            $listmap='';
+            $maps = Map::getMapsByMapPack($mPack->getId());
+            foreach ($maps as $map)
+            {
+                $listmap .= $map->getName().'<br/>';
+            }
             $dataMap = array(
                 'id'        => $mPack->getId(),
                 'name'      => $mPack->getName(),
-                'maps'      => $mPack->getName()
+                'maps'      => $listmap
             );
             $data[] = $dataMap;           
         }
@@ -171,9 +174,8 @@ class MPacksAdministration extends WP_List_Table
     {
         switch( $column_name ) {
             case 'id':
-            case 'game':
             case 'name':
-            case 'pick':
+            case 'maps':
                 return $item[ $column_name ];
 
             default:
@@ -220,23 +222,6 @@ class MPacksAdministration extends WP_List_Table
             'delete' => sprintf('<a href="?page=ladder_press_maps&action=remove&mapId='.$item["id"].'">Delete</a>'),
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
-    }
-    
-    /**
-     * Ajout de javascript dans une vue
-     * 
-     * @param String $name nom de votre js
-     * @param String $fileName nom_du_fichier.js
-     */
-    function addJavascript($name,$fileName)
-    {
-        wp_enqueue_script('jquery');
-        wp_enqueue_script( $name, plugins_url( '/../../view/js/'.$fileName, __FILE__) , array('jquery'), '1.0.0', true );
-    }
-    
-    function addStyleSheet($name,$fileName)
-    {
-        wp_enqueue_style( $name, plugins_url( '/../../view/css/'.$fileName, __FILE__));
     }
     
 }

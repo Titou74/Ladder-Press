@@ -107,4 +107,14 @@ class Map
         $wpdb->delete( "{$wpdb->prefix}ladp_t_maps_map", array( 'map_id' => $mapId ) );
     }
     
+    
+    function getMapsByMapPack($id)
+    {
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_tj_mpa_map_mma WHERE MPA_ID = $id", ARRAY_A);
+        foreach ($result as $value){
+            $maps[] = self::getMapById($value['MAP_ID']);
+        }
+        return $maps;
+    }
 }

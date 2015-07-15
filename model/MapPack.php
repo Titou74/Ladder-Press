@@ -32,6 +32,15 @@ class MapPack
         $this->name = $name;
     }
     
+    private function instancierMapPack($mPackArray = null) {
+        $mPack = new MapPack();
+        if($mPack != null) {
+            $mPack->setId($mPackArray['MPA_ID']);
+            $mPack->setName($mPackArray['MPA_NAME']);
+        }
+        return $mPack;
+    }
+    
     public function getAllMapPacks() {
         // Execution requête
         global $wpdb;
@@ -41,9 +50,49 @@ class MapPack
         $mPacks = array();
         // Instanciation des objects "Game"
         foreach ($result as $value){
-            $mPacks[] = self::instancierMap($value);
+            $mPacks[] = self::instancierMapPack($value);
         }
         return $mPacks;
+    }
+    
+    public function createMapPack($mPack) {
+        global $wpdb;
+        $wpdb->insert( "{$wpdb->prefix}ladp_t_map_packs_mpa", array( 
+		'mpa_name' => $mPack->getName()
+            )      
+       );
+       return $wpdb->insert_id;
+    }
+    
+    public function getMapPackById($id)
+    {
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_map_packs_mpa WHERE MPA_ID = $id", ARRAY_A);
+        $mPack = self::instancierMapPack($result);
+        
+        return $mPack;
+    }
+    
+    /**
+     * Ajoute une ou plusieurs maps à un map pack
+     * 
+     * @global type $wpdb db handler
+     * @param Map $maps la ou les maps à ajouter au map pack
+     * @param MapPack $mPack map pack dans lequel on doit ajouter les maps
+     */
+    public function addMapsInMapPack($maps,$mPack)
+    {
+        global $wpdb;
+        
+        var_dump($mPack);
+        foreach ($maps as $map)
+        {
+            $wpdb->insert("{$wpdb->prefix}ladp_tj_mpa_map_mma", array(
+                'map_id' => $map->getId(),
+                'mpa_id' => $mPack->getId()
+                )
+            );
+        }
     }
 
 }
