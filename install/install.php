@@ -64,6 +64,7 @@ class Install {
                        UGA_GAM_ID           int not null,
                        UGA_USER_ID          bigint(20) unsigned not null,
                        UGA_GUID             longtext,
+                       UGA_NICKNAME         longtext,
                        primary key (UGA_GAM_ID, UGA_USER_ID)
                     );
         ");
