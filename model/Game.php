@@ -88,8 +88,9 @@ class Game
     
     public function getGameById($id)
     {
+        $idFormat = stripslashes_deep($id);
         global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_games_gam WHERE GAM_ID = $id", ARRAY_A);
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_games_gam WHERE GAM_ID = $idFormat", ARRAY_A);
         $game = self::instancierGame($result);
         
         return $game;
@@ -134,6 +135,6 @@ class Game
     
     public function deleteGame($gameId) {
         global $wpdb;
-        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'gam_id' => $gameId ) );
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'gam_id' => stripslashes_deep($gameId) ) );
     }
 }
