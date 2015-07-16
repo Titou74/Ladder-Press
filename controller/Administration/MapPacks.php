@@ -218,8 +218,8 @@ class MPacksAdministration extends WP_List_Table
     
     function column_action($item) {
         $actions = array(
-            'edit' => sprintf('<a href="?page=ladder_press_maps&action=edit&mapId='.$item["id"].'">Edit</a>'),
-            'delete' => sprintf('<a href="?page=ladder_press_maps&action=remove&mapId='.$item["id"].'">Delete</a>'),
+            'edit' => sprintf('<a href="?page=ladder_press_m_maps&action=edit&mPackId='.$item["id"].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_m_maps&action=remove&mPackId='.$item["id"].'">Delete</a>'),
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }
