@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
             var idMap = jQuery('#listMaps option:selected').val();
             var nomMap = jQuery('#listMaps option:selected').text();
             jQuery('#mapsSelected').append('<p class="selectedMap map'+idMap+'"></p>');
-            jQuery('#mapsSelected .map'+idMap).append('<input type="hidden" name="ladder_press_m_packs_maps[]" value="'+idMap+'">');
+            jQuery('#mapsSelected .map'+idMap).append('<input type="hidden" name="ladder_press_m_pack_maps[]" value="'+idMap+'">');
             jQuery('#mapsSelected .map'+idMap).append('<span>'+nomMap+'</span><a href="#" onClick="supprimerMap(jQuery(this))">X</a>');
             jQuery('#listMaps option:selected').remove();
        }
