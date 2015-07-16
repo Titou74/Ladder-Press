@@ -15,9 +15,12 @@ class MPacksAdministration extends WP_List_Table
     public function mPacksMenu()
     {
         if(! is_admin()) exit;
+        include_once plugin_dir_path( __FILE__ ).'../../model/Map.php';
+        include_once plugin_dir_path( __FILE__ ).'../../model/MapPack.php';
+        
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_m_pack_id']) && $_POST['ladder_press_remove_m_pack_id'] != 0) {
-                // Remove game
+                // Remove map
                 Map::deleteMap($_POST['ladder_press_remove_m_pack_id']);
             } else if (isset($_POST['ladder_press_m_pack_id'])) {
                 if($_POST['ladder_press_m_pack_id'] != 0) {

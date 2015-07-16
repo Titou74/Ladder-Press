@@ -15,9 +15,11 @@ class MapsAdministration extends WP_List_Table
     public function mapsMenu()
     {
         if(! is_admin()) exit;
+        include_once plugin_dir_path( __FILE__ ).'../../model/Map.php';
+        include_once plugin_dir_path( __FILE__ ).'../../model/Game.php';
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
-                // Remove game
+                // Remove map
                 Map::deleteMap($_POST['ladder_press_remove_map_id']);
             } else if (isset($_POST['ladder_press_map_id'])) {
                 if($_POST['ladder_press_map_id'] != 0) {
