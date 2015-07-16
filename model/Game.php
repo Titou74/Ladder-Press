@@ -88,8 +88,9 @@ class Game
     
     public function getGameById($id)
     {
+        $idFormat = stripslashes_deep($id);
         global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_games_gam WHERE GAM_ID = $id", ARRAY_A);
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_games_gam WHERE GAM_ID = $idFormat", ARRAY_A);
         $game = self::instancierGame($result);
         
         return $game;
@@ -97,28 +98,43 @@ class Game
     
     public function createGame($game) {
         global $wpdb;
-        $wpdb->insert( "{$wpdb->prefix}ladp_t_games_gam", array( 
-		'gam_name' => $game->getName(),
-		'gam_short_name' => $game->getShortName(),
-                'gam_active_guid' => $game->getActiveGuid(),
-                'gam_guid_regex' => $game->getGuidRegex()
+        $wpdb->insert( "{$wpdb->prefix}ladp_t_games_gam", 
+            array( 
+		'gam_name' => stripslashes_deep($game->getName()),
+		'gam_short_name' => stripslashes_deep($game->getShortName()),
+                'gam_active_guid' => stripslashes_deep($game->getActiveGuid()),
+                'gam_guid_regex' => stripslashes_deep($game->getGuidRegex())
+            ),
+            array( 
+                    '%s',
+                    '%s',
+                    '%d',
+                    '%s'
             )
         );
     }
     
     public function updateGame($game) {
         global $wpdb;
-        $wpdb->update( "{$wpdb->prefix}ladp_t_games_gam", array( 
-		'gam_name' => $game->getName(),
-		'gam_short_name' => $game->getShortName(),
-                'gam_active_guid' => $game->getActiveGuid(),
-                'gam_guid_regex' => $game->getGuidRegex()
+        $wpdb->update( "{$wpdb->prefix}ladp_t_games_gam", 
+            array( 
+		'gam_name' => stripslashes_deep($game->getName()),
+		'gam_short_name' => stripslashes_deep($game->getShortName()),
+                'gam_active_guid' => stripslashes_deep($game->getActiveGuid()),
+                'gam_guid_regex' => stripslashes_deep($game->getGuidRegex())
             ), 
-        array( 'gam_id' => $game->getId() ) );
+            array( 'gam_id' => stripslashes_deep($game->getId()) ),
+            array( 
+                    '%s',
+                    '%s',
+                    '%d',
+                    '%s'
+            ) 
+        );
     }
     
     public function deleteGame($gameId) {
         global $wpdb;
-        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'gam_id' => $gameId ) );
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_games_gam", array( 'gam_id' => stripslashes_deep($gameId) ) );
     }
 }
