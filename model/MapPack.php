@@ -111,5 +111,12 @@ class MapPack
         global $wpdb;
         $wpdb->delete( "{$wpdb->prefix}ladp_tj_mpa_map_mma", array( 'mpa_id' => $idMPack ) );
     }
+    
+    public function deleteMapPack($idMPack)
+    {
+        global $wpdb;
+        $wpdb->delete( "{$wpdb->prefix}ladp_tj_mpa_map_mma", array( 'mpa_id' => $idMPack ) );
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_map_packs_mpa", array( 'mpa_id' => $idMPack ) );
+    }
 
 }

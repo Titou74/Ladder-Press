@@ -21,7 +21,7 @@ class MPacksAdministration extends WP_List_Table
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_m_pack_id']) && $_POST['ladder_press_remove_m_pack_id'] != 0) {
                 // Remove map
-                Map::deleteMap($_POST['ladder_press_remove_m_pack_id']);
+                MapPack::deleteMapPack($_POST['ladder_press_remove_m_pack_id']);
             } else if (isset($_POST['ladder_press_m_pack_id'])) {
                 if($_POST['ladder_press_m_pack_id'] != 0) {
                     // Update game   
@@ -66,8 +66,8 @@ class MPacksAdministration extends WP_List_Table
             wp_enqueue_script( 'editMapPacks', plugins_url( '/../../view/js/'.'editMapPacks.js', __FILE__) , array('jquery'), '1.0.0', true );
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMapPack.php';
         } else if($_GET['action'] == "remove" && isset ($_GET['mPackId'])) {
-            $deleteMap = Map::getMapById($_GET['mPackId']);
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
+            $deleteMapPack = MapPack::getMapPackById($_GET['mPackId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMapPack.php';
         }
     }
     
