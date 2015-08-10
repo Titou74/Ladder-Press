@@ -86,8 +86,33 @@ class Team
         $this->logoName = $logoName;
     }
     
-    public function teamHtml()
-    {
-        echo "A que coucou Bob !";
+    private function instancierTeam($teamArray = null) {
+        $team = new Team();
+        if($teamArray != null) {
+            $team->setId($teamArray['TEA_ID']);
+            $team->setIdCreator($teamArray['USER_ID_CREATOR']);
+            $team->setName($teamArray['TEA_NAME']);
+            $team->setTag($teamArray['TEA_TAG']);
+            $team->setDateCrea($teamArray['TEA_DATE_CREATION']);
+            $team->setActive($teamArray['TEA_ACTIVE']);
+            $team->setSite($teamArray['TEA_SITE_URL']);
+            $team->setLogoName($teamArray['TEA_LOGO_NAME']);
+        }
+        return $team;
     }
+    
+    public function getAllMaps() {
+        // Execution requête
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea", ARRAY_A);
+        
+        // Initialisation tableau retour
+        $maps = array();
+        // Instanciation des objects "Game"
+        foreach ($result as $value){
+            $maps[] = self::instancierTeam($value);
+        }
+        return $maps;
+    }
+    
 }
