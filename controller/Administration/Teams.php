@@ -10,7 +10,7 @@ if( ! class_exists( 'WP_List_Table' ) ) {
     require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 }
 
-class TeamAdministration extends WP_List_Table
+class TeamsAdministration extends WP_List_Table
 {
     public function teamsMenu()
     {
@@ -49,15 +49,15 @@ class TeamAdministration extends WP_List_Table
 //        }
         
         if(!isset($_GET['action'])) {
-            $teamAdministration = new TeamAdministration();
-            $gamesAdministration->prepare_items();
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listGames.php';
+            $teamsAdministration = new TeamsAdministration();
+            $teamsAdministration->prepare_items();
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listTeams.php';
         } else if($_GET['action'] == "add") {
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
-        } else if($_GET['action'] == "edit" && isset ($_GET['gameId'])) {
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editTeam.php';
+        } else if($_GET['action'] == "edit" && isset ($_GET['teamId'])) {
             $editGame = Game::getGameById($_GET['gameId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
-        } else if($_GET['action'] == "remove" && isset ($_GET['gameId'])) {
+        } else if($_GET['action'] == "remove" && isset ($_GET['teamId'])) {
             $deleteGame = Game::getGameById($_GET['gameId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteGame.php';
         }
@@ -74,9 +74,8 @@ class TeamAdministration extends WP_List_Table
         $hidden = self::get_hidden_columns(); 
         $sortable = self::get_sortable_columns();
         
-        $allTeams = Game::getAllTeams();
-        
-        $data = self::table_data($allGames);
+        $allTeams = Team::getAllTeams();
+        $data = self::table_data($allTeams);
         usort( $data, array( &$this, 'sort_data' ) );
         
         $perPage = 20;
@@ -100,14 +99,14 @@ class TeamAdministration extends WP_List_Table
      * @return Array
      */
     public function get_columns()
-    {
+    { 
         $columns = array(
-            'cb'        => '<input type="checkbox" />',
             'id'          => 'ID',
             'name'       => 'Name',
-            'short_name' => 'Short name',
-            'guid'        => 'GUID require',
-            'regex'    => 'GUID regex',
+            'tag'        => 'Tag',
+            'id_creator'        => 'Creator',
+            'date_creation'    => 'Creating date',
+            'active'    => 'Active',
             'action'    => ''
         );
         return $columns;
@@ -133,7 +132,10 @@ class TeamAdministration extends WP_List_Table
         return array(
             'id' => array('id', false),
             'name' => array('name', false),
-            'short_name' => array('short_name', false),
+            'tag' => array('tag', false),
+            'id_creator' => array('short_name', false),
+            'date_creation' => array('date_creation', false),
+            'active' => array('active', false)
         );
     }
     
@@ -142,18 +144,19 @@ class TeamAdministration extends WP_List_Table
      *
      * @return Array
      */
-    private function table_data($allGames)
+    private function table_data($allTeams)
     {
         $data = array();
-        foreach ($allGames as $game) {
-            $dataGame = array(
-                'id'          => $game->getId(),
-                'name'       => $game->getName(),
-                'short_name' => $game->getShortname(),
-                'guid'        => $game->getActiveGuid() ? 'Yes' : 'No',
-                'regex'    => $game->getGuidRegex()
+        foreach ($allTeams as $team) {
+            $dataTeam = array(
+                'id'          => $team->getId(),
+                'name'       => $team->getName(),
+                'tag'        => $team->getTag(),
+                'id_creator'        => $team->getIdCreator(),
+                'date_creation'        => $team->getDateCrea(),
+                'active'        => $team->getActive() ? 'Yes' : 'No'
             );
-            $data[] = $dataGame;
+            $data[] = $dataTeam;
         }
         return $data;
     }
@@ -177,9 +180,10 @@ class TeamAdministration extends WP_List_Table
         switch( $column_name ) {
             case 'id':
             case 'name':
-            case 'short_name':
-            case 'guid':
-            case 'regex':
+            case 'tag':
+            case 'id_creator':
+            case 'date_creation':
+            case 'active':
                 return $item[ $column_name ];
 
             default:
@@ -235,8 +239,9 @@ class TeamAdministration extends WP_List_Table
     
     function column_action($item) {
         $actions = array(
-            'edit' => sprintf('<a href="?page=ladder_press_games&action=edit&gameId='.$item["id"].'">Edit</a>'),
-            'delete' => sprintf('<a href="?page=ladder_press_games&action=remove&gameId='.$item["id"].'">Delete</a>'),
+            'edit' => sprintf('<a href="?page=ladder_press_team&action=edit&teamId='.$item["id"].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_team&action=remove&teamId='.$item["id"].'">Delete</a>'),
+            'view_lineup' => sprintf('<a href="?page=ladder_press_team&action=view_lineup&teamId='.$item["id"].'">View lineup</a>')
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }

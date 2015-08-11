@@ -101,18 +101,18 @@ class Team
         return $team;
     }
     
-    public function getAllMaps() {
+    public function getAllTeams() {
         // Execution requête
         global $wpdb;
         $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea", ARRAY_A);
         
         // Initialisation tableau retour
-        $maps = array();
+        $teams = array();
         // Instanciation des objects "Game"
         foreach ($result as $value){
-            $maps[] = self::instancierTeam($value);
+            $teams[] = self::instancierTeam($value);
         }
-        return $maps;
+        return $teams;
     }
     
 }
