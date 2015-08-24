@@ -115,4 +115,67 @@ class Team
         return $teams;
     }
     
+    public function createTeam($team) {
+        global $wpdb;
+        $wpdb->insert( "{$wpdb->prefix}ladp_t_teams_tea", 
+            array( 
+                'user_id_creator' => stripslashes_deep($team->getIdCreator()),
+		'tea_name' => stripslashes_deep($team->getName()),
+		'tea_tag' => stripslashes_deep($team->getTag()),
+                'tea_date_creation' => stripslashes_deep($team->getDateCrea()),
+                'tea_active' => stripslashes_deep($team->getActive()),
+                'tea_site_url' => stripslashes_deep($team->getSite()),
+                'tea_logo_name' => stripslashes_deep($team->getLogoName())
+            ),
+            array( 
+                    '%d',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                    '%s',
+                    '%s'
+            )
+        );
+    }
+    
+    public function updateTeam($team) {
+        global $wpdb;
+        $wpdb->update( "{$wpdb->prefix}ladp_t_teams_tea", 
+            array( 
+                'user_id_creator' => stripslashes_deep($team->getIdCreator()),
+		'tea_name' => stripslashes_deep($team->getName()),
+		'tea_tag' => stripslashes_deep($team->getTag()),
+                'tea_date_creation' => stripslashes_deep($team->getDateCrea()),
+                'tea_active' => stripslashes_deep($team->getActive()),
+                'tea_site_url' => stripslashes_deep($team->getSite()),
+                'tea_logo_name' => stripslashes_deep($team->getLogoName())
+            ),
+            array( 'tea_id' => stripslashes_deep($team->getId()) ),
+            array( 
+                    '%d',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d',
+                    '%s',
+                    '%s'
+            )
+        );
+    }
+    
+    public function getTeamById($id)
+    {
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea WHERE TEA_ID = $id", ARRAY_A);
+        $team = self::instancierTeam($result);
+        
+        return $team;
+    }
+    
+    public function deleteTeam($teamId) {
+        global $wpdb;
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_teams_tea", array( 'tea_id' => stripslashes_deep($teamId) ) );
+    }
+    
 }

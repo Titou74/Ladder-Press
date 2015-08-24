@@ -20,33 +20,37 @@ class TeamsAdministration extends WP_List_Table
         // Include require models
         include_once plugin_dir_path( __FILE__ ).'../../model/Team.php';
         
-//        if (isset($_POST['submit'])) {
-//           if(isset($_POST['ladder_press_remove_game_id']) && $_POST['ladder_press_remove_game_id'] != 0) {
-//                // Remove game
-//                Game::deleteGame($_POST['ladder_press_remove_game_id']);
-//            } else if (isset($_POST['ladder_press_game_id'])) {
-//                if($_POST['ladder_press_game_id'] != 0) {
-//                    // Update game
-//                    $game = Game::getGameById($_POST['ladder_press_game_id']);
-//                    $game->setName($_POST['ladder_press_game_name']);
-//                    $game->setShortName($_POST['ladder_press_game_short_name']);
-//                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
-//                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
-//                    
-//                    Game::updateGame($game);
-//                } else {
-//                    // Create game
-//                    $game = new Game();
-//                    $game->setName($_POST['ladder_press_game_name']);
-//                    $game->setShortName($_POST['ladder_press_game_short_name']);
-//                    $game->setActiveGuid(isset($_POST['ladder_press_game_guid_require']));
-//                    $game->setGuidRegex($_POST['ladder_press_game_guid_regex']);
-//                    
-//                    Game::createGame($game);
-//                }
-//                
-//            }
-//        }
+        if (isset($_POST['submit'])) {
+           if(isset($_POST['ladder_press_remove_team_id']) && $_POST['ladder_press_remove_team_id'] != 0) {
+                // Remove game
+                Team::deleteTeam($_POST['ladder_press_remove_team_id']);
+            } else if (isset($_POST['ladder_press_team_id'])) {
+                if($_POST['ladder_press_team_id'] != 0) {
+                    // Update game
+                    $team = Team::getTeamById($_POST['ladder_press_team_id']);
+                    $team->setDateCrea($_POST['ladder_press_team_creation']);
+                    $team->setActive(1);
+                    $team->setName($_POST['ladder_press_team_name']);
+                    $team->setTag($_POST['ladder_press_team_tag']);
+                    $team->setIdCreator($_POST['ladder_press_team_creator']);
+                    $team->setLogoName($_POST['ladder_press_team_logo_name']);
+                    
+                    Team::updateTeam($team);
+                } else {
+                    // Create game
+                    $team = new Team();
+                    $team->setDateCrea($_POST['ladder_press_team_creation']);
+                    $team->setActive(1);
+                    $team->setName($_POST['ladder_press_team_name']);
+                    $team->setTag($_POST['ladder_press_team_tag']);
+                    $team->setIdCreator($_POST['ladder_press_team_creator']);
+                    $team->setLogoName($_POST['ladder_press_team_logo_name']);
+                    
+                    Team::createTeam($team);
+                }
+                
+            }
+        }
         
         if(!isset($_GET['action'])) {
             $teamsAdministration = new TeamsAdministration();
@@ -55,11 +59,11 @@ class TeamsAdministration extends WP_List_Table
         } else if($_GET['action'] == "add") {
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editTeam.php';
         } else if($_GET['action'] == "edit" && isset ($_GET['teamId'])) {
-            $editGame = Game::getGameById($_GET['gameId']);
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editGame.php';
+            $editTeam = Team::getTeamById($_GET['teamId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editTeam.php';
         } else if($_GET['action'] == "remove" && isset ($_GET['teamId'])) {
-            $deleteGame = Game::getGameById($_GET['gameId']);
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteGame.php';
+            $deleteTeam = Team::getTeamById($_GET['teamId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteTeam.php';
         }
     }
     
@@ -133,7 +137,7 @@ class TeamsAdministration extends WP_List_Table
             'id' => array('id', false),
             'name' => array('name', false),
             'tag' => array('tag', false),
-            'id_creator' => array('short_name', false),
+            'id_creator' => array('id_creator', false),
             'date_creation' => array('date_creation', false),
             'active' => array('active', false)
         );
@@ -148,11 +152,12 @@ class TeamsAdministration extends WP_List_Table
     {
         $data = array();
         foreach ($allTeams as $team) {
+            $user_info = get_userdata($team->getIdCreator());    
             $dataTeam = array(
                 'id'          => $team->getId(),
                 'name'       => $team->getName(),
                 'tag'        => $team->getTag(),
-                'id_creator'        => $team->getIdCreator(),
+                'id_creator'        => $user_info->display_name,
                 'date_creation'        => $team->getDateCrea(),
                 'active'        => $team->getActive() ? 'Yes' : 'No'
             );
@@ -239,9 +244,9 @@ class TeamsAdministration extends WP_List_Table
     
     function column_action($item) {
         $actions = array(
-            'edit' => sprintf('<a href="?page=ladder_press_team&action=edit&teamId='.$item["id"].'">Edit</a>'),
-            'delete' => sprintf('<a href="?page=ladder_press_team&action=remove&teamId='.$item["id"].'">Delete</a>'),
-            'view_lineup' => sprintf('<a href="?page=ladder_press_team&action=view_lineup&teamId='.$item["id"].'">View lineup</a>')
+            'edit' => sprintf('<a href="?page=ladder_press_teams&action=edit&teamId='.$item["id"].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_teams&action=remove&teamId='.$item["id"].'">Delete</a>'),
+            'view_lineup' => sprintf('<a href="?page=ladder_press_teams&action=view_lineup&teamId='.$item["id"].'">View lineup</a>')
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }
