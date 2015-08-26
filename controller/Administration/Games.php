@@ -16,6 +16,7 @@ class GamesAdministration extends WP_List_Table
     {
         // Check if user is admin
         if(! is_admin()) exit;
+        include_once plugin_dir_path( __FILE__ ).'../../model/Game.php';
         
         if (isset($_POST['submit'])) {
            if(isset($_POST['ladder_press_remove_game_id']) && $_POST['ladder_press_remove_game_id'] != 0) {
