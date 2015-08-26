@@ -15,7 +15,7 @@ class Users {
     public function userMenu() {
         if(get_current_user_id() != 0) {
             if(!isset($_GET['page'])) {
-                echo "COUCOU";
+                echo "COUCOU TRUC";
             } else if($_GET['page'] == "game_list") {
                 echo "COUCOU LIST";
             } else if($_GET['page'] == "game_add") {
