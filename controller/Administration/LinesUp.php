@@ -58,8 +58,7 @@ class LinesUpAdministration extends WP_List_Table
 //
 //            }
 //        }
-        if(isset($_GET['action']) && $_GET['action'] == "view_lineup" && isset($_GET['teamID'])) {
-            echo('ok ??');
+        if(isset($_GET['action']) && $_GET['action'] == "view_lineup" && isset($_GET['teamId'])) {
             $linesUpAdministration = new LinesUpAdministration();
             $linesUpAdministration->prepare_items();         
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/viewLineUp.php';

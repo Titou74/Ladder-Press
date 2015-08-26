@@ -24,9 +24,7 @@ class LadderPressAdministration {
         add_submenu_page('ladder_press', 'Maps', 'Maps', 'manage_options', 'ladder_press_maps', array('MapsAdministration', 'mapsMenu'));
         add_submenu_page('ladder_press', 'Map packs', 'Map packs', 'manage_options', 'ladder_press_m_packs', array('MPacksAdministration', 'mPacksMenu'));
         add_submenu_page('ladder_press', 'Teams', 'Teams', 'manage_options', 'ladder_press_teams', array('TeamsAdministration', 'TeamsMenu'));
-        
-        // Add new pages in administration
-        add_options_page('ladder press','Line up','manage_options', 'ladder_press_linesup', array('LinesUpAdministration', 'linesUpMenu'));
+        add_submenu_page(null,'Line up','Lines up','manage_options', 'ladder_press_teams_linesup', array('LinesUpAdministration', 'linesUpMenu'));
         
     }
     

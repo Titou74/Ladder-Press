@@ -246,7 +246,7 @@ class TeamsAdministration extends WP_List_Table
         $actions = array(
             'edit' => sprintf('<a href="?page=ladder_press_teams&action=edit&teamId='.$item["id"].'">Edit</a>'),
             'delete' => sprintf('<a href="?page=ladder_press_teams&action=remove&teamId='.$item["id"].'">Delete</a>'),
-            'view_lineup' => sprintf('<a href="?page=ladder_press_linesup&action=view_lineup&teamId='.$item["id"].'">View lineup</a>')
+            'view_lineup' => sprintf('<a href="?page=ladder_press_teams_linesup&action=view_lineup&teamId='.$item["id"].'">View lineup</a>')
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }
