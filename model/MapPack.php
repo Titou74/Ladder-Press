@@ -83,8 +83,6 @@ class MapPack
     public function addMapsInMapPack($maps,$mPack)
     {
         global $wpdb;
-        
-        var_dump($mPack);
         foreach ($maps as $map)
         {
             $wpdb->insert("{$wpdb->prefix}ladp_tj_mpa_map_mma", array(
@@ -93,6 +91,32 @@ class MapPack
                 )
             );
         }
+    }
+    
+    public function updateMapPack($mPack) {
+        global $wpdb;
+        $wpdb->update( "{$wpdb->prefix}ladp_t_map_packs_mpa", 
+            array( 
+		'MPA_NAME' => stripslashes_deep($mPack->getName())
+            ), 
+            array( 'MPA_ID' => stripslashes_deep($mPack->getId()) ),
+            array( 
+                    '%s'
+            ) 
+        );
+    }
+    
+    public function deleteMapsInMapPack($idMPack)
+    {
+        global $wpdb;
+        $wpdb->delete( "{$wpdb->prefix}ladp_tj_mpa_map_mma", array( 'mpa_id' => $idMPack ) );
+    }
+    
+    public function deleteMapPack($idMPack)
+    {
+        global $wpdb;
+        $wpdb->delete( "{$wpdb->prefix}ladp_tj_mpa_map_mma", array( 'mpa_id' => $idMPack ) );
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_map_packs_mpa", array( 'mpa_id' => $idMPack ) );
     }
 
 }

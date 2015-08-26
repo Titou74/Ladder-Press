@@ -108,13 +108,14 @@ class Map
     }
     
     
-    function getMapsByMapPack($id)
+    public function getMapsByMapPack($idMPack)
     {
         global $wpdb;
-        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_tj_mpa_map_mma WHERE MPA_ID = $id", ARRAY_A);
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_tj_mpa_map_mma WHERE MPA_ID = $idMPack", ARRAY_A);
         foreach ($result as $value){
             $maps[] = self::getMapById($value['MAP_ID']);
         }
         return $maps;
     }
+    
 }

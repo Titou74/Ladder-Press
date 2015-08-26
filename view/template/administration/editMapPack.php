@@ -6,38 +6,36 @@
  * and open the template in the editor.
  */
 
-$edit = isset($editMap);
-if($edit)
-{
-    $game_select = Game::getGameById($editMap->getGameId());
-    $game_select_id = $game_select->getId();
-}else{
-    $game_select_id = 0;
-}
-    
+$edit = isset($editMapPack);
 $maps = Map::getAllMaps();
-
+if($edit) 
+{
+    $mapsInMapPack = Map::getMapsByMapPack($editMapPack->getId());
+    $mapsInMapPackId = array_map(create_function('$o', 'return $o->getId();'), $mapsInMapPack);
+}
 
 ?>
 <div class="wrap">
     <h2><?php echo $edit ? "Edit " : "Add "; echo get_admin_page_title(); ?></h2>
     <form method="post" action="admin.php?page=ladder_press_m_packs">
-        <input type="hidden" name="ladder_press_m_pack_id" value=" <?php echo $edit ? $editMap->getId() : "0"; ?> ">
+        <input type="hidden" name="ladder_press_m_pack_id" value=" <?php echo $edit ? $editMapPack->getId() : "0"; ?> ">
         <table class="form-table">
             <tbody>
                 <tr>
                     <th scope="row">Map pack name</th>
                     <td>
-                        <input type="text" name="ladder_press_m_packs_name" value="<?php echo $edit ?  $editMap->getName() : ""; ?>" required="required">
+                        <input type="text" name="ladder_press_m_pack_name" value="<?php echo $editMapPack ?  $editMapPack->getName() : ""; ?>" required="required">
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">Maps to include</th>
                     <td>
                         <select name="listMaps" id="listMaps">
-                        <?php foreach($maps as $map): ?>
-                            <option value="<?php echo $map->getId(); ?>"><?php echo $map->getName(); ?></option>
-                        <?php endforeach; ?>
+                            <?php foreach($maps as $map): ?>
+                                <?php if(($edit) && array_search($map->getId(), $mapsInMapPackId)=== false): ?>
+                                    <option value="<?php echo $map->getId(); ?>"><?php echo $map->getName(); ?></option>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </select>
                         <input type="button" id="addMap" value="Add this map"/>
                     </td>      
@@ -46,6 +44,14 @@ $maps = Map::getAllMaps();
                     <th scope="row">Maps selected</th>
                     <td>
                         <div id="mapsSelected">
+                            <?php if($edit):?>
+                                <?php foreach($mapsInMapPack as $mapSelected) :?>
+                                <p class="selectedMap map<?php echo $mapSelected->getId();?>">
+                                    <input type="hidden" name="ladder_press_m_pack_maps[]" value="<?php echo $mapSelected->getId();?>">
+                                    <span><?php echo $mapSelected->getName(); ?></span><a href="#" onClick="supprimerMap(jQuery(this))">X</a>
+                                </p>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </td>     
                 </tr>

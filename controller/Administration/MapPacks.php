@@ -15,26 +15,33 @@ class MPacksAdministration extends WP_List_Table
     public function mPacksMenu()
     {
         if(! is_admin()) exit;
+        include_once plugin_dir_path( __FILE__ ).'../../model/Map.php';
+        include_once plugin_dir_path( __FILE__ ).'../../model/MapPack.php';
+        
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_m_pack_id']) && $_POST['ladder_press_remove_m_pack_id'] != 0) {
-                // Remove game
-                Map::deleteMap($_POST['ladder_press_remove_m_pack_id']);
+                // Remove map
+                MapPack::deleteMapPack($_POST['ladder_press_remove_m_pack_id']);
             } else if (isset($_POST['ladder_press_m_pack_id'])) {
                 if($_POST['ladder_press_m_pack_id'] != 0) {
                     // Update game   
-//                    $map = Map::getMapById($_POST['ladder_press_map_id']);
-//                    $map->setName($_POST['ladder_press_map_name']);
-//                    $map->setGameId($_POST['ladder_press_map_from_game']);
-//                    $map->setPick($url_pick);
-//                    Map::updateMap($map);
+                    $mPack = MapPack::getMapPackById($_POST['ladder_press_m_pack_id']);
+                    $mPack->setName($_POST['ladder_press_m_pack_name']);
+                    MapPack::updateMapPack($mPack);
+                    $mPack->deleteMapsInMapPack($mPack->getId());
+                    $maps = $_POST['ladder_press_m_pack_maps'];
+                    foreach($maps as $map)
+                    {
+                        $uneMap = Map::getMapById($map);
+                        $lesMaps[] = $uneMap;
+                    }
+                    MapPack::addMapsInMapPack($lesMaps,$mPack);
                 } else {
-                    // Create game
-                    // @TODO titou : je ne sais pas comment on gère la récuperation du dernier objet créer dans la bdd vu qu'on ne renvoie rien. Du coup j'ai renvoyé l'id et je l'ai récuperer vaut-il mieux l'instancier lors du "create" ?
                     $mPack = new MapPack();
-                    $mPack->setName($_POST['ladder_press_m_packs_name']);
+                    $mPack->setName($_POST['ladder_press_m_pack_name']);
                     $idMapPackCreated = MapPack::createMapPack($mPack);
                     $leMapPack = MapPack::getMapPackById($idMapPackCreated);
-                    $maps = $_POST['ladder_press_m_packs_maps'];
+                    $maps = $_POST['ladder_press_m_pack_maps'];
                     foreach($maps as $map)
                     {
                         $uneMap = Map::getMapById($map);
@@ -53,12 +60,14 @@ class MPacksAdministration extends WP_List_Table
             wp_enqueue_script('jquery');
             wp_enqueue_script( 'editMapPacks', plugins_url( '/../../view/js/'.'editMapPacks.js', __FILE__) , array('jquery'), '1.0.0', true );
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMapPack.php';
-        } else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
-            $editMap = Map::getMapById($_GET['mapId']);
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
-        } else if($_GET['action'] == "remove" && isset ($_GET['mapId'])) {
-            $deleteMap = Map::getMapById($_GET['mapId']);
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
+        } else if($_GET['action'] == "edit" && isset ($_GET['mPackId'])) {
+            $editMapPack = MapPack::getMapPackById($_GET['mPackId']);
+            wp_enqueue_script('jquery');
+            wp_enqueue_script( 'editMapPacks', plugins_url( '/../../view/js/'.'editMapPacks.js', __FILE__) , array('jquery'), '1.0.0', true );
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMapPack.php';
+        } else if($_GET['action'] == "remove" && isset ($_GET['mPackId'])) {
+            $deleteMapPack = MapPack::getMapPackById($_GET['mPackId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMapPack.php';
         }
     }
     
@@ -218,8 +227,8 @@ class MPacksAdministration extends WP_List_Table
     
     function column_action($item) {
         $actions = array(
-            'edit' => sprintf('<a href="?page=ladder_press_maps&action=edit&mapId='.$item["id"].'">Edit</a>'),
-            'delete' => sprintf('<a href="?page=ladder_press_maps&action=remove&mapId='.$item["id"].'">Delete</a>'),
+            'edit' => sprintf('<a href="?page=ladder_press_m_packs&action=edit&mPackId='.$item["id"].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_m_packs&action=remove&mPackId='.$item["id"].'">Delete</a>'),
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }
