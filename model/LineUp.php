@@ -116,4 +116,25 @@ class LineUp
         return $linesUp;
     }
     
+    public function getLineUpById($id)
+    {
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_line_up_lup WHERE LUP_ID = $id", ARRAY_A);
+        $LUP = self::instancierLineUp($result);
+        
+        return $LUP;
+    }
+
+
+    public function getLinesUpByTeamId($idTeam)
+    {
+        global $wpdb;
+        $LUPs=array();
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_line_up_lup WHERE LUP_TEA_ID = $idTeam", ARRAY_A);
+        foreach ($result as $value){
+            $LUPs[] = self::getLineUpById($value['LUP_ID']);
+        }
+        return $LUPs;
+    }
+    
 }

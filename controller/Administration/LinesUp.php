@@ -15,6 +15,7 @@ class LinesUpAdministration extends WP_List_Table
     public function linesUpMenu()
     {
         if(! is_admin()) exit;
+        if(!isset($_GET['teamId'])) exit;
         include_once plugin_dir_path( __FILE__ ).'../../model/LineUp.php';
         include_once plugin_dir_path( __FILE__ ).'../../model/Game.php';
 //        if (isset($_POST['submit'])) {
@@ -58,16 +59,13 @@ class LinesUpAdministration extends WP_List_Table
 //
 //            }
 //        }
-        if(isset($_GET['action']) && $_GET['action'] == "view_lineup" && isset($_GET['teamId'])) {
+        if(isset($_GET['action']) && $_GET['action'] == "view_lineup") {
             $linesUpAdministration = new LinesUpAdministration();
             $linesUpAdministration->prepare_items();         
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/viewLineUp.php';
-        } //else if($_GET['action'] == "add") {
-//            require_once( ABSPATH . 'wp-admin/includes/image.php' );
-//            require_once( ABSPATH . 'wp-admin/includes/file.php' );
-//            require_once( ABSPATH . 'wp-admin/includes/media.php' );
-//            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
-//        } else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listLineUp.php';
+        } else if($_GET['action'] == "add") {
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editLineUp.php';
+        } //else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
 //            $editMap = Map::getMapById($_GET['mapId']);
 //            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
 //        } else if($_GET['action'] == "remove" && isset ($_GET['mapId'])) {
@@ -87,8 +85,8 @@ class LinesUpAdministration extends WP_List_Table
         $hidden = self::get_hidden_columns(); 
         $sortable = self::get_sortable_columns();
         
-        $allLinesUp = LineUp::getAllLinesUp();
-        $data = self::table_data($allLinesUp);
+        $LUPsTeam = LineUp::getLinesUpByTeamId($_GET['teamId']);
+        $data = self::table_data($LUPsTeam);
         usort( $data, array( &$this, 'sort_data' ) );
         
         $perPage = 20;
@@ -155,10 +153,10 @@ class LinesUpAdministration extends WP_List_Table
      *
      * @return Array
      */
-    private function table_data($allLUP) // LUP stands for LinesUp
+    private function table_data($LUPsTeam) // LUP stands for LinesUp
     {
         $data = array();
-        foreach ($allLUP as $LUP) {
+        foreach ($LUPsTeam as $LUP) {
             $game = Game::getGameById($LUP->getGameId());
             $dataLUP = array(
                 'id'        => $LUP->getId(),
