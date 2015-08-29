@@ -85,6 +85,35 @@ class LineUp
         $this->active = $active;
     }
 
-
+    private function instancierLineUp($lineUpArray = null) {
+        $lineUp = new LineUp();
+        if($lineUpArray != null) {
+            $lineUp->setId($lineUpArray['LUP_ID']);
+            $lineUp->setTeamId($lineUpArray['LUP_TEA_ID']);
+            $lineUp->setGameId($lineUpArray['LUP_GAM_ID']);
+            $lineUp->setName($lineUpArray['LUP_NAME']);
+            $lineUp->setShortname($lineUpArray['LUP_SHORT_NAME']);
+            $lineUp->setDateCreation($lineUpArray['LUP_DATE_CREATION']);
+            $lineUp->setDateSuppression($lineUpArray['LUP_DATE_SUPPRESSION']);
+            $lineUp->setActive($lineUpArray['LUP_ACTIVE'] ? true : false);
+        }
+        return $lineUp;
+    }
+    
+    public function getAllLinesUp() {
+        // Execution requête
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_line_up_lup", ARRAY_A);
+        
+        // Initialisation tableau retour
+        $linesUp = array();
+        
+        // Instanciation des objects "Game"
+        foreach ($result as $value){
+            $linesUp[] = self::instancierLineUp($value);
+        }
+        
+        return $linesUp;
+    }
     
 }

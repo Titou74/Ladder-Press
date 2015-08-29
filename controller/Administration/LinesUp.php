@@ -15,7 +15,7 @@ class LinesUpAdministration extends WP_List_Table
     public function linesUpMenu()
     {
         if(! is_admin()) exit;
-        include_once plugin_dir_path( __FILE__ ).'../../model/Map.php';
+        include_once plugin_dir_path( __FILE__ ).'../../model/LineUp.php';
         include_once plugin_dir_path( __FILE__ ).'../../model/Game.php';
 //        if (isset($_POST['submit'])) {
 //            if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
@@ -76,12 +76,6 @@ class LinesUpAdministration extends WP_List_Table
 //        }
     }
     
-    public function single_row( $item ) {
-            echo '<tr class="from_game_'.$item['gameId'].'">';
-            $this->single_row_columns( $item );
-            echo '</tr>';
-    }
-    
     /**
      * Prepare the items for the table to process
      *
@@ -93,9 +87,8 @@ class LinesUpAdministration extends WP_List_Table
         $hidden = self::get_hidden_columns(); 
         $sortable = self::get_sortable_columns();
         
-        $allMaps = Map::getAllMaps();
-        
-        $data = self::table_data($allMaps);
+        $allLinesUp = LineUp::getAllLinesUp();
+        $data = self::table_data($allLinesUp);
         usort( $data, array( &$this, 'sort_data' ) );
         
         $perPage = 20;
@@ -124,8 +117,9 @@ class LinesUpAdministration extends WP_List_Table
             'id'         => 'ID',
             'game'       => 'Game',
             'name'       => 'Name',
-            'pick'       => 'Picture',
-            'action'    => ''
+            'short_name' => 'Short Name',
+            'date_crea'  => 'Creation date',
+            'active'     => 'Active'
         );
         return $columns;
     }
@@ -150,7 +144,9 @@ class LinesUpAdministration extends WP_List_Table
         return array(
             'id' => array('id', false),
             'game' => array('game', false),
-            'name' => array('name', false)
+            'name' => array('name', false),
+            'date_crea' => array('date_crea',false),
+            'active' => array('date_crea',false), 
         );
     }
     
@@ -159,19 +155,20 @@ class LinesUpAdministration extends WP_List_Table
      *
      * @return Array
      */
-    private function table_data($allMaps)
+    private function table_data($allLUP) // LUP stands for LinesUp
     {
         $data = array();
-        foreach ($allMaps as $map) {
-            $game = Game::getGameById($map->getGameId());
-            $dataMap = array(
-                'id'        => $map->getId(),
+        foreach ($allLUP as $LUP) {
+            $game = Game::getGameById($LUP->getGameId());
+            $dataLUP = array(
+                'id'        => $LUP->getId(),
                 'game'      => $game->getName(),
-                'name'      => $map->getName(),
-                'pick'   => $map->getPick() != "" ? '<img src="'.$map->getPick().'" style="width:150px;max-height:150px;"/>' : "",
-                'gameId'   => $map->getGameId(),
+                'name'      => $LUP->getName(),
+                'short_name'   => $LUP->getShortName(),
+                'date_crea'   => $LUP->getDateCreation(),
+                'active'        => $LUP->getActive() ? 'Yes' : 'No'
             );
-            $data[] = $dataMap;           
+            $data[] = $dataLUP;           
         }
         return $data;
     }
@@ -196,7 +193,9 @@ class LinesUpAdministration extends WP_List_Table
             case 'id':
             case 'game':
             case 'name':
-            case 'pick':
+            case 'short_name':
+            case 'date_crea':
+            case 'active':
                 return $item[ $column_name ];
 
             default:
