@@ -87,8 +87,10 @@ class Team
     }
     
     private function instancierTeam($teamArray = null) {
-        $team = new Team();
+        $team = null;
         if($teamArray != null) {
+            $team = new Team();
+            
             $team->setId($teamArray['TEA_ID']);
             $team->setIdCreator($teamArray['USER_ID_CREATOR']);
             $team->setName($teamArray['TEA_NAME']);
@@ -178,4 +180,49 @@ class Team
         $wpdb->delete( "{$wpdb->prefix}ladp_t_teams_tea", array( 'tea_id' => stripslashes_deep($teamId) ) );
     }
     
+    public function getCurrentPlayerTeam($idUser) {
+        global $wpdb;
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea
+            JOIN {$wpdb->prefix}ladp_tj_user_tea_ute ON {$wpdb->prefix}ladp_t_teams_tea.TEA_ID = {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEA_ID
+            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = 1
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE IS NULL
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT = 1
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ACCEPT = 1", ARRAY_A);
+        $team = self::instancierTeam($result);
+        
+        return $team;
+    }
+    
+    public function getInvitationPlayerNonRepondu($idUser) {
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea
+            JOIN {$wpdb->prefix}ladp_tj_user_tea_ute ON {$wpdb->prefix}ladp_t_teams_tea.TEA_ID = {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEA_ID
+            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = 1
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE IS NULL
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT = 1
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ACCEPT IS NULL", ARRAY_A);
+        $teams = array();
+        // Instanciation des objects "Game"
+        foreach ($result as $value){
+            $teams[] = self::instancierTeam($value);
+        }
+        return $teams;
+    }
+                
+    public function getDemandePlayerNonRepondu($idUser) {
+        global $wpdb;
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea
+            JOIN {$wpdb->prefix}ladp_tj_user_tea_ute ON {$wpdb->prefix}ladp_t_teams_tea.TEA_ID = {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEA_ID
+            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = 1
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE IS NULL
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT IS NULL
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ACCEPT = 1", ARRAY_A);
+        
+        $teams = array();
+        // Instanciation des objects "Game"
+        foreach ($result as $value){
+            $teams[] = self::instancierTeam($value);
+        }
+        return $teams;
+    }
 }

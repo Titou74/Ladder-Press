@@ -14,8 +14,22 @@
 class Users {
     public function userMenu() {
         if(get_current_user_id() != 0) {
+            
+            $allGames = Game::getAllGames();
+            
             if(!isset($_GET['page'])) {
-                echo "COUCOU TRUC MACHIN";
+                
+                $userGuid = null;
+                
+                $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
+                
+                $userTeamInvitation = Team::getInvitationPlayerNonRepondu(get_current_user_id());
+                
+                $userTeamDemande = Team::getDemandePlayerNonRepondu(get_current_user_id());
+                
+                $userHistorique = null;
+                
+                include_once plugin_dir_path( __FILE__ ).'../view/template/userMenu.php';
             } else if($_GET['page'] == "game_list") {
                 echo "COUCOU LIST";
             } else if($_GET['page'] == "game_add") {
