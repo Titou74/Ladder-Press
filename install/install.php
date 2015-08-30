@@ -89,6 +89,7 @@ class Install {
                        UTE_USER_ACCEPT      bool not null,
                        UTE_USER_RANK        char(10) not null,
                        UTE_DATE_ACCEPT      datetime,
+                       UTE_DATE_LEAVE       datetime,
                        primary key (UTE_TEA_ID, UTE_USER_ID)
                     );
         ");
