@@ -33,7 +33,7 @@ $users = get_users(array( 'orderby' => 'display_name','fields' => array( 'id','d
                     <td>
                         <select name="ladder_press_team_creator">
                             <?php foreach($users as $user): ?>
-                                <?php if(isset($edit) && $user->id === $editTeam->getIdCreator()): ?>
+                                <?php if($edit && $user->id === $editTeam->getIdCreator()): ?>
                                     <option value="<?php echo $user->id;?>" selected="selected"><?php echo $user->display_name; ?></option>
                                 <?php else: ?>
                                     <option value="<?php echo $user->id; ?>"><?php echo $user->display_name; ?></option>
