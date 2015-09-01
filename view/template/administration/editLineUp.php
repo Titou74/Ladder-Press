@@ -10,7 +10,7 @@ $edit = isset($editLUP);
 
 if($edit)
 {
-    $game_select = Game::getGameById($editMap->getGameId());
+    $game_select = Game::getGameById($editLUP->getGameId());
     $game_select_id = $game_select->getId();
 }else{
     $game_select_id = 0;
@@ -20,19 +20,20 @@ $games = Game::getAllGames();
 ?>
 <div class="wrap">
     <h2><?php echo $edit ? "Edit " : "Add "; echo get_admin_page_title(); ?></h2>
-    <form method="post" action="admin.php?page=ladder_press_teams_linesup">
+    <form method="post" action="admin.php?page=ladder_press_teams_linesup&teamId=<?php echo $_GET['teamId']; ?>">
         <input type="hidden" name="ladder_press_lineup_id" value=" <?php echo $edit ? $editLUP->getId() : "0"; ?> ">
+        <input type="hidden" name="ladder_press_lineup_team_id" value="<?php echo $_GET['teamId']; ?>">
         <input type="hidden" name="ladder_press_lineup_creation" value="<?php echo $edit ?  $editLUP->getDateCrea() : date("Y-m-d H:i:s"); ?>">
         <table class="form-table">
             <tbody>
                 <tr>
-                    <th scope="row">Team name</th>
+                    <th scope="row">Line up name</th>
                     <td>
                         <input type="text" name="ladder_press_lineup_name" value="<?php echo $edit ?  $editLUP->getName() : ""; ?>" required="required">
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Short name</th>
+                    <th scope="row">Shortname</th>
                     <td>
                         <input type="text" name="ladder_press_lineup_shortname" value="<?php echo $edit ?  $editLUP->getShortName() : ""; ?>" required="required">
                     </td>

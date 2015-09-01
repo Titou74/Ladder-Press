@@ -6,8 +6,7 @@
  * and open the template in the editor.
  */
 if ( ! isset( $linesUpAdministration ) ) exit; // Exit if accessed directly
-
-//$games = Game::getAllGames();
+$teamId = $_GET['teamId'];
 ?>
 <div class="wrap">
     <form method="post">
@@ -20,6 +19,6 @@ if ( ! isset( $linesUpAdministration ) ) exit; // Exit if accessed directly
 </div>
 
 
-<form style="display:inline;" action="?page=ladder_press_teams_linesup&action=add" method="post">
+<form style="display:inline;" action="?page=ladder_press_teams_linesup&action=add<?php echo '&teamId='.$teamId; ?>" method="post">
     <input id="submit" class="button button-primary" type="submit" value="Add a new line up" />
 </form>

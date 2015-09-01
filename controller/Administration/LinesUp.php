@@ -15,54 +15,49 @@ class LinesUpAdministration extends WP_List_Table
     public function linesUpMenu()
     {
         if(! is_admin()) exit;
-        if(!isset($_GET['teamId'])) exit;
+        if(!isset($_GET['teamId'])) die("TRACE ! Pas d'id de team :-/ ");
         include_once plugin_dir_path( __FILE__ ).'../../model/LineUp.php';
         include_once plugin_dir_path( __FILE__ ).'../../model/Game.php';
-//        if (isset($_POST['submit'])) {
-//            if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
-//                // Remove map
-//                Map::deleteMap($_POST['ladder_press_remove_map_id']);
-//            } else if (isset($_POST['ladder_press_map_id'])) {
-//                if($_POST['ladder_press_map_id'] != 0) {
-//                    // Update game
-//                    if(isset($_FILES['pick']) && $_FILES['pick'] != '')
-//                    {
-//                        $uploadedFile = $_FILES['pick'];
-//                        $uploadOverrides = array( 'test_form' => false );
-//                        $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
-//                        $url_pick = $movefile['url'];
-//                    }else{
-//                        $url_pick = "";
-//                    }     
-//                    $map = Map::getMapById($_POST['ladder_press_map_id']);
-//                    $map->setName($_POST['ladder_press_map_name']);
-//                    $map->setGameId($_POST['ladder_press_map_from_game']);
-//                    $map->setPick($url_pick);
-//                    Map::updateMap($map);
-//                } else {
-//                    // Create game
-//                    if(isset($_FILES['pick']) && $_FILES['pick'] != '')
-//                    {
-//                        $uploadedFile = $_FILES['pick'];
-//                        $uploadOverrides = array( 'test_form' => false );
-//                        $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
-//                        $url_pick = $movefile['url'];
-//                    }else{
-//                        $url_pick = "";
-//                    }
-//                    $map = new Map();
-//                    $map->setName($_POST['ladder_press_map_name']);
-//                    $map->setGameId($_POST['ladder_press_map_from_game']);
-//                    $map->setPick($url_pick);
-//                    Map::createMap($map);
-//                }
-//
-//            }
-//        }
-        if(isset($_GET['action']) && $_GET['action'] == "view_lineup") {
+        if (isset($_POST['submit'])) {
+            if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
+                // Remove line up
+                Map::deleteMap($_POST['ladder_press_remove_map_id']);
+            } else if (isset($_POST['ladder_press_lineup_id'])) {
+                if($_POST['ladder_press_lineup_id'] != 0) {
+                    // Update line up
+                    if(isset($_FILES['pick']) && $_FILES['pick'] != '')
+                    {
+                        $uploadedFile = $_FILES['pick'];
+                        $uploadOverrides = array( 'test_form' => false );
+                        $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
+                        $url_pick = $movefile['url'];
+                    }else{
+                        $url_pick = "";
+                    }     
+                    $map = Map::getMapById($_POST['ladder_press_map_id']);
+                    $map->setName($_POST['ladder_press_map_name']);
+                    $map->setGameId($_POST['ladder_press_map_from_game']);
+                    $map->setPick($url_pick);
+                    Map::updateMap($map);
+                } else {
+                    $LUP = new LineUp();
+                    $LUP->setName($_POST['ladder_press_lineup_name']);
+                    $LUP->setTeamId($_POST['ladder_press_lineup_team_id']);
+                    $LUP->setGameId($_POST['ladder_press_lineup_for_game']);
+                    $LUP->setDateCreation($_POST['ladder_press_lineup_creation']);
+                    $LUP->setShortName($_POST['ladder_press_lineup_shortname']);
+                    $LUP->setShortName($_POST['ladder_press_lineup_shortname']);
+                    $LUP->setActive(1);
+                    LineUp::createLineUp($LUP);
+                }
+
+            }
+        }
+        
+        if(!isset($_GET['action']) || (isset($_GET['action']) && $_GET['action'] == "view_lineup")) {
             $linesUpAdministration = new LinesUpAdministration();
             $linesUpAdministration->prepare_items();         
-            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listLineUp.php';
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listLinesUp.php';
         } else if($_GET['action'] == "add") {
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editLineUp.php';
         } //else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
