@@ -59,8 +59,10 @@ class Game
     }
     
     private function instancierGame($gameArray = null) {
-        $game = new Game();
+        $game = null;
         if($gameArray != null) {
+            $game = new Game();
+            
             $game->setId($gameArray['GAM_ID']);
             $game->setName($gameArray['GAM_NAME']);
             $game->setShortname($gameArray['GAM_SHORT_NAME']);
@@ -81,6 +83,22 @@ class Game
         // Instanciation des objects "Game"
         foreach ($result as $value){
             $games[] = self::instancierGame($value);
+        }
+        
+        return $games;
+    }
+    
+    public function getAllGamesGuidRequire() {
+        // Récupération de tout les jeux
+        $allGames = this.getAllGames();
+        
+        // Initialisation tableau retour
+        $games = array();
+        
+        foreach ($allGames as $game) {
+            if($game->getActiveGuid()) {
+                $games[] = $game;
+            }
         }
         
         return $games;
