@@ -137,7 +137,7 @@ class LineUp
         return $LUPs;
     }
     
-        public function createLineUp($LUP) {
+    public function createLineUp($LUP) {
         global $wpdb;
         $wpdb->insert( "{$wpdb->prefix}ladp_t_line_up_lup", 
             array( 
@@ -156,6 +156,30 @@ class LineUp
                     '%s',
                     '%d'
             )
+        );
+    }
+    
+    public function updateLineUp($LUP)
+    {
+        global $wpdb;
+        $wpdb->update("{$wpdb->prefix}ladp_t_line_up_lup", 
+            array( 
+                'lup_tea_id' => stripslashes_deep($LUP->getTeamId()),
+                'lup_gam_id' => stripslashes_deep($LUP->getGameId()),
+                'lup_name' => stripslashes_deep($LUP->getName()),
+                'lup_short_name' => stripslashes_deep($LUP->getShortName()),
+                'lup_date_creation' => stripslashes_deep($LUP->getDateCreation()),
+                'lup_active' => stripslashes_deep($LUP->getActive())
+            ), 
+            array( 'lup_id' => $LUP->getId() ),
+            array(
+                    '%d',
+                    '%d',
+                    '%s',
+                    '%s',
+                    '%s',
+                    '%d'
+            )  
         );
     }
     

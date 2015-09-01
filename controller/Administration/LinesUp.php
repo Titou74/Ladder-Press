@@ -24,21 +24,19 @@ class LinesUpAdministration extends WP_List_Table
                 Map::deleteMap($_POST['ladder_press_remove_map_id']);
             } else if (isset($_POST['ladder_press_lineup_id'])) {
                 if($_POST['ladder_press_lineup_id'] != 0) {
-                    // Update line up
-                    if(isset($_FILES['pick']) && $_FILES['pick'] != '')
-                    {
-                        $uploadedFile = $_FILES['pick'];
-                        $uploadOverrides = array( 'test_form' => false );
-                        $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
-                        $url_pick = $movefile['url'];
-                    }else{
-                        $url_pick = "";
-                    }     
-                    $map = Map::getMapById($_POST['ladder_press_map_id']);
-                    $map->setName($_POST['ladder_press_map_name']);
-                    $map->setGameId($_POST['ladder_press_map_from_game']);
-                    $map->setPick($url_pick);
-                    Map::updateMap($map);
+                    // Update line up 
+                    $LUP = LineUp::getLineUpById($_POST['ladder_press_lineup_id']);
+                    $LUP->setName($_POST['ladder_press_lineup_name']);
+                    $LUP->setTeamId($_POST['ladder_press_lineup_team_id']);
+                    $LUP->setGameId($_POST['ladder_press_lineup_for_game']);
+                    $LUP->setDateCreation($_POST['ladder_press_lineup_creation']);
+                    $LUP->setShortName($_POST['ladder_press_lineup_shortname']);
+                    $LUP->setShortName($_POST['ladder_press_lineup_shortname']);
+                    if($_POST['ladder_press_lineup_active'] == "on" || $_POST['ladder_press_lineup_active'])
+                        $LUP->setActive(1);
+                    else
+                        $LUP->setActive (0);
+                    LineUp::updateLineUp($LUP);
                 } else {
                     $LUP = new LineUp();
                     $LUP->setName($_POST['ladder_press_lineup_name']);
@@ -47,7 +45,10 @@ class LinesUpAdministration extends WP_List_Table
                     $LUP->setDateCreation($_POST['ladder_press_lineup_creation']);
                     $LUP->setShortName($_POST['ladder_press_lineup_shortname']);
                     $LUP->setShortName($_POST['ladder_press_lineup_shortname']);
-                    $LUP->setActive(1);
+                    if($_POST['ladder_press_lineup_active'] == "on" || $_POST['ladder_press_lineup_active'])
+                        $LUP->setActive(1);
+                    else
+                        $LUP->setActive(0);
                     LineUp::createLineUp($LUP);
                 }
 
@@ -60,10 +61,10 @@ class LinesUpAdministration extends WP_List_Table
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listLinesUp.php';
         } else if($_GET['action'] == "add") {
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editLineUp.php';
-        } //else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
-//            $editMap = Map::getMapById($_GET['mapId']);
-//            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
-//        } else if($_GET['action'] == "remove" && isset ($_GET['mapId'])) {
+        } else if($_GET['action'] == "edit" && isset ($_GET['lineUpId'])) {
+            $editLUP = LineUp::getLineUpById($_GET['lineUpId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editLineUp.php';
+        } //else if($_GET['action'] == "remove" && isset ($_GET['mapId'])) {
 //            $deleteMap = Map::getMapById($_GET['mapId']);
 //            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
 //        }
@@ -112,7 +113,8 @@ class LinesUpAdministration extends WP_List_Table
             'name'       => 'Name',
             'short_name' => 'Short Name',
             'date_crea'  => 'Creation date',
-            'active'     => 'Active'
+            'active'     => 'Active',
+            'action'     => ''
         );
         return $columns;
     }
@@ -159,7 +161,7 @@ class LinesUpAdministration extends WP_List_Table
                 'name'      => $LUP->getName(),
                 'short_name'   => $LUP->getShortName(),
                 'date_crea'   => $LUP->getDateCreation(),
-                'active'        => $LUP->getActive() ? 'Yes' : 'No'
+                'active'        => $LUP->getActive() ? 'Yes' : 'No',
             );
             $data[] = $dataLUP;           
         }
@@ -231,8 +233,8 @@ class LinesUpAdministration extends WP_List_Table
     
     function column_action($item) {
         $actions = array(
-            'edit' => sprintf('<a href="?page=ladder_press_maps&action=edit&mapId='.$item["id"].'">Edit</a>'),
-            'delete' => sprintf('<a href="?page=ladder_press_maps&action=remove&mapId='.$item["id"].'">Delete</a>'),
+            'edit' => sprintf('<a href="?page=ladder_press_teams_linesup&action=edit&lineUpId='.$item["id"].'&teamId='.$_GET['teamId'].'">Edit</a>'),
+            'delete' => sprintf('<a href="?page=ladder_press_teams_linesup&action=remove&lineUpId='.$item["id"].'&teamId='.$_GET['teamId'].'">Delete</a>'),
         );
         return sprintf('%1$s %2$s', $item['Name'], $this->row_actions($actions) );
     }

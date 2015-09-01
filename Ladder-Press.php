@@ -8,7 +8,7 @@
  * License: GPLv2 or later
  * Copyright 2015-2015  
  *                      Titouan Choron  (email : titou.c.74@gmail.com)
- *                      Thibaut Dupuy   (email : t*****@gmail.com)
+ *                      Thibaut Dupuy   (email : tdupuy53@gmail.com)
  * 
 */
 class LadderPress

@@ -15,15 +15,16 @@ if($edit)
 }else{
     $game_select_id = 0;
 }
-    
+
 $games = Game::getAllGames();
+
 ?>
 <div class="wrap">
     <h2><?php echo $edit ? "Edit " : "Add "; echo get_admin_page_title(); ?></h2>
     <form method="post" action="admin.php?page=ladder_press_teams_linesup&teamId=<?php echo $_GET['teamId']; ?>">
         <input type="hidden" name="ladder_press_lineup_id" value=" <?php echo $edit ? $editLUP->getId() : "0"; ?> ">
         <input type="hidden" name="ladder_press_lineup_team_id" value="<?php echo $_GET['teamId']; ?>">
-        <input type="hidden" name="ladder_press_lineup_creation" value="<?php echo $edit ?  $editLUP->getDateCrea() : date("Y-m-d H:i:s"); ?>">
+        <input type="hidden" name="ladder_press_lineup_creation" value="<?php echo $edit ?  $editLUP->getDateCreation() : date("Y-m-d H:i:s"); ?>">
         <table class="form-table">
             <tbody>
                 <tr>
@@ -52,6 +53,13 @@ $games = Game::getAllGames();
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <th scope="row">Active</th>
+                    <td>
+                       <input type="checkbox" name="ladder_press_lineup_active" <?php if(!$edit || $editLUP->getActive())echo'checked="checked"'; ?>/> 
+                    </td>
+                </tr>
+
             </tbody>
         </table>
         
