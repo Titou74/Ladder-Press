@@ -18,7 +18,7 @@ if($hasTeam) {
     echo "<p>Vous n'avez saisi actuellement aucun GUID</p>";
 }
 
-echo "<a class=\"\" href=\"http://localhost/wordpress/wp-admin/post.php?post=35&action=edit\">Éditer vos GUID</a>";
+echo "<a class=\"\" href=\"?page=game_list\">Éditer vos GUID</a>";
 
 echo "<hr>";
 

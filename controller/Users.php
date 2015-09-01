@@ -27,7 +27,7 @@ class Users {
                 
                 $userTeamDemande = Team::getDemandePlayerNonRepondu(get_current_user_id());
                 
-                $userHistorique = null;
+                $userHistorique = self::genererUserHistorique();
                 
                 include_once plugin_dir_path( __FILE__ ).'../view/template/userMenu.php';
             } else if($_GET['page'] == "game_list") {
@@ -40,5 +40,9 @@ class Users {
         } else {
             echo "Vous devez être connecter pour accéder au module joueur";
         }
+    }
+    
+    public function genererUserHistorique() {
+        return null;
     }
 }
