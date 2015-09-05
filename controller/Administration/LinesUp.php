@@ -15,13 +15,13 @@ class LinesUpAdministration extends WP_List_Table
     public function linesUpMenu()
     {
         if(! is_admin()) exit;
-        if(!isset($_GET['teamId'])) die("TRACE ! Pas d'id de team :-/ ");
+        if(!isset($_GET['teamId'])) exit;
         include_once plugin_dir_path( __FILE__ ).'../../model/LineUp.php';
         include_once plugin_dir_path( __FILE__ ).'../../model/Game.php';
         if (isset($_POST['submit'])) {
-            if(isset($_POST['ladder_press_remove_map_id']) && $_POST['ladder_press_remove_map_id'] != 0) {
+            if(isset($_POST['ladder_press_remove_lineup_id']) && $_POST['ladder_press_remove_lineup_id'] != 0) {
                 // Remove line up
-                Map::deleteMap($_POST['ladder_press_remove_map_id']);
+                LineUp::deleteLineUp($_POST['ladder_press_remove_lineup_id']);
             } else if (isset($_POST['ladder_press_lineup_id'])) {
                 if($_POST['ladder_press_lineup_id'] != 0) {
                     // Update line up 
@@ -64,10 +64,10 @@ class LinesUpAdministration extends WP_List_Table
         } else if($_GET['action'] == "edit" && isset ($_GET['lineUpId'])) {
             $editLUP = LineUp::getLineUpById($_GET['lineUpId']);
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editLineUp.php';
-        } //else if($_GET['action'] == "remove" && isset ($_GET['mapId'])) {
-//            $deleteMap = Map::getMapById($_GET['mapId']);
-//            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteMap.php';
-//        }
+        } else if($_GET['action'] == "remove" && isset ($_GET['lineUpId'])) {
+            $deleteLUP = LineUp::getLineUpById($_GET['lineUpId']);
+            include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/deleteLineUp.php';
+        }
     }
     
     /**

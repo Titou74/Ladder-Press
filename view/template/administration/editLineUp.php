@@ -59,10 +59,8 @@ $games = Game::getAllGames();
                        <input type="checkbox" name="ladder_press_lineup_active" <?php if(!$edit || $editLUP->getActive())echo'checked="checked"'; ?>/> 
                     </td>
                 </tr>
-
             </tbody>
         </table>
-        
         <?php submit_button(); ?>
     </form>
 </div>

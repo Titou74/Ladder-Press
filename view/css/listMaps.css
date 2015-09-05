@@ -16,3 +16,13 @@ and open the template in the editor.
 {
     display:table-row;
 }
+
+a.deleted 
+{ 
+    color: white; 
+    padding: 1px 6px 1px 6px; 
+    text-decoration:none;
+    border:1px #0073aa solid;
+    margin-left: 5px;
+    background-color: #00a0d2;
+}

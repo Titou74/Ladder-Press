@@ -183,4 +183,10 @@ class LineUp
         );
     }
     
+    public function deleteLineUp($id)
+    {
+        global $wpdb;
+        $wpdb->delete( "{$wpdb->prefix}ladp_t_line_up_lup", array( 'lup_id' => $id ) );
+    }
+    
 }
