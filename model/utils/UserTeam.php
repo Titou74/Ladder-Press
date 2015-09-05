@@ -12,5 +12,33 @@
  * @author Titou74 <titou.c.74@gmail.com>
  */
 class UserTeam {
-    //put your code here
+    private $userId;
+    private $gameId;
+    private $guid;
+    
+    function getUserId() {
+        return $this->userId;
+    }
+
+    function getGameId() {
+        return $this->gameId;
+    }
+
+    function getGuid() {
+        return $this->guid;
+    }
+
+    function setUserId($userId) {
+        $this->userId = $userId;
+    }
+
+    function setGameId($gameId) {
+        $this->gameId = $gameId;
+    }
+
+    function setGuid($guid) {
+        $this->guid = $guid;
+    }
+
+
 }
