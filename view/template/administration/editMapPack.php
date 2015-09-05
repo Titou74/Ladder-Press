@@ -13,7 +13,6 @@ if($edit)
     $mapsInMapPack = Map::getMapsByMapPack($editMapPack->getId());
     $mapsInMapPackId = array_map(create_function('$o', 'return $o->getId();'), $mapsInMapPack);
 }
-
 ?>
 <div class="wrap">
     <h2><?php echo $edit ? "Edit " : "Add "; echo get_admin_page_title(); ?></h2>
@@ -32,7 +31,11 @@ if($edit)
                     <td>
                         <select name="listMaps" id="listMaps">
                             <?php foreach($maps as $map): ?>
-                                <?php if(($edit) && array_search($map->getId(), $mapsInMapPackId)=== false): ?>
+                                <?php if($edit && array_search($map->getId(), $mapsInMapPackId)=== false): ?>
+                                    <!-- Si nous sommes en édition nous récuperons seulement les maps qui ne sont pas déjà dans le mapPack -->
+                                    <option value="<?php echo $map->getId(); ?>"><?php echo $map->getName(); ?></option>
+                                <?php else : ?>
+                                    <!--Sinon on récupere toutes les maps-->
                                     <option value="<?php echo $map->getId(); ?>"><?php echo $map->getName(); ?></option>
                                 <?php endif; ?>
                             <?php endforeach; ?>

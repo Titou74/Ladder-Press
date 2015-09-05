@@ -59,11 +59,13 @@ class MPacksAdministration extends WP_List_Table
         } else if($_GET['action'] == "add") {
             wp_enqueue_script('jquery');
             wp_enqueue_script( 'editMapPacks', plugins_url( '/../../view/js/'.'editMapPacks.js', __FILE__) , array('jquery'), '1.0.0', true );
+            wp_enqueue_style( 'editMapPacks', plugins_url( '/../../view/css/'.'editMapPack.css', __FILE__));
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMapPack.php';
         } else if($_GET['action'] == "edit" && isset ($_GET['mPackId'])) {
             $editMapPack = MapPack::getMapPackById($_GET['mPackId']);
             wp_enqueue_script('jquery');
             wp_enqueue_script( 'editMapPacks', plugins_url( '/../../view/js/'.'editMapPacks.js', __FILE__) , array('jquery'), '1.0.0', true );
+            wp_enqueue_style( 'editMapPacks', plugins_url( '/../../view/css/'.'editMapPack.css', __FILE__));
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMapPack.php';
         } else if($_GET['action'] == "remove" && isset ($_GET['mPackId'])) {
             $deleteMapPack = MapPack::getMapPackById($_GET['mPackId']);
