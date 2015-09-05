@@ -49,26 +49,24 @@ $users = get_users(array( 'orderby' => 'display_name','fields' => array( 'id','d
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row">Logo name</th>
+                    <th scope="row">Upload logo</th>
                     <td>
-                        <input type="text" name="ladder_press_team_logo_name" value="<?php echo $edit ?  $editTeam->getLogoName() : ""; ?>">
+                        <?php  if($edit): ?>
+                            <?php  if($editTeam->getLogoName() != '') : ?>
+                                <img alt="Team's logo" src="<?php $editTeam->getLogoName(); ?>" style="width: 250px; display: block; max-height: 250px;"/>
+                            <?php  else: ?>
+                                <p><i> No picture uploaded </i></p>
+                            <?php  endif; ?>
+                        <?php endif; ?>
+                        <input type="file" name="ladder_press_team_logo" id="ladder_press_team_logo"  multiple="false" />
                     </td>
                 </tr>
-                <!--<tr>-->
-                    <!-- @TODO mettre à jour pour une image du logo -->
-<!--                <tr>
-                    <th scope="row">Upload Picture</th>
+                <tr>
+                    <th scope="row">Active</th>
                     <td>
-                        <?php // if($edit): ?>
-                            <?php // if($editMap->getPick() != '') : ?>
-                                <img alt="image de la map" src="<?php //echo $editMap->getPick(); ?>" style="width: 250px; display: block; max-height: 250px;"/>
-                            <?php // else : ?>
-                                <p><i> No picture uploaded </i></p>
-                            <?php // endif; ?>
-                        <?php // endif; ?>
-                        <input type="file" name="pick" id="pick"  multiple="false" />
+                       <input type="checkbox" name="ladder_press_team_active" <?php if(!$edit || $editTeam->getActive())echo'checked="checked"'; ?>/> 
                     </td>
-                </tr>-->
+                </tr>
             </tbody>
         </table>
         

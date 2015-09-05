@@ -29,6 +29,19 @@ class MapsAdministration extends WP_List_Table
                         $uploadedFile = $_FILES['pick'];
                         $uploadOverrides = array( 'test_form' => false );
                         $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
+                        if ( $movefile ) {
+                            $wp_filetype = $movefile['type'];
+                            $filename = $movefile['file'];
+                            $wp_upload_dir = wp_upload_dir();
+                            $attachment = array(
+                                'guid' => $wp_upload_dir['url'] . '/' . basename( $filename ),
+                                'post_mime_type' => $wp_filetype,
+                                'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+                                'post_content' => '',
+                                'post_status' => 'inherit'
+                            );
+                            $attach_id = wp_insert_attachment( $attachment, $filename);
+                        }
                         $url_pick = $movefile['url'];
                     }else{
                         $url_pick = "";
@@ -39,12 +52,25 @@ class MapsAdministration extends WP_List_Table
                     $map->setPick($url_pick);
                     Map::updateMap($map);
                 } else {
-                    // Create game
+                    // Create map
                     if(isset($_FILES['pick']) && $_FILES['pick'] != '')
                     {
                         $uploadedFile = $_FILES['pick'];
                         $uploadOverrides = array( 'test_form' => false );
                         $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
+                        if ( $movefile ) {
+                            $wp_filetype = $movefile['type'];
+                            $filename = $movefile['file'];
+                            $wp_upload_dir = wp_upload_dir();
+                            $attachment = array(
+                                'guid' => $wp_upload_dir['url'] . '/' . basename( $filename ),
+                                'post_mime_type' => $wp_filetype,
+                                'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+                                'post_content' => '',
+                                'post_status' => 'inherit'
+                            );
+                            $attach_id = wp_insert_attachment( $attachment, $filename);
+                        }
                         $url_pick = $movefile['url'];
                     }else{
                         $url_pick = "";
