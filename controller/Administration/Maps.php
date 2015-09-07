@@ -42,7 +42,7 @@ class MapsAdministration extends WP_List_Table
                             );
                             $attach_id = wp_insert_attachment( $attachment, $filename);
                         }
-                        $url_pick = $movefile['url'];
+                        $url_pick = $attach_id;
                     }else{
                         $url_pick = "";
                     }     
@@ -198,7 +198,7 @@ class MapsAdministration extends WP_List_Table
                 'id'        => $map->getId(),
                 'game'      => $game->getName(),
                 'name'      => $map->getName(),
-                'pick'   => $map->getPick() != "" ? '<img src="'.$map->getPick().'" style="width:150px;max-height:150px;"/>' : "",
+                'pick'   => $map->getPick() != "" ? '<img src="'.wp_get_attachment_url( $map->getPick() ).'" style="width:150px;max-height:150px;"/>' : "",
                 'gameId'   => $map->getGameId(),
             );
             $data[] = $dataMap;           

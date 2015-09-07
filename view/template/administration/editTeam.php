@@ -53,7 +53,7 @@ $users = get_users(array( 'orderby' => 'display_name','fields' => array( 'id','d
                     <td>
                         <?php  if($edit): ?>
                             <?php  if($editTeam->getLogoName() != '') : ?>
-                                <img alt="Team's logo" src="<?php $editTeam->getLogoName(); ?>" style="width: 250px; display: block; max-height: 250px;"/>
+                                <img alt="Team's logo" src="<?php echo wp_get_attachment_url( $editTeam->getLogoName() ); ?>" style="width: 250px; display: block; max-height: 250px;"/>
                             <?php  else: ?>
                                 <p><i> No picture uploaded </i></p>
                             <?php  endif; ?>

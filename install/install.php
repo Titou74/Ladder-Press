@@ -184,7 +184,7 @@ class Install {
                        MAP_ID               int not null auto_increment,
                        MAP_GAM_ID           int not null,
                        MAP_NAME             char(100) not null,
-                       MAP_PICK             char(255),
+                       MAP_PICK             int,
                        primary key (MAP_ID)
                     );
         ");
@@ -246,7 +246,7 @@ class Install {
                        TEA_DATE_CREATION    datetime not null,
                        TEA_ACTIVE           bool not null,
                        TEA_SITE_URL         char(255),
-                       TEA_LOGO_NAME        char(255),
+                       TEA_LOGO_NAME        int,
                        primary key (TEA_ID)
                     );
         ");

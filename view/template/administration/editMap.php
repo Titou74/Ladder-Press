@@ -51,7 +51,7 @@ $games = Game::getAllGames();
                     <td>
                         <?php if($edit): ?>
                             <?php if($editMap->getPick() != '') : ?>
-                                <img alt="image de la map" src="<?php echo $editMap->getPick(); ?>" style="width: 250px; display: block; max-height: 250px;"/>
+                                <img alt="image de la map" src="<?php echo wp_get_attachment_url( $editMap->getPick() ); ?>" style="width: 250px; display: block; max-height: 250px;"/>
                             <?php else : ?>
                                 <p><i> No picture uploaded </i></p>
                             <?php endif; ?>
