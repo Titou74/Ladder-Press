@@ -36,6 +36,7 @@ class TeamsAdministration extends WP_List_Table
                     $team->setName($_POST['ladder_press_team_name']);
                     $team->setTag($_POST['ladder_press_team_tag']);
                     $team->setIdCreator($_POST['ladder_press_team_creator']);
+                    $team->setSite($_POST['ladder_press_team_site']);
                     if(isset($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
                     {
                         $uploadedFile = $_FILES['ladder_press_team_logo'];
@@ -71,7 +72,8 @@ class TeamsAdministration extends WP_List_Table
                     $team->setName($_POST['ladder_press_team_name']);
                     $team->setTag($_POST['ladder_press_team_tag']);
                     $team->setIdCreator($_POST['ladder_press_team_creator']);
-                                        if(isset($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
+                    $team->setSite($_POST['ladder_press_team_site']);
+                    if(isset($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
                     {
                         $uploadedFile = $_FILES['ladder_press_team_logo'];
                         $uploadOverrides = array( 'test_form' => false );

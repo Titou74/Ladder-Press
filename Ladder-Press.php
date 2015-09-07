@@ -56,8 +56,10 @@ class LadderPress
         }
         
         include_once plugin_dir_path( __FILE__ ).'/controller/Users.php';
+        include_once plugin_dir_path( __FILE__ ).'/controller/Teams.php';
         
         add_shortcode('ladder_press_user_menu', array('Users', 'userMenu'));
+        add_shortcode('ladder_press_team', array('Teams', 'teamsMenu'));
     }
     
     public static function install() {
