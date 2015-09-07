@@ -106,7 +106,7 @@ class Team
     public function getAllTeams() {
         // Execution requête
         global $wpdb;
-        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea", ARRAY_A);
+        $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea WHERE TEA_ACTIVE", ARRAY_A);
         
         // Initialisation tableau retour
         $teams = array();
@@ -176,8 +176,9 @@ class Team
     }
     
     public function deleteTeam($teamId) {
-        global $wpdb;
-        $wpdb->delete( "{$wpdb->prefix}ladp_t_teams_tea", array( 'tea_id' => stripslashes_deep($teamId) ) );
+        $deleteTeam = self::getTeamById($teamId);
+        $deleteTeam->setActive(false);
+        self::updateTeam($deleteTeam);
     }
     
     public function getCurrentPlayerTeam($idUser) {
