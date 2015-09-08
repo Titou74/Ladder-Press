@@ -28,8 +28,7 @@ $hasPlayers = isset($teamPlayers) && $teamPlayers != null;
     <div>
         <div><p>Site</p></div>
         <div><p><a href="<?php echo $team->getSite(); ?>" ><?php echo $team->getSite(); ?></a></p></div>
-    </div>
-    
+    </div>   
     <div>
         <div><p>Joueurs</p></div>
         <div>
@@ -44,6 +43,8 @@ $hasPlayers = isset($teamPlayers) && $teamPlayers != null;
         ?>
         </div>
     </div>
-    
+    <div>
+        <input type="button" value="Rejoindre l'équipe"/>
+    </div>   
 </div>
 
