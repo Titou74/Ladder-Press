@@ -7,6 +7,7 @@ if(!isset($team)) {
 
 $hasPlayers = isset($teamPlayers) && $teamPlayers != null;
 
+$userTeam = UserTeam::getUserTeam(get_current_user_id(), $_GET['teamId']);
 ?>
 
 <div>
@@ -44,7 +45,12 @@ $hasPlayers = isset($teamPlayers) && $teamPlayers != null;
         </div>
     </div>
     <div>
-        <input type="button" value="Rejoindre l'équipe"/>
+        <form action="?page=join_team&teamId=<?php echo $team->getId(); ?>" method="post"/>
+        <?php if(is_null($userTeam) || empty($userTeam)) : ?>
+            <input type="button" value="Rejoindre l'équipe"/>
+        <?php else : ?>
+            <p><small><i> Vous êtes déjà inscrit dans une team </i></small></p>
+        <?php endif; ?>
     </div>   
 </div>
 
