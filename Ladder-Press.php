@@ -64,6 +64,17 @@ class LadderPress
         
         add_shortcode('ladder_press_user_menu', array('Users', 'userMenu'));
         add_shortcode('ladder_press_team', array('Teams', 'teamsMenu'));
+        
+        $pages = get_pages();
+        foreach($pages as $page)
+        {
+            if(has_shortcode($page->post_content,'ladder_press_user_menu'))
+                $page_user_menu = $page->guid;
+            if(has_shortcode($page->post_content,'ladder_press_team'))
+                $page_team = $page->guid;
+        }
+        define('PAGE_TEAM', $page_team);
+        define('PAGE_USER_MENU', $page_user_menu);
     }
     
     public static function install() {
