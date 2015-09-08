@@ -139,6 +139,9 @@ class Teams {
                         echo "Vous ne pouvez pas créer d'équipe si vous êtes déjà membre d'une équipe.";
                     }
                 }
+            } else if($_GET['page'] == 'join_team' && isset($_GET['teamId'])) {
+                $team = Team::getTeamById($_GET['teamId']);
+                include_once plugin_dir_path( __FILE__ ).'../view/template/teamJoin.php';
             } else {
                 echo "Vous devez être connecter pour créer ou modifier une équipe";
             }
