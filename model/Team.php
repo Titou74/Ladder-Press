@@ -186,7 +186,7 @@ class Team
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea
             JOIN {$wpdb->prefix}ladp_tj_user_tea_ute ON {$wpdb->prefix}ladp_t_teams_tea.TEA_ID = {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEA_ID
-            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = 1
+            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = $idUser
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE IS NULL
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT = 1
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ACCEPT = 1", ARRAY_A);
@@ -199,7 +199,7 @@ class Team
         global $wpdb;
         $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea
             JOIN {$wpdb->prefix}ladp_tj_user_tea_ute ON {$wpdb->prefix}ladp_t_teams_tea.TEA_ID = {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEA_ID
-            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = 1
+            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = $idUser
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE IS NULL
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT = 1
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ACCEPT IS NULL", ARRAY_A);
@@ -215,7 +215,7 @@ class Team
         global $wpdb;
         $result = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea
             JOIN {$wpdb->prefix}ladp_tj_user_tea_ute ON {$wpdb->prefix}ladp_t_teams_tea.TEA_ID = {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEA_ID
-            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = 1
+            WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = $idUser
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE IS NULL
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT IS NULL
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ACCEPT = 1", ARRAY_A);

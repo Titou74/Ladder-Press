@@ -135,7 +135,6 @@ class UserTeam {
                     '%s'
             )
         );
-        $userTeam->setId($wpdb->insert_id);
     }
     
     public function updateUserTeam($userTeam) {

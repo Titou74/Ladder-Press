@@ -13,7 +13,6 @@
  */
 class Teams {
     public function teamsMenu() {
-        
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_team_id']) && $_POST['ladder_press_remove_team_id'] != 0) {
                 // Remove team
@@ -60,6 +59,7 @@ class Teams {
                         echo "Vous ne pouvez pas modifier cette équipe";
                     }
                 } else {
+                    
                     if(!UserTeam::isUserHasTeam(get_current_user_id())) {
                         // Create team
                         $team = new Team();
@@ -70,9 +70,12 @@ class Teams {
                             $team->setActive (0);
                         $team->setName($_POST['ladder_press_team_name']);
                         $team->setTag($_POST['ladder_press_team_tag']);
-                        $team->setIdCreator(get_current_user_id());
                         $team->setSite($_POST['ladder_press_team_site']);
-                        if(isset($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
+                        
+                        $team->setIdCreator(get_current_user_id());
+                        $team->setDateCrea(date("Y-m-d H:i:s"));
+                        $team->setActive(true);
+                        /*if(isset($_FILES['ladder_press_team_logo']) && !empty($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
                         {
                             $uploadedFile = $_FILES['ladder_press_team_logo'];
                             $uploadOverrides = array( 'test_form' => false );
@@ -91,9 +94,9 @@ class Teams {
                                 $attach_id = wp_insert_attachment( $attachment, $filename);
                             }
                             $logo_name = $movefile['url'];
-                        }else{
+                        }else{*/
                             $logo_name = "";
-                        }  
+                        //}  
                         $team->setLogoName($logo_name);
                         Team::createTeam($team);
                         
@@ -101,13 +104,16 @@ class Teams {
                         
                         $newUserAdmin->setTeamId($team->getId());
                         $newUserAdmin->setUserId(get_current_user_id());
-                        $newUserAdmin->setRequestDate(getdate());
+                        $newUserAdmin->setRequestDate(date("Y-m-d H:i:s"));
                         $newUserAdmin->setTeamAccept(true);
                         $newUserAdmin->setUserAccept(true);
                         $newUserAdmin->setUserRank("admin");
-                        $newUserAdmin->setAcceptDate(getdate());
-                        $newUserAdmin->setLeaveDate(null);
+                        $newUserAdmin->setAcceptDate(date("Y-m-d H:i:s"));
+                        $newUserAdmin->setLeaveDate(NULL);
                         
+                        UserTeam::createUserTeam($newUserAdmin);
+                        
+                        $_GET['teamId'] = $team->getId();
                     } else {
                         echo "Vous ne pouvez pas créer d'équipe si vous êtes déjà membre d'une équipe.";
                     }
