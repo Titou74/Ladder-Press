@@ -84,12 +84,11 @@ class Install {
                        UTE_TEA_ID           int not null,
                        UTE_USER_ID          bigint(20) unsigned not null,
                        UTE_DATE_REQUEST     datetime,
-                       UTE_DATE_INVITE      datetime,
                        UTE_TEAM_ACCEPT      bool,
                        UTE_USER_ACCEPT      bool,
                        UTE_USER_RANK        char(10) not null,
                        UTE_DATE_ACCEPT      datetime,
-                       UTE_DATE_LEAVE       datetime,
+                       UTE_DATE_LEAVE       datetime DE,
                        primary key (UTE_TEA_ID, UTE_USER_ID)
                     );
         ");

@@ -27,5 +27,5 @@ $edit = isset($editTeam);
     <input type="file" name="ladder_press_team_logo" id="ladder_press_team_logo"  multiple="false" />
     
     <br><br>
-    <input id="submit" class="button button-primary" type="submit" value="Créer une équipe" />
+    <input id="submit" name="submit" class="button button-primary" type="submit" value="Créer une équipe" />
 </form>
