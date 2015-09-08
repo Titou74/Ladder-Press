@@ -21,7 +21,7 @@ class TeamsAdministration extends WP_List_Table
         include_once plugin_dir_path( __FILE__ ).'../../model/Team.php';
         
         if (isset($_POST['submit'])) {
-           if(isset($_POST['ladder_press_remove_team_id']) && $_POST['ladder_press_remove_team_id'] != 0) {
+            if(isset($_POST['ladder_press_remove_team_id']) && $_POST['ladder_press_remove_team_id'] != 0) {
                 // Remove game
                 Team::deleteTeam($_POST['ladder_press_remove_team_id']);
             } else if (isset($_POST['ladder_press_team_id'])) {

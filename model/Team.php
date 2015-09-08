@@ -139,6 +139,7 @@ class Team
                     '%s'
             )
         );
+        $team->setId($wpdb->insert_id);
     }
     
     public function updateTeam($team) {

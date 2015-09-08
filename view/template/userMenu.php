@@ -27,7 +27,7 @@ echo "<h2>Ma team</h2>";
 if($hasTeam) {
     echo "<p>Equipe actuelle : " . $userTeam->getName() . "</p>";
 } else {
-    echo "<p>Vous n'êtes actuellement dans aucune équipe. Vous pouvez en rejoindre une depuis la <a href=\"\">liste  des équipes</a></p>";
+    echo "<p>Vous n'êtes actuellement dans aucune équipe. Vous pouvez en rejoindre une depuis la <a href=\"team-menu/\">liste  des équipes</a></p>";
 }
 
 echo "<h2>Invitation en cours</h2>";
@@ -47,7 +47,7 @@ if($userTeamDemande) {
         echo "<p>Vous avez une demande auprès de l'équipe " . $team->getName() . " en attente de confirmation.";
     }
 } else {
-    echo "<p>Vous n'avez aucune demande en cours</p>";
+    echo "<p>Vous n'avez aucune demande en attente de validation</p>";
 }
 
 echo "<hr>";

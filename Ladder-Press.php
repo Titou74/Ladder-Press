@@ -43,6 +43,10 @@ class LadderPress
         
         include_once plugin_dir_path( __FILE__ ).'/model/UserMatchCom.php';
         
+        include_once plugin_dir_path( __FILE__ ).'/model/utils/UserGame.php';
+        
+        include_once plugin_dir_path( __FILE__ ).'/model/utils/UserTeam.php';
+        
         if( is_admin()) {
             include_once plugin_dir_path( __FILE__ ).'/controller/Administration/Games.php';
             include_once plugin_dir_path( __FILE__ ).'/controller/Administration/Maps.php';
