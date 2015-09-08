@@ -12,78 +12,32 @@
  * @author Titou74 <titou.c.74@gmail.com>
  */
 class UserGame {
-    private $teamId;
     private $userId;
-    private $requestDate;
-    private $teamAccept;
-    private $userAccept;
-    private $userRank;
-    private $acceptDate;
-    private $leaveDate;
+    private $gameId;
+    private $guid;
     
-    function getTeamId() {
-        return $this->teamId;
-    }
-
     function getUserId() {
         return $this->userId;
     }
 
-    function getRequestDate() {
-        return $this->requestDate;
+    function getGameId() {
+        return $this->gameId;
     }
 
-    function getTeamAccept() {
-        return $this->teamAccept;
-    }
-
-    function getUserAccept() {
-        return $this->userAccept;
-    }
-
-    function getUserRank() {
-        return $this->userRank;
-    }
-
-    function getAcceptDate() {
-        return $this->acceptDate;
-    }
-
-    function getLeaveDate() {
-        return $this->leaveDate;
-    }
-
-    function setTeamId($teamId) {
-        $this->teamId = $teamId;
+    function getGuid() {
+        return $this->guid;
     }
 
     function setUserId($userId) {
         $this->userId = $userId;
     }
 
-    function setRequestDate($requestDate) {
-        $this->requestDate = $requestDate;
+    function setGameId($gameId) {
+        $this->gameId = $gameId;
     }
 
-    function setTeamAccept($teamAccept) {
-        $this->teamAccept = $teamAccept;
+    function setGuid($guid) {
+        $this->guid = $guid;
     }
-
-    function setUserAccept($userAccept) {
-        $this->userAccept = $userAccept;
-    }
-
-    function setUserRank($userRank) {
-        $this->userRank = $userRank;
-    }
-
-    function setAcceptDate($acceptDate) {
-        $this->acceptDate = $acceptDate;
-    }
-
-    function setLeaveDate($leaveDate) {
-        $this->leaveDate = $leaveDate;
-    }
-
-
+    
 }
