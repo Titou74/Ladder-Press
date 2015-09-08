@@ -91,7 +91,7 @@ class TeamsAdministration extends WP_List_Table
                             );
                             $attach_id = wp_insert_attachment( $attachment, $filename);
                         }
-                        $logo_name = $movefile['url'];
+                        $logo_name = $attach_id;
                     }else{
                         $logo_name = "";
                     }  
