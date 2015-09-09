@@ -178,39 +178,41 @@ class Teams {
             if(UserTeam::isUserAdminTeam(get_current_user_id(), $_POST['ladder_press_team_id'])) {
                 // Update team
                 $team = Team::getTeamById($_POST['ladder_press_team_id']);
-                $team->setDateCrea($_POST['ladder_press_team_creation']);
-                if($_POST['ladder_press_team_active'] == "on" || $_POST['ladder_press_team_active'])
-                    $team->setActive(1);
-                else
-                    $team->setActive (0);
-                $team->setName($_POST['ladder_press_team_name']);
-                $team->setTag($_POST['ladder_press_team_tag']);
-                $team->setIdCreator($_POST['ladder_press_team_creator']);
-                $team->setSite($_POST['ladder_press_team_site']);
-                if(isset($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
-                {
-                    $uploadedFile = $_FILES['ladder_press_team_logo'];
-                    $uploadOverrides = array( 'test_form' => false );
-                    $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
-                    if ( $movefile ) {
-                        $wp_filetype = $movefile['type'];
-                        $filename = $movefile['file'];
-                        $wp_upload_dir = wp_upload_dir();
-                        $attachment = array(
-                            'guid' => $wp_upload_dir['url'] . '/' . basename( $filename ),
-                            'post_mime_type' => $wp_filetype,
-                            'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
-                            'post_content' => '',
-                            'post_status' => 'inherit'
-                        );
-                        $attach_id = wp_insert_attachment( $attachment, $filename);
-                    }
-                    $logo_name = $attach_id;
-                }else{
-                    $logo_name = "";
-                }  
-                $team->setLogoName($logo_name);
-                Team::updateTeam($team);
+                if($team != null) {
+                    $team->setDateCrea($_POST['ladder_press_team_creation']);
+                    if($_POST['ladder_press_team_active'] == "on" || $_POST['ladder_press_team_active'])
+                        $team->setActive(1);
+                    else
+                        $team->setActive (0);
+                    $team->setName($_POST['ladder_press_team_name']);
+                    $team->setTag($_POST['ladder_press_team_tag']);
+                    $team->setIdCreator($_POST['ladder_press_team_creator']);
+                    $team->setSite($_POST['ladder_press_team_site']);
+                    if(isset($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
+                    {
+                        $uploadedFile = $_FILES['ladder_press_team_logo'];
+                        $uploadOverrides = array( 'test_form' => false );
+                        $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
+                        if ( $movefile ) {
+                            $wp_filetype = $movefile['type'];
+                            $filename = $movefile['file'];
+                            $wp_upload_dir = wp_upload_dir();
+                            $attachment = array(
+                                'guid' => $wp_upload_dir['url'] . '/' . basename( $filename ),
+                                'post_mime_type' => $wp_filetype,
+                                'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+                                'post_content' => '',
+                                'post_status' => 'inherit'
+                            );
+                            $attach_id = wp_insert_attachment( $attachment, $filename);
+                        }
+                        $logo_name = $attach_id;
+                    }else{
+                        $logo_name = "";
+                    }  
+                    $team->setLogoName($logo_name);
+                    Team::updateTeam($team);
+                }
             } else {
                 echo "Vous ne pouvez pas modifier cette équipe";
             }
