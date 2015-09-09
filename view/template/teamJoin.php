@@ -5,6 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 if(!isset($team)) {
     exit;
 }
@@ -12,7 +13,7 @@ if(!isset($team)) {
 ?>
 <div class="wrap">
     
-    <p>Etes vous sûr de vouloir rejoindre l'équipe : <strong><?php echo $team->getName() ?>"</strong></p>
+    <p>Etes vous sûr de vouloir rejoindre l'équipe : <strong><?php echo $team->getName() ?></strong></p>
     
 <!--    <form style="display:inline;" method="post" action="?page=ladder_press_games">
         <input type="hidden" name="ladder_press_remove_game_id" value="">
