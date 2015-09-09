@@ -26,9 +26,34 @@ class Users {
         
         // Display traitment
         if(isset($_GET['page'])) {
-            
+            switch ($_GET['page']) {
+                case "user_menu":
+                    self::displayUserMenu();
+                    break;
+                default:
+                    self::displayUserMenu();
+                    break;
+            }
         } else {
-            
+            self::displayUserMenu();
+        }
+    }
+    
+    private function displayUserMenu() {
+        if(get_current_user_id() != 0) {
+            $userGuid = null;
+                
+            $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
+
+            $userTeamInvitation = Team::getInvitationPlayerNonRepondu(get_current_user_id());
+
+            $userTeamDemande = Team::getDemandePlayerNonRepondu(get_current_user_id());
+
+            $userHistorique = self::genererUserHistorique();
+
+            include_once $GLOBALS['ladder_press_dir_path'].'/view/template/userMenu.php';
+        } else {
+            echo "Vous devez être connecter pour accéder au module joueur";
         }
     }
     
@@ -57,10 +82,7 @@ class Users {
             } else if($_GET['page'] == "game_edit") {
                 echo "COUCOU EDIT";
             }
-            // La j'inclus le contrôleur "Teams" grâce au shortcode suite Teams.php ligne 126
-            if($_GET['page'] == "team_list"){
-                do_shortcode('[ladder_press_team]');
-            }
+            
         } else {
             echo "Vous devez être connecter pour accéder au module joueur";
         }

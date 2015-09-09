@@ -26,9 +26,73 @@ class Teams {
         
         // Display traitment
         if(isset($_GET['page'])) {
+            switch ($_GET['page']) {
+                case "team_list":
+                    self::displayTeamList();
+                    break;
+                case "details" && isset($_GET['teamId']):
+                    self::displayTeamDetail();
+                    break;
+                case "edit" && isset($_GET['teamId']):
+                    self::editTeam();
+                    break;
+                case "create":
+                    self::createTeam();
+                    break;
+                case "join_team" && isset($_GET['teamId']);
+                    self::joinTeam();
+                    break;
+                default:
+                    self::displayTeamList();
+                    break;
+            }
+        } else {
+            self::displayTeamList();
+        }
+    }
+    
+    private function displayTeamList() {
+        // Teams liste
+        $allTeams = Team::getAllTeams();
+        include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamList.php';
+    }
+    
+    private function displayTeamDetail() {
+        // Team details
+        $team = Team::getTeamById($_GET['teamId']);
+        include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamDetails.php';
+    }
+    
+    private function createTeam() {
+        if(get_current_user_id() != 0) {
+            if(!UserTeam::isUserHasTeam(get_current_user_id())) {
+                include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamEdit.php';
+            } else {
+                echo "Vous ne pouvez pas créer d'équipe si vous êtes déjà membre d'une équipe.";
+            }
+        } else {
+            echo "Vous devez être connecté pour créer une équipe";
+        }
+    }
+    
+    private function editTeam() {
+        if(get_current_user_id() != 0) {
             
         } else {
-            
+            echo "Vous devez être connecté pour créer une équipe";
+        }
+    }
+    
+    private function joinTeam() {
+        if(get_current_user_id() != 0) {
+            if(!UserTeam::isUserHasTeam(get_current_user_id())) {
+                $team = Team::getTeamById($_GET['teamId']);
+                include_once $GLOBALS['ladder_press_dir_path'].'../view/template/teamJoin.php';
+            } else {
+                echo "Vous ne pouvez rejoindre d'équipe si vous êtes déjà membre d'une équipe.";
+            }
+        } else {
+            echo "Vous devez être connecté pour rejoindre une équipe";
         }
     }
     
@@ -139,38 +203,6 @@ class Teams {
                     }
                 }
                 
-            }
-        }
-        
-        // Enfin j'affiche la vue souhaité en fonction du paramètre GET. (Pourras tu effacer les commentaires au passage)
-        if(!isset($_GET['page']) || $_GET['page'] == 'team_list') {
-            // Teams liste
-            $allTeams = Team::getAllTeams();
-            
-            include_once plugin_dir_path( __FILE__ ).'../view/template/teamList.php';
-        } else if($_GET['page'] == "details" && isset($_GET['teamId'])) {
-            // Team details
-            $team = Team::getTeamById($_GET['teamId']);
-            
-            include_once plugin_dir_path( __FILE__ ).'../view/template/teamDetails.php';
-        } else if($_GET['page'] == "edit") {
-            if(get_current_user_id() != 0) {
-                if(isset($_GET['teamId'])) {
-                    // Edition d'une équipe déjà existante
-
-                } else {
-                    // Création d'une équipe
-                    if(!UserTeam::isUserHasTeam(get_current_user_id())) {
-                        include_once plugin_dir_path( __FILE__ ).'../view/template/teamEdit.php';
-                    } else {
-                        echo "Vous ne pouvez pas créer d'équipe si vous êtes déjà membre d'une équipe.";
-                    }
-                }
-            } else if($_GET['page'] == 'join_team' && isset($_GET['teamId'])) {
-                $team = Team::getTeamById($_GET['teamId']);
-                include_once plugin_dir_path( __FILE__ ).'../view/template/teamJoin.php';
-            } else {
-                echo "Vous devez être connecter pour créer ou modifier une équipe";
             }
         }
         

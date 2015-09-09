@@ -31,7 +31,7 @@ echo "<h2>Ma team</h2>";
 if($hasTeam) {
     echo "<p>Equipe actuelle : " . $userTeam->getName() . "</p>";
 } else {
-    echo "<p>Vous n'êtes actuellement dans aucune équipe. Vous pouvez en rejoindre une depuis la <a href=\"team-menu/\">liste  des équipes</a></p>";
+    echo "<p>Vous n'êtes actuellement dans aucune équipe. Vous pouvez en rejoindre une depuis la <a href=\"?p=teams\">liste  des équipes</a></p>";
 }
 
 echo "<h2>Invitation en cours</h2>";
