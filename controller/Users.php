@@ -24,10 +24,35 @@ class Users {
             
         }
         // Display traitment
-        if(!isset($_GET['page'])) {
-
+        if(isset($_GET['page'])) {
+            switch ($_GET['page']) {
+                case "user_menu":
+                    self::displayUserMenu();
+                    break;
+                default:
+                    self::displayUserMenu();
+                    break;
+            }
         } else {
-            
+            self::displayUserMenu();
+        }
+    }
+    
+    private function displayUserMenu() {
+        if(get_current_user_id() != 0) {
+            $userGuid = null;
+                
+            $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
+
+            $userTeamInvitation = Team::getInvitationPlayerNonRepondu(get_current_user_id());
+
+            $userTeamDemande = Team::getDemandePlayerNonRepondu(get_current_user_id());
+
+            $userHistorique = self::genererUserHistorique();
+
+            include_once $GLOBALS['ladder_press_dir_path'].'/view/template/userMenu.php';
+        } else {
+            echo "Vous devez être connecter pour accéder au module joueur";
         }
     }
     
@@ -56,6 +81,7 @@ class Users {
             } else if($_GET['page'] == "game_edit") {
                 echo "COUCOU EDIT";
             }
+            
         } else {
             echo "Vous devez être connecter pour accéder au module joueur";
         }
