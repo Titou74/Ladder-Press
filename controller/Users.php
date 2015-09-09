@@ -12,6 +12,26 @@
  * @author Titou
  */
 class Users {
+    
+    public function __construct()
+    {
+        // Include models
+        include_once plugin_dir_path( __FILE__ ).'../model/Team.php';
+        include_once plugin_dir_path( __FILE__ ).'/model/Game.php';
+        
+        // Form traitment
+        if (isset($_POST['submit'])) {
+            
+        }
+        
+        // Display traitment
+        if(isset($_GET['page'])) {
+            
+        } else {
+            
+        }
+    }
+    
     public function userMenu() {
         if(get_current_user_id() != 0) {
             

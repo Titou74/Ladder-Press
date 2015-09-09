@@ -12,6 +12,26 @@
  * @author Titou74 <titou.c.74@gmail.com>
  */
 class Teams {
+    
+    public function __construct()
+    {
+        // Include models
+        include_once plugin_dir_path( __FILE__ ).'/model/Team.php';
+        include_once plugin_dir_path( __FILE__ ).'/model/utils/UserTeam.php';
+        
+        // Form traitment
+        if (isset($_POST['submit'])) {
+            
+        }
+        
+        // Display traitment
+        if(isset($_GET['page'])) {
+            
+        } else {
+            
+        }
+    }
+    
     public function teamsMenu() {
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_team_id']) && $_POST['ladder_press_remove_team_id'] != 0) {
