@@ -23,10 +23,9 @@ class Users {
         if (isset($_POST['submit'])) {
             
         }
-        
         // Display traitment
-        if(isset($_GET['page'])) {
-            
+        if(!isset($_GET['page'])) {
+
         } else {
             
         }
@@ -36,8 +35,7 @@ class Users {
         if(get_current_user_id() != 0) {
             
             $allGames = Game::getAllGames();
-            echo('lol');
-            if(!isset($_GET['page'])) {
+            if(isset($_GET['page']) == "user_menu") {
                 
                 $userGuid = null;
                 
@@ -49,6 +47,7 @@ class Users {
                 
                 $userHistorique = self::genererUserHistorique();
                 
+                
                 include_once plugin_dir_path( __FILE__ ).'../view/template/userMenu.php';
             } else if($_GET['page'] == "game_list") {
                 echo "COUCOU LIST";
@@ -56,10 +55,6 @@ class Users {
                 echo "COUCOU ADD";
             } else if($_GET['page'] == "game_edit") {
                 echo "COUCOU EDIT";
-            }
-            // La j'inclus le contrôleur "Teams" grâce au shortcode suite Teams.php ligne 126
-            if($_GET['page'] == "team_list"){
-                do_shortcode('[ladder_press_team]');
             }
         } else {
             echo "Vous devez être connecter pour accéder au module joueur";

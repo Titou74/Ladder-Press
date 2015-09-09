@@ -30,7 +30,9 @@ class LadderPressController {
                     break;
             }
         } else {
-            echo "pas de p non reconnu";
+            include_once $GLOBALS['ladder_press_dir_path'].'/controller/Users.php';
+            new Users();
+            exit;
         }
     }
 }
