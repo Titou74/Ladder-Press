@@ -21,7 +21,15 @@ class Teams {
         
         // Form traitment
         if (isset($_POST['submit'])) {
-            
+            if(isset($_POST['ladder_press_remove_team_id'])) {
+                self::processDeleteTeam();
+            } else if (isset($_POST['ladder_press_team_id'])) {
+                if($_POST['ladder_press_team_id'] == 0) {
+                    self::processCreateTeam();
+                } else {
+                    self::processEditTeam();
+                }
+            }
         }
         
         // Display traitment
@@ -96,15 +104,15 @@ class Teams {
         }
     }
     
-    private function deleteTeamForm() {
+    private function processDeleteTeam() {
         
         // TODO Vérification de droit de suppression
-        Team::deleteTeam($_POST['ladder_press_remove_team_id']);
+        //Team::deleteTeam($_POST['ladder_press_remove_team_id']);
     }
     
     private function processCreateTeam() {
         if(get_current_user_id() != 0) {
-            if(!UserTeam::isUserHasTeam(get_current_user_id())) {
+            if(!UserTeam::isUserHasTeam(get_current_user_id()) && $_POST['ladder_press_team_id'] == 0) {
                 // Create team
                 $team = new Team();
                 $team->setDateCrea($_POST['ladder_press_team_creation']);
@@ -210,5 +218,4 @@ class Teams {
             echo "Vous devez être connecté pour créer une équipe";
         }
     }
-    
 }
