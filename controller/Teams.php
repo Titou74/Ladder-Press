@@ -31,23 +31,23 @@ class Teams {
                 }
             }
         }
-        
         // Display traitment
         if(isset($_GET['page'])) {
-            switch ($_GET['page']) {
-                case "team_list":
+            $page = $_GET['page'];
+            switch (true) {
+                case $page == "team_list":
                     self::displayTeamList();
                     break;
-                case "details" && isset($_GET['teamId']):
+                case ($page == "details" && isset($_GET['teamId'])):
                     self::displayTeamDetail();
                     break;
-                case "edit" && isset($_GET['teamId']):
+                case ($page == "edit" && isset($_GET['teamId'])):
                     self::editTeam();
                     break;
-                case "create":
+                case $page == "create":
                     self::createTeam();
                     break;
-                case "join_team" && isset($_GET['teamId']);
+                case ($page == "join_team" && isset($_GET['teamId'])):
                     self::joinTeam();
                     break;
                 default:
@@ -95,7 +95,7 @@ class Teams {
         if(get_current_user_id() != 0) {
             if(!UserTeam::isUserHasTeam(get_current_user_id())) {
                 $team = Team::getTeamById($_GET['teamId']);
-                include_once $GLOBALS['ladder_press_dir_path'].'../view/template/teamJoin.php';
+                include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamJoin.php';
             } else {
                 echo "Vous ne pouvez rejoindre d'équipe si vous êtes déjà membre d'une équipe.";
             }
