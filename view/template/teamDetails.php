@@ -45,9 +45,9 @@ $userTeam = UserTeam::getUserTeam(get_current_user_id(), $_GET['teamId']);
         </div>
     </div>
     <div>
-        <form action="?page=join_team&teamId=<?php echo $team->getId(); ?>" method="post"/>
+        <form action="?p=teams&page=join_team&teamId=<?php echo $team->getId(); ?>" method="post"/>
         <?php if(is_null($userTeam) || empty($userTeam)) : ?>
-            <input type="button" value="Rejoindre l'équipe"/>
+            <input type="submit" value="Rejoindre l'équipe"/>
         <?php elseif($userTeam->getTeamId() == $team->getId()) : ?>
             <p><small><i> Vous êtes déjà inscrit dans cette équipe </i></small></p>
         <?php else : ?>
