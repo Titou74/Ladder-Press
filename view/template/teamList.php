@@ -29,7 +29,7 @@ if($hasTeams) {
                echo "<td><p>" . "TODO" . "</p></td>";
                echo "<td><p>" . "TODO" . "</p></td>";
                echo "<td>";
-               echo "<form style=\"display:inline;\" action=\"?page=details&teamId=" . $team->getId() . "\" method=\"post\">" .
+               echo "<form style=\"display:inline;\" action=\"?p=teams&page=details&teamId=" . $team->getId() . "\" method=\"post\">" .
                         "<input id=\"submit\" class=\"button button-primary\" type=\"submit\" value=\"Détails de l'équipe\" />" .
                     "</form>";
                 echo "</td>";
@@ -41,7 +41,7 @@ if($hasTeams) {
     echo "<p>Il n'y a pour l'instant aucune équipe.</p>";
 }
 
-echo "<form style=\"display:inline;\" action=\"?page=edit\" method=\"post\">" .
+echo "<form style=\"display:inline;\" action=\"?p=teams&page=create\" method=\"post\">" .
          "<input id=\"submit\" class=\"button button-primary\" type=\"submit\" value=\"Créer une équipe\" />" .
      "</form>";
 
