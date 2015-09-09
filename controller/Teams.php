@@ -122,7 +122,8 @@ class Teams {
             }
         }
         
-        if(!isset($_GET['page'])) {
+        // Enfin j'affiche la vue souhaité en fonction du paramètre GET. (Pourras tu effacer les commentaires au passage)
+        if(!isset($_GET['page']) || $_GET['page'] == 'team_list') {
             // Teams liste
             $allTeams = Team::getAllTeams();
             

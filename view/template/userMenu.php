@@ -10,6 +10,10 @@ $hasTeamDemande = isset($userTeamDemande) && $userTeamDemande != null;
 
 $hasHistorique = isset($userHistorique) && $userHistorique != null;
 
+// Test short code do_shortcode
+// @TITOU ici j'inclue le lien avec un paramètre GET que je choisis, suite dans le controlleur Users.php ligne 41
+echo "<a class=\"\" href=\"?page=team_list\">Liste des teams</a>";
+
 echo "<h2>Mes GUID</h2>";
 
 if($hasTeam) {
