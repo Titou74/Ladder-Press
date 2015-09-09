@@ -71,7 +71,7 @@ class MapsAdministration extends WP_List_Table
                             );
                             $attach_id = wp_insert_attachment( $attachment, $filename);
                         }
-                        $url_pick = $movefile['url'];
+                        $url_pick = $attach_id;
                     }else{
                         $url_pick = "";
                     }
