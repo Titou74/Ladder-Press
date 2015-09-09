@@ -16,8 +16,8 @@ class Teams {
     public function __construct()
     {
         // Include models
-        include_once plugin_dir_path( __FILE__ ).'/model/Team.php';
-        include_once plugin_dir_path( __FILE__ ).'/model/utils/UserTeam.php';
+        include_once $GLOBALS['ladder_press_dir_path'].'/model/Team.php';
+        include_once $GLOBALS['ladder_press_dir_path'].'/model/utils/UserTeam.php';
         
         // Form traitment
         if (isset($_POST['submit'])) {

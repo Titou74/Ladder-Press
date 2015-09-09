@@ -16,21 +16,21 @@ class LadderPressController {
         if(isset($_GET['p'])) {
             switch ($_GET['p']) {
                 case "users":
-                    include_once plugin_dir_path( __FILE__ ).'/controller/Users.php';
+                    include_once $GLOBALS['ladder_press_dir_path'].'/controller/Users.php';
                     new Users();
                     break;
                 
                 case "teams":
-                    include_once plugin_dir_path( __FILE__ ).'/controller/Teams.php';
+                    include_once $GLOBALS['ladder_press_dir_path'].'/controller/Teams.php';
                     new Teams();
                     break;
 
                 default:
-                    
+                    echo "p non reconnu";
                     break;
             }
         } else {
-            
+            echo "pas de p non reconnu";
         }
     }
 }
