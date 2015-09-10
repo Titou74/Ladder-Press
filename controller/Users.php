@@ -18,10 +18,11 @@ class Users {
         // Include models
         include_once $GLOBALS['ladder_press_dir_path'].'/model/Team.php';
         include_once $GLOBALS['ladder_press_dir_path'].'/model/Game.php';
+        include_once $GLOBALS['ladder_press_dir_path'].'/model/utils/UserTeam.php';
         
         // Form traitment
         if (isset($_POST['submit'])) {
-            if(isset($_POST['ladder_press_join_user_id']))
+            if(isset($_POST['ladder_press_join_team_id']))
             {
                 self::processRequestJoinTeam();
             }
@@ -65,8 +66,16 @@ class Users {
     
     private function processRequestJoinTeam()
     {
-        //@TODO à faire
-        $team = Team::getTeamById($_GET['teamId']);
-        
+        if(get_current_user_id() != 0) {
+            $userTeam = new UserTeam();
+            $userTeam->setTeamId($_POST['ladder_press_join_team_id']);
+            $userTeam->setUserId(get_current_user_id());
+            $userTeam->setRequestDate(date("Y-m-d H:i:s"));
+            $userTeam->setTeamAccept(0);
+            $userTeam->setUserAccept(true);
+            $userTeam->setAcceptDate(null);
+            $userTeam->setLeaveDate(null);
+            UserTeam::createUserTeam($userTeam);
+        }
     }
 }
