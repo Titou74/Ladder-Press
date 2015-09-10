@@ -21,7 +21,10 @@ class Users {
         
         // Form traitment
         if (isset($_POST['submit'])) {
-            
+            if(isset($_POST['ladder_press_join_user_id']))
+            {
+                self::processRequestJoinTeam();
+            }
         }
         // Display traitment
         if(isset($_GET['page'])) {
@@ -58,5 +61,12 @@ class Users {
     
     private function genererUserHistorique() {
         return null;
+    }
+    
+    private function processRequestJoinTeam()
+    {
+        //@TODO à faire
+        $team = Team::getTeamById($_GET['teamId']);
+        
     }
 }
