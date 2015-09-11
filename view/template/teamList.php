@@ -12,13 +12,6 @@ if($hasTeams) {
              "</tr>" .
          "</thead>";
 
-
-    echo "<tfoot>" .
-             "<tr>" .
-                 "<th><p>Nom</p></th> <th><p>Tag</p></th> <th><p>Logo</p></th> <th><p>Nombre de joueur</p></th> <th><p>Nombre de lineup</p></th></th>" .
-             "</tr>" .
-         "</tfoot>";
-
     echo "<tbody>";
 
        foreach ($allTeams as $team) {
