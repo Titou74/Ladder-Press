@@ -4,7 +4,7 @@ $hasTeams = isset($allTeams) && $allTeams != null;
 
 if($hasTeams) {
 
-    echo "<table>";
+    echo "<table id=\"ladder-press-team-list\">";
 
     echo "<thead>" .
              "<tr>" .
@@ -46,3 +46,9 @@ echo "<form style=\"display:inline;\" action=\"?p=teams&page=create\" method=\"p
      "</form>";
 
 ?>
+
+<script type='text/javascript'>
+    jQuery(document).ready( function () {
+        jQuery('#ladder-press-team-list').DataTable();
+    } );
+</script>
