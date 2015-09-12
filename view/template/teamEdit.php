@@ -3,7 +3,7 @@
 $edit = isset($editTeam);
 
 ?>
-<form method="post" action="?page=detail" enctype="multipart/form-data">
+<form method="post" action="?p=teams&page=detail" enctype="multipart/form-data">
     
     <input type="hidden" name="ladder_press_team_id" value=" <?php echo $edit ? $editTeam->getId() : "0"; ?> ">
     

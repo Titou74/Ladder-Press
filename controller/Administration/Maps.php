@@ -93,9 +93,6 @@ class MapsAdministration extends WP_List_Table
             
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/listMaps.php';
         } else if($_GET['action'] == "add") {
-            require_once( ABSPATH . 'wp-admin/includes/image.php' );
-            require_once( ABSPATH . 'wp-admin/includes/file.php' );
-            require_once( ABSPATH . 'wp-admin/includes/media.php' );
             include_once plugin_dir_path( __FILE__ ).'../../view/template/administration/editMap.php';
         } else if($_GET['action'] == "edit" && isset ($_GET['mapId'])) {
             $editMap = Map::getMapById($_GET['mapId']);

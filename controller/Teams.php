@@ -18,7 +18,6 @@ class Teams {
         // Include models
         include_once $GLOBALS['ladder_press_dir_path'].'/model/Team.php';
         include_once $GLOBALS['ladder_press_dir_path'].'/model/utils/UserTeam.php';
-        
         // Form traitment
         if (isset($_POST['submit'])) {
             if(isset($_POST['ladder_press_remove_team_id'])) {
@@ -127,11 +126,13 @@ class Teams {
                 $team->setIdCreator(get_current_user_id());
                 $team->setDateCrea(date("Y-m-d H:i:s"));
                 $team->setActive(true);
-                
-                /*if(isset($_FILES['ladder_press_team_logo']) && !empty($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
+                if(isset($_FILES['ladder_press_team_logo']) && !empty($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
                 {
                     $uploadedFile = $_FILES['ladder_press_team_logo'];
                     $uploadOverrides = array( 'test_form' => false );
+                    require_once( ABSPATH . 'wp-admin/includes/image.php' );
+                    require_once( ABSPATH . 'wp-admin/includes/file.php' );
+                    require_once( ABSPATH . 'wp-admin/includes/media.php' );
                     $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
                     if ( $movefile ) {
                         $wp_filetype = $movefile['type'];
@@ -146,10 +147,10 @@ class Teams {
                         );
                         $attach_id = wp_insert_attachment( $attachment, $filename);
                     }
-                    $logo_name = $movefile['url'];
-                }else{*/
+                    $logo_name = $attach_id;
+                }else{
                     $logo_name = "";
-                //}  
+                }  
                 $team->setLogoName($logo_name);
                 Team::createTeam($team);
 
@@ -192,6 +193,9 @@ class Teams {
                     {
                         $uploadedFile = $_FILES['ladder_press_team_logo'];
                         $uploadOverrides = array( 'test_form' => false );
+                        require_once( ABSPATH . 'wp-admin/includes/image.php' );
+                        require_once( ABSPATH . 'wp-admin/includes/file.php' );
+                        require_once( ABSPATH . 'wp-admin/includes/media.php' );
                         $movefile = wp_handle_upload($uploadedFile,$uploadOverrides);
                         if ( $movefile ) {
                             $wp_filetype = $movefile['type'];
