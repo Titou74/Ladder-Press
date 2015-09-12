@@ -4,20 +4,13 @@ $hasTeams = isset($allTeams) && $allTeams != null;
 
 if($hasTeams) {
 
-    echo "<table>";
+    echo "<table id=\"ladder-press-team-list\">";
 
     echo "<thead>" .
              "<tr>" .
                  "<th><p>Nom</p></th> <th><p>Tag</p></th> <th><p>Logo</p></th> <th><p>Nombre de joueur</p></th> <th><p>Nombre de lineup</p></th> <th></th>" .
              "</tr>" .
          "</thead>";
-
-
-    echo "<tfoot>" .
-             "<tr>" .
-                 "<th><p>Nom</p></th> <th><p>Tag</p></th> <th><p>Logo</p></th> <th><p>Nombre de joueur</p></th> <th><p>Nombre de lineup</p></th></th>" .
-             "</tr>" .
-         "</tfoot>";
 
     echo "<tbody>";
 
@@ -46,3 +39,9 @@ echo "<form style=\"display:inline;\" action=\"?p=teams&page=create\" method=\"p
      "</form>";
 
 ?>
+
+<script type='text/javascript'>
+    jQuery(document).ready( function () {
+        jQuery('#ladder-press-team-list').DataTable();
+    } );
+</script>

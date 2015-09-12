@@ -44,4 +44,17 @@ class LadderPress
     }
     
 }
+
+function ladderPressIncludeExternalLibraries() {
+    wp_register_script( 'DataTables-script', plugins_url( '/lib/DataTables/DataTables-1.10.9/media/js/jquery.dataTables.js', __FILE__ ), array( 'jquery' ) );
+
+    wp_register_style( 'dataTables-style', plugins_url( '/lib/DataTables/DataTables-1.10.9/media/css/jquery.dataTables.css', __FILE__ ) );
+    
+    
+    wp_enqueue_script( 'DataTables-script' );
+    wp_enqueue_style( 'dataTables-style' );
+    
+}
+add_action( 'wp_enqueue_scripts', 'ladderPressIncludeExternalLibraries' );
+
 new LadderPress();

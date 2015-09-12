@@ -94,7 +94,11 @@ class Teams {
         if(get_current_user_id() != 0) {
             if(!UserTeam::isUserHasTeam(get_current_user_id())) {
                 $team = Team::getTeamById($_GET['teamId']);
-                include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamJoin.php';
+                if($team != null) {
+                    include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamJoin.php';
+                } else {
+                    echo "Team introuvable.";
+                }
             } else {
                 echo "Vous ne pouvez rejoindre d'équipe si vous êtes déjà membre d'une équipe.";
             }
