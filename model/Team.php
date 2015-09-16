@@ -17,6 +17,7 @@ class Team
     private $active;
     private $site;
     private $logoName;
+    private $players;
     
     public function __construct() {
         add_shortcode('test', array($this, 'teamHtml'));
@@ -86,6 +87,14 @@ class Team
         $this->logoName = $logoName;
     }
     
+    function getPlayers() {
+        return $this->players;
+    }
+
+    function setPlayers($players) {
+        $this->players = $players;
+    }
+
     private function instancierTeam($teamArray = null) {
         $team = null;
         if($teamArray != null) {
@@ -167,11 +176,17 @@ class Team
         );
     }
     
-    public function getTeamById($id)
+    public function getTeamById($id, $getPlayer = false)
     {
         global $wpdb;
         $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_t_teams_tea WHERE TEA_ID = $id", ARRAY_A);
         $team = self::instancierTeam($result);
+        
+        if($team != null) {
+            if ($getPlayer) {
+                $team->setPlayers(User::getUsersOfTeam($team->getId()));
+            }
+        }
         
         return $team;
     }
@@ -217,7 +232,7 @@ class Team
             JOIN {$wpdb->prefix}ladp_tj_user_tea_ute ON {$wpdb->prefix}ladp_t_teams_tea.TEA_ID = {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEA_ID
             WHERE {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ID = $idUser
             AND ({$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE IS NULL OR {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_DATE_LEAVE = '0000-00-00')
-            AND ({$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT IS NULL OR {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT = '0000-00-00')
+            AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_TEAM_ACCEPT IS NULL
             AND {$wpdb->prefix}ladp_tj_user_tea_ute.UTE_USER_ACCEPT = 1", ARRAY_A);
         
         $teams = array();

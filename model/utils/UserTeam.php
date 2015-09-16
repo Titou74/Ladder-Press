@@ -106,7 +106,11 @@ class UserTeam {
         $idUserFormat = stripslashes_deep($idUser);
         $idTeamFormat = stripslashes_deep($idTeam);
         global $wpdb;
-        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_tj_user_tea_ute WHERE UTE_TEA_ID = $idTeamFormat AND UTE_USER_ID = $idUserFormat AND UTE_DATE_LEAVE IS NULL AND UTE_TEAM_ACCEPT = TRUE AND UTE_USER_ACCEPT = TRUE", ARRAY_A);
+        $result = $wpdb->get_row("SELECT * FROM {$wpdb->prefix}ladp_tj_user_tea_ute
+                                    WHERE UTE_TEA_ID = $idTeamFormat 
+                                    AND UTE_USER_ID = $idUserFormat
+                                    AND (UTE_DATE_LEAVE IS NULL OR UTE_DATE_LEAVE = '0000-00-00')
+                                    AND UTE_TEAM_ACCEPT = TRUE AND UTE_USER_ACCEPT = TRUE", ARRAY_A);
         $userTeam = self::instancierUserTeam($result);
         return $userTeam;
     }

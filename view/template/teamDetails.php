@@ -4,10 +4,6 @@ if(!isset($team)) {
     echo "Aucune équipe a afficher";
     exit;
 }
-
-$hasPlayers = isset($teamPlayers) && $teamPlayers != null;
-
-$userTeam = UserTeam::getUserTeam(get_current_user_id(), $_GET['teamId']);
 ?>
 
 <div>
@@ -34,9 +30,9 @@ $userTeam = UserTeam::getUserTeam(get_current_user_id(), $_GET['teamId']);
         <div><p>Joueurs</p></div>
         <div>
         <?php
-        if($hasPlayers) {
-            foreach ($teamPlayers as $player) {
-
+        if($team->getPlayers() != null && !empty($team->getPlayers())) {
+            foreach ($team->getPlayers() as $player) {
+                echo "<p>" . $player->getUserLogin() . "</p>";
             }
         } else {
             echo "<p>L'équipe n'a aucun joueur</p>";

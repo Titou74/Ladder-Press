@@ -17,6 +17,7 @@ class Teams {
     {
         // Include models
         include_once $GLOBALS['ladder_press_dir_path'].'/model/Team.php';
+        include_once $GLOBALS['ladder_press_dir_path'].'/model/User.php';
         include_once $GLOBALS['ladder_press_dir_path'].'/model/utils/UserTeam.php';
         // Form traitment
         if (isset($_POST['submit'])) {
@@ -66,7 +67,9 @@ class Teams {
     
     private function displayTeamDetail() {
         // Team details
-        $team = Team::getTeamById($_GET['teamId']);
+        $team = Team::getTeamById($_GET['teamId'], true);
+        $userTeam = UserTeam::getUserTeam(get_current_user_id(), $_GET['teamId']);
+        var_dump($_GET['teamId']);
         include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamDetails.php';
     }
     

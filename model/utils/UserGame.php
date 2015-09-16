@@ -15,6 +15,7 @@ class UserGame {
     private $userId;
     private $gameId;
     private $guid;
+    private $userLogin;
     
     function getUserId() {
         return $this->userId;
@@ -27,6 +28,10 @@ class UserGame {
     function getGuid() {
         return $this->guid;
     }
+    
+    function getUserLogin() {
+        return $this->userLogin;
+    }
 
     function setUserId($userId) {
         $this->userId = $userId;
@@ -38,6 +43,10 @@ class UserGame {
 
     function setGuid($guid) {
         $this->guid = $guid;
+    }
+    
+    function setUserLogin($userLogin) {
+        $this->userLogin = $userLogin;
     }
     
 }
