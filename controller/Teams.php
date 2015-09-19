@@ -50,6 +50,9 @@ class Teams {
                 case ($page == "join_team" && isset($_GET['teamId'])):
                     self::joinTeam();
                     break;
+                case ($page == "leave_team" && isset($_GET['teamId'])):
+                    self::leaveTeam();
+                    break;
                 default:
                     self::displayTeamList();
                     break;
@@ -68,8 +71,7 @@ class Teams {
     private function displayTeamDetail() {
         // Team details
         $team = Team::getTeamById($_GET['teamId'], true);
-        $userTeam = UserTeam::getUserTeam(get_current_user_id(), $_GET['teamId']);
-        var_dump($_GET['teamId']);
+        $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
         include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamDetails.php';
     }
     
@@ -104,6 +106,21 @@ class Teams {
                 }
             } else {
                 echo "Vous ne pouvez rejoindre d'équipe si vous êtes déjà membre d'une équipe.";
+            }
+        } else {
+            echo "Vous devez être connecté pour rejoindre une équipe";
+        }
+    }
+    
+    private function leaveTeam() {
+        if(get_current_user_id() != 0) {
+            $team = Team::getTeamById($_GET['teamId'], true);
+            $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
+            
+            if(!is_null($userTeam) && !empty($userTeam) && !is_null($team) && !empty($team) && $team->getId() == $userTeam->getId()) {
+                include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamLeave.php';
+            } else {
+                echo "Vous ne pouvez pas quitter une équipe dans laquel vous n'êtes pas.";
             }
         } else {
             echo "Vous devez être connecté pour rejoindre une équipe";

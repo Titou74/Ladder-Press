@@ -25,6 +25,9 @@ class Users {
             if(isset($_POST['ladder_press_join_team_id']))
             {
                 self::processRequestJoinTeam();
+            } else if(isset($_POST['ladder_press_leave_team_id']))
+            {
+                self::processRequestLeaveTeam();
             }
         }
         // Display traitment
@@ -76,6 +79,25 @@ class Users {
             $userTeam->setAcceptDate(null);
             $userTeam->setLeaveDate(null);
             UserTeam::createUserTeam($userTeam);
+        }
+    }
+    
+    private function processRequestLeaveTeam() {
+        if(get_current_user_id() != 0) {
+            $team = Team::getTeamById($_POST['ladder_press_leave_team_id'], false);
+            $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
+            
+            if(!is_null($userTeam) && !empty($userTeam) && !is_null($team) && !empty($team) && $team->getId() == $userTeam->getId()) {
+                $objUserTeam = USerTeam::getUserTeam(get_current_user_id(), $team->getId());
+                if(!is_null($objUserTeam) && !empty($objUserTeam)) {
+                    $objUserTeam->setLeaveDate(date("Y-m-d H:i:s"));
+                    UserTeam::updateUserTeam($objUserTeam);
+                }
+            } else {
+                echo "Vous ne pouvez pas quitter une équipe dans laquel vous n'êtes pas.";
+            }
+        } else {
+            echo "Vous devez être connecté pour rejoindre une équipe";
         }
     }
 }

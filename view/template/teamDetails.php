@@ -41,13 +41,17 @@ if(!isset($team)) {
         </div>
     </div>
     <div>
-        <form action="?p=teams&page=join_team&teamId=<?php echo $team->getId(); ?>" method="post"/>
         <?php if(get_current_user_id() == 0): ?>
             <p><small><i> Vous devez vous connecter pour rejoindre une team </i></small></p>
         <?php elseif(is_null($userTeam) || empty($userTeam)) : ?>
-            <input type="submit" value="Rejoindre l'équipe"/>
-        <?php elseif($userTeam->getTeamId() == $team->getId()) : ?>
+            <form action="?p=teams&page=join_team&teamId=<?php echo $team->getId(); ?>" method="post"/>
+                <input type="submit" value="Rejoindre l'équipe"/>
+            </form>
+        <?php elseif($userTeam->getId() == $team->getId()) : ?>
             <p><small><i> Vous êtes déjà inscrit dans cette équipe </i></small></p>
+            <form action="?p=teams&page=leave_team&teamId=<?php echo $team->getId(); ?>" method="post"/>
+                <input type="submit" value="Quitter l'équipe"/>
+            </form>
         <?php else : ?>
             <p><small><i> Vous êtes déjà inscrit dans une autre équipe </i></small></p>
         <?php endif; ?>

@@ -143,7 +143,7 @@ class UserTeam {
     
     public function updateUserTeam($userTeam) {
         global $wpdb;
-        $wpdb->update( "{$wpdb->prefix}ladp_t_teams_tea", 
+        $wpdb->update( "{$wpdb->prefix}ladp_tj_user_tea_ute", 
             array( 
 		'UTE_DATE_REQUEST' => stripslashes_deep($userTeam->getRequestDate()),
                 'UTE_TEAM_ACCEPT' => stripslashes_deep($userTeam->getTeamAccept()),
