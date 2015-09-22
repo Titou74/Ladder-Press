@@ -30,8 +30,9 @@ if(!isset($team)) {
         <div><p>Joueurs</p></div>
         <div>
         <?php
-        if($team->getPlayers() != null && !empty($team->getPlayers())) {
-            foreach ($team->getPlayers() as $player) {
+        $hasPlayers = $team->getPlayers();
+        if(!empty($hasPlayers) && $hasPlayers != null) {
+            foreach ($hasPlayers as $player) {
                 echo "<p>" . $player->getUserLogin() . "</p>";
             }
         } else {
