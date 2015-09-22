@@ -53,6 +53,9 @@ class Teams {
                 case ($page == "leave_team" && isset($_GET['teamId'])):
                     self::leaveTeam();
                     break;
+                case $page == "adminMenu":
+                    self::displayAdminMenu();
+                    break;
                 default:
                     self::displayTeamList();
                     break;
@@ -73,6 +76,15 @@ class Teams {
         $team = Team::getTeamById($_GET['teamId'], true);
         $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
         include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamDetails.php';
+    }
+    
+    /**
+     * Display a menu where the user can choose either the players management or edit team informations
+     */
+    private function displayAdminMenu() {
+        // TODO gestion des rôles
+        $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
+        include_once $GLOBALS['ladder_press_dir_path'].'/view/template/userTeamAdminMenu.php';
     }
     
     private function createTeam() {

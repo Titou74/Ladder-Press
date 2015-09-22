@@ -52,4 +52,11 @@ if($userTeamDemande) {
 
 echo "<hr>";
 
+// TODO Gestion des rôles
+if($hasTeam){
+    echo "<a href='?p=teams&page=adminMenu'>Accéder à l'administration de mon équipe</a>";
+}
+
+echo "<hr>";
+
 echo "<h2>Historique de mon compte</h2>";

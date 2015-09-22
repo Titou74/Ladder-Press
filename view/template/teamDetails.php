@@ -31,7 +31,7 @@ if(!isset($team)) {
         <div>
         <?php
         $hasPlayers = $team->getPlayers();
-        if(!empty($hasPlayers) && $hasPlayers != null) {
+        if(!empty($hasPlayers) && !is_null($hasPlayers)) {
             foreach ($hasPlayers as $player) {
                 echo "<p>" . $player->getUserLogin() . "</p>";
             }
