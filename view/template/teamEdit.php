@@ -25,7 +25,15 @@ $edit = isset($editTeam);
         <?php  endif; ?>
     <?php endif; ?>
     <input type="file" name="ladder_press_team_logo" id="ladder_press_team_logo"  multiple="false" />
-    
+    <br>
+    <?php if($edit) : ?>
+    <label for="ladder_press_team_active"> Active</label>
+    <input type="checkbox" name="ladder_press_team_active" <?php if(!$edit || $editTeam->getActive())echo'checked="checked"'; ?>/> 
+    <?php endif; ?>
     <br><br>
-    <input id="submit" name="submit" class="button button-primary" type="submit" value="Créer une équipe" />
+    <?php if(!$edit) : ?>
+        <input id="submit" name="submit" class="button button-primary" type="submit" value="Créer une équipe" />
+    <?php else : ?>
+        <input id="submit" name="submit" class="button button-primary" type="submit" value="Modifier l'équipe" />
+    <?php endif; ?>
 </form>

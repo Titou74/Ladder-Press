@@ -174,7 +174,7 @@ class UserTeam {
     }
     
     function isUserAdminTeam($idUser, $idTeam) {
-        $userTeam = Team::getUserTeam($idUser, $idTeam);
+        $userTeam = self::getUserTeam($idUser, $idTeam);
         if($userTeam == null || empty($userTeam)) {
             return false;
         } else {

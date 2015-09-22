@@ -101,7 +101,8 @@ class Teams {
     
     private function editTeam() {
         if(get_current_user_id() != 0) {
-            
+            $editTeam = Team::getTeamById($_GET['teamId'], true);
+            include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamEdit.php';
         } else {
             echo "Vous devez être connecté pour créer une équipe";
         }
@@ -223,7 +224,7 @@ class Teams {
                         $team->setActive (0);
                     $team->setName($_POST['ladder_press_team_name']);
                     $team->setTag($_POST['ladder_press_team_tag']);
-                    $team->setIdCreator($_POST['ladder_press_team_creator']);
+                    $team->setIdCreator($team->getIdCreator());
                     $team->setSite($_POST['ladder_press_team_site']);
                     if(isset($_FILES['ladder_press_team_logo']) && $_FILES['ladder_press_team_logo'] != '')
                     {
