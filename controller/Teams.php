@@ -56,6 +56,9 @@ class Teams {
                 case $page == "adminMenu":
                     self::displayAdminMenu();
                     break;
+                case ($page == "playersManagement" && isset($_GET['teamId'])):
+                    self::displayPlayersManagement();
+                    break;
                 default:
                     self::displayTeamList();
                     break;
@@ -76,6 +79,13 @@ class Teams {
         $team = Team::getTeamById($_GET['teamId'], true);
         $userTeam = Team::getCurrentPlayerTeam(get_current_user_id());
         include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamDetails.php';
+    }
+    
+    private function displayPlayersManagement()
+    {
+        $team = Team::getTeamById($_GET['teamId'], true);
+        $players = UserTeam::getTeamUsers($_GET['teamId']);
+        include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamPlayersManagement.php';
     }
     
     /**
