@@ -204,4 +204,25 @@ class UserTeam {
         }
         return $users;
     }
+    /**
+     * Give new right to a user
+     * 
+     * @global type $wpdb
+     * @param int $idTeam
+     * @param int $idUser
+     * @param String $rank rank we want to assign to the user
+     */
+    function grantUserRight($idTeam,$idUser,$rank)
+    {
+            global $wpdb;
+            $wpdb->update( "{$wpdb->prefix}ladp_tj_user_tea_ute", 
+            array( 
+                'UTE_USER_RANK' => stripslashes_deep($rank),
+            ),
+            array( 'UTE_TEA_ID' => stripslashes_deep($idTeam), 'UTE_USER_ID' => stripslashes_deep($idUser) ),
+            array( 
+                    '%s',
+            )
+        );
+    }
 }

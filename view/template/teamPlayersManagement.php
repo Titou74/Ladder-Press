@@ -24,7 +24,13 @@
            echo "<tr>"
                    . "<td><p>" . $user_info->user_login . "</p></td>"
                    . "<td><p>" . $player->getUserRank() . "</p></td>"
-                   . "<td><p>" . "TODO" . "</td></p>"
+                   . "<td>";
+                    if($player->getUserRank() != 'admin'){
+                         echo "<form method='post' action='?p=teams&page=playersManagement&teamId=".$_GET['teamId']."'>"
+                        ."<input type='hidden' name='ladder_press_grant_user_id' value='". $user_info->ID ."'/>"
+                        ."<input type='submit' value='Ajouter admin' name='submit'/>";
+                   }
+                   echo "</td>"
                 . "</tr>";
        }
        echo "</tbody>";

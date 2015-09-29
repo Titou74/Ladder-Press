@@ -25,10 +25,13 @@ class Teams {
                 self::processDeleteTeam();
             } else if (isset($_POST['ladder_press_team_id'])) {
                 if($_POST['ladder_press_team_id'] == 0) {
-                    self::processCreateTeam();
+                    self::processCreateTeam(); 
                 } else {
                     self::processEditTeam();
                 }
+            } else if(isset($_POST['ladder_press_grant_user_id'])){
+                /** @TODO a refaire avec envoi des droits **/
+                self::processGrantUserRank('admin');
             }
         }
         // Display traitment
@@ -154,6 +157,18 @@ class Teams {
         
         // TODO Vérification de droit de suppression
         //Team::deleteTeam($_POST['ladder_press_remove_team_id']);
+    }
+    
+    /**
+     * Permet de changer le rôle de l'utilisateur
+     * 
+     * @param String $rank rank que l'on veut attribuer à l'utilisateur
+     */
+    private function processGrantUserRank($rank){
+        if($_POST['ladder_press_grant_user_id'] != '' && isset($_GET['teamId']) && $rank != '')
+        {
+            UserTeam::grantUserRight($_GET['teamId'],$_POST['ladder_press_grant_user_id'],$rank);
+        }
     }
     
     private function processCreateTeam() {
