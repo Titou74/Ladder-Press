@@ -25,7 +25,7 @@ class Users {
             if(isset($_POST['ladder_press_join_team_id']))
             {
                 self::processRequestJoinTeam();
-            } else if(isset($_POST['ladder_press_leave_team_id']))
+            } else if(isset($_POST['ladder_press_leave_team_id']))    
             {
                 self::processRequestLeaveTeam();
             }

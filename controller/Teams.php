@@ -37,8 +37,10 @@ class Teams {
                 }else if(isset($_POST['ladder_press_remove_user_admin'])) {
                     $idUser = $_POST['ladder_press_remove_user_admin'];
                     $rank = '';
-                }
+                } 
                 self::processUpdateUserRank($idUser,$rank);
+            }else if(isset($_POST['ladder_press_kick_user_id'])) {
+                self::processKickUser();
             }
         }
         // Display traitment
@@ -69,6 +71,9 @@ class Teams {
                 case ($page == "playersManagement" && isset($_GET['teamId'])):
                     self::displayPlayersManagement();
                     break;
+                case ($page == "confirmKickUser" && isset($_GET['teamId'])):
+                    self::displayConfirmKickUser();
+                    break;
                 default:
                     self::displayTeamList();
                     break;
@@ -97,6 +102,22 @@ class Teams {
         $players = UserTeam::getTeamUsers($_GET['teamId']);
         include_once $GLOBALS['ladder_press_dir_path'].'/view/template/teamPlayersManagement.php';
     }
+    
+    private function displayConfirmKickUser() {
+        if(isset($_POST['ladder_press_kick_user'])){
+            $player = get_userdata( $_POST['ladder_press_kick_user']);
+            $team = Team::getTeamById($_GET['teamId'], true);
+            if($team->getIdCreator() != $player->ID)
+            {
+                include_once $GLOBALS['ladder_press_dir_path'].'/view/template/confirmKickUser.php';
+            }else{
+                echo 'Vous ne pouvez pas kicker le créateur de la team !!';
+            }
+        }else {
+            echo 'Impossible de kicker l\' utilisateur : Utilisateur non trouvé ou non valide';
+        }
+    }
+    
     
     /**
      * Display a menu where the user can choose either the players management or edit team informations
@@ -292,6 +313,19 @@ class Teams {
             }
         } else {
             echo "Vous devez être connecté pour créer une équipe";
+        }
+    }
+    
+    private function processKickUser() {
+        $team = Team::getTeamById($_POST['ladder_press_kick_team_id'], false);
+        $userTeam = UserTeam::getUserTeam($_POST['ladder_press_kick_user_id'],$_POST['ladder_press_kick_team_id']);
+        if($team->getIdCreator() != $_POST['ladder_press_kick_user_id']) {
+            if(!is_null($userTeam) && !empty($userTeam)) {
+                $userTeam->setLeaveDate(date("Y-m-d H:i:s"));
+                UserTeam::updateUserTeam($userTeam);
+            }
+        }else{
+            echo "Vous ne pouvez pas kicker le créateur de la team";
         }
     }
 }
