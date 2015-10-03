@@ -212,7 +212,7 @@ class UserTeam {
      * @param int $idUser
      * @param String $rank rank we want to assign to the user
      */
-    function grantUserRight($idTeam,$idUser,$rank)
+    function updateUserRank($idTeam,$idUser,$rank)
     {
             global $wpdb;
             $wpdb->update( "{$wpdb->prefix}ladp_tj_user_tea_ute", 

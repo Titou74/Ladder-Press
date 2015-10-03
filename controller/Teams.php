@@ -29,9 +29,16 @@ class Teams {
                 } else {
                     self::processEditTeam();
                 }
-            } else if(isset($_POST['ladder_press_grant_user_id'])){
-                /** @TODO a refaire avec envoi des droits **/
-                self::processGrantUserRank('admin');
+            } else if(isset($_POST['ladder_press_players_management'])&& $_POST['ladder_press_players_management']){
+                if(isset($_POST['ladder_press_grant_user_admin']))
+                {
+                    $idUser = $_POST['ladder_press_grant_user_admin'];
+                    $rank = 'admin';
+                }else if(isset($_POST['ladder_press_remove_user_admin'])) {
+                    $idUser = $_POST['ladder_press_remove_user_admin'];
+                    $rank = '';
+                }
+                self::processUpdateUserRank($idUser,$rank);
             }
         }
         // Display traitment
@@ -163,11 +170,12 @@ class Teams {
      * Permet de changer le rôle de l'utilisateur
      * 
      * @param String $rank rank que l'on veut attribuer à l'utilisateur
+     * @param int $idUser
      */
-    private function processGrantUserRank($rank){
-        if($_POST['ladder_press_grant_user_id'] != '' && isset($_GET['teamId']) && $rank != '')
+    private function processUpdateUserRank($idUser,$rank){
+        if($idUser != '' && isset($_GET['teamId']))
         {
-            UserTeam::grantUserRight($_GET['teamId'],$_POST['ladder_press_grant_user_id'],$rank);
+            UserTeam::updateUserRank($_GET['teamId'],$idUser,$rank);
         }
     }
     
