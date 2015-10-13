@@ -8,7 +8,7 @@ if($hasTeams) {
 
     echo "<thead>" .
              "<tr>" .
-                 "<th><p>Nom</p></th> <th><p>Tag</p></th> <th><p>Logo</p></th> <th><p>Nombre de joueur</p></th> <th><p>Nombre de lineup</p></th> <th></th>" .
+                 "<th><p>Nom</p></th> <th><p>Tag</p></th> <th><p>Logo</p></th> <th><p>Nombre de joueur</p></th> <!--<th><p>Nombre de lineup</p></th>--> <th></th>" .
              "</tr>" .
          "</thead>";
 
@@ -18,9 +18,9 @@ if($hasTeams) {
            echo "<tr>";
                echo "<td><p>" . $team->getName() . "</p></td>";
                echo "<td><p>" . $team->getTag() . "</p></td>";
-               echo "<td><img src=\"" . $team->getLogoName() . "\" alt=\"logo team " . $team->getName()  . "\" width=\"150\" ></td>";
-               echo "<td><p>" . "TODO" . "</p></td>";
-               echo "<td><p>" . "TODO" . "</p></td>";
+               echo "<td><img src=\"" .wp_get_attachment_url( $team->getLogoName() ). "\" alt=\"logo team " . $team->getName()  . "\" width=\"150\" ></td>";
+               echo "<td><p>" . $team->getNumberOfUsers($team->getId()). "</p></td>";
+               echo "<!--<td><p>" . "TODO" . "</p></td>-->"; // TODO
                echo "<td>";
                echo "<form style=\"display:inline;\" action=\"?p=teams&page=details&teamId=" . $team->getId() . "\" method=\"post\">" .
                         "<input id=\"submit\" class=\"button button-primary\" type=\"submit\" value=\"Détails de l'équipe\" />" .
