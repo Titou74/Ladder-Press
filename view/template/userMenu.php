@@ -30,6 +30,8 @@ if($hasTeam) {
     echo "<p>Vous n'êtes actuellement dans aucune équipe. Vous pouvez en rejoindre une depuis la <a href=\"?p=teams\">liste  des équipes</a></p>";
 }
 
+echo "<p><a href=\"?p=teams\">liste  des équipes</a></p>";
+
 echo "<h2>Invitation en cours</h2>";
 
 if($hasTeamInvitation) {
@@ -50,13 +52,12 @@ if($userTeamDemande) {
     echo "<p>Vous n'avez aucune demande en attente de validation</p>";
 }
 
-echo "<hr>";
+if($isAdmin) {
+    echo "<hr>";
 
-// TODO Gestion des rôles
-if($hasTeam){
-    echo "<a href='?p=teams&page=adminMenu'>Accéder à l'administration de mon équipe</a>";
+        echo "<a href='?p=teams&page=adminMenu'>Accéder à l'administration de mon équipe</a>";
+
+    echo "<hr>";
 }
-
-echo "<hr>";
 
 echo "<h2>Historique de mon compte</h2>";

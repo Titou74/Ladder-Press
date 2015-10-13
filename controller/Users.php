@@ -54,8 +54,11 @@ class Users {
             $userTeamInvitation = Team::getInvitationPlayerNonRepondu(get_current_user_id());
 
             $userTeamDemande = Team::getDemandePlayerNonRepondu(get_current_user_id());
-
+            
             $userHistorique = self::genererUserHistorique();
+            
+            if($userTeam)
+                $isAdmin = UserTeam::isUserAdminTeam(get_current_user_id(),$userTeam->getId());
 
             include_once $GLOBALS['ladder_press_dir_path'].'/view/template/userMenu.php';
         } else {
